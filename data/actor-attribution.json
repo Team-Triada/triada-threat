@@ -1,0 +1,80 @@
+[
+  {
+    "mitreId": "G0016",
+    "country": "Russia",
+    "countryCode": "RU",
+    "attribution": "SVR (Russian Foreign Intelligence Service)"
+  },
+  {
+    "mitreId": "G0007",
+    "country": "Russia",
+    "countryCode": "RU",
+    "attribution": "GRU Unit 26165 (Russian military intelligence)"
+  },
+  {
+    "mitreId": "G0034",
+    "country": "Russia",
+    "countryCode": "RU",
+    "attribution": "GRU Unit 74455 (Russian military intelligence)"
+  },
+  {
+    "mitreId": "G0032",
+    "country": "North Korea",
+    "countryCode": "KP",
+    "attribution": "Reconnaissance General Bureau (RGB)"
+  },
+  {
+    "mitreId": "G1017",
+    "country": "China",
+    "countryCode": "CN",
+    "attribution": "Assessed state-sponsored, PRC-nexus"
+  },
+  {
+    "mitreId": "G1045",
+    "country": "China",
+    "countryCode": "CN",
+    "attribution": "Assessed state-sponsored, PRC-nexus"
+  },
+  {
+    "mitreId": "G0046",
+    "country": "Unattributed",
+    "countryCode": null,
+    "attribution": "Financially motivated criminal group"
+  },
+  {
+    "mitreId": "G1015",
+    "country": "Unattributed",
+    "countryCode": null,
+    "attribution": "Financially motivated criminal group, English-speaking"
+  },
+  {
+    "mitreId": "G0064",
+    "country": "Iran",
+    "countryCode": "IR",
+    "attribution": "Assessed Iranian state-sponsored (industry and government reporting)"
+  },
+  {
+    "mitreId": "G0069",
+    "country": "Iran",
+    "countryCode": "IR",
+    "attribution": "MOIS-linked (Iranian Ministry of Intelligence)"
+  },
+  {
+    "mitreId": "G0096",
+    "country": "China",
+    "countryCode": "CN",
+    "attribution": "PRC state-sponsored; US DOJ indicted members in 2020 (Chengdu 404 contractors)"
+  },
+  {
+    "mitreId": "G0045",
+    "country": "China",
+    "countryCode": "CN",
+    "attribution": "MSS Tianjin State Security Bureau (US DOJ indictment, 2018)"
+  },
+  {
+    "mitreId": "G0044",
+    "country": "China",
+    "countryCode": "CN",
+    "attribution": "Assessed PRC-nexus, dual espionage/financial motive"
+  }
+]
