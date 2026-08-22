@@ -1,0 +1,2092 @@
+{
+  "updatedAt": "2026-08-22T13:21:49.415Z",
+  "roster": [
+    {
+      "group": "qilin",
+      "altname": null,
+      "victims": 2195
+    },
+    {
+      "group": "lockbit3",
+      "altname": null,
+      "victims": 2016
+    },
+    {
+      "group": "akira",
+      "altname": null,
+      "victims": 1572
+    },
+    {
+      "group": "play",
+      "altname": null,
+      "victims": 1304
+    },
+    {
+      "group": "clop",
+      "altname": "Cl0p",
+      "victims": 1300
+    },
+    {
+      "group": "lockbit2",
+      "altname": null,
+      "victims": 1002
+    },
+    {
+      "group": "incransom",
+      "altname": "Inc Ransom",
+      "victims": 912
+    },
+    {
+      "group": "ransomhub",
+      "altname": null,
+      "victims": 842
+    },
+    {
+      "group": "thegentlemen",
+      "altname": "Storm-2697",
+      "victims": 778
+    },
+    {
+      "group": "alphv",
+      "altname": "blackcat",
+      "victims": 731
+    },
+    {
+      "group": "dragonforce",
+      "altname": null,
+      "victims": 641
+    },
+    {
+      "group": "bianlian",
+      "altname": null,
+      "victims": 552
+    },
+    {
+      "group": "safepay",
+      "altname": null,
+      "victims": 547
+    },
+    {
+      "group": "blackbasta",
+      "altname": null,
+      "victims": 523
+    },
+    {
+      "group": "medusa",
+      "altname": null,
+      "victims": 517
+    },
+    {
+      "group": "8base",
+      "altname": null,
+      "victims": 455
+    },
+    {
+      "group": "lynx",
+      "altname": null,
+      "victims": 416
+    },
+    {
+      "group": "everest",
+      "altname": null,
+      "victims": 392
+    },
+    {
+      "group": "conti",
+      "altname": null,
+      "victims": 351
+    },
+    {
+      "group": "dispossessor",
+      "altname": null,
+      "victims": 344
+    },
+    {
+      "group": "lockbit5",
+      "altname": null,
+      "victims": 338
+    },
+    {
+      "group": "nightspire",
+      "altname": null,
+      "victims": 319
+    },
+    {
+      "group": "pysa",
+      "altname": null,
+      "victims": 309
+    },
+    {
+      "group": "hunters",
+      "altname": null,
+      "victims": 307
+    },
+    {
+      "group": "killsec",
+      "altname": null,
+      "victims": 284
+    },
+    {
+      "group": "rhysida",
+      "altname": null,
+      "victims": 278
+    },
+    {
+      "group": "sinobi",
+      "altname": null,
+      "victims": 274
+    },
+    {
+      "group": "cactus",
+      "altname": null,
+      "victims": 248
+    },
+    {
+      "group": "royal",
+      "altname": null,
+      "victims": 211
+    },
+    {
+      "group": "hive",
+      "altname": null,
+      "victims": 208
+    },
+    {
+      "group": "ransomhouse",
+      "altname": null,
+      "victims": 205
+    },
+    {
+      "group": "coinbasecartel",
+      "altname": null,
+      "victims": 192
+    },
+    {
+      "group": "fog",
+      "altname": null,
+      "victims": 189
+    },
+    {
+      "group": "stormous",
+      "altname": null,
+      "victims": 188
+    },
+    {
+      "group": "vicesociety",
+      "altname": null,
+      "victims": 188
+    },
+    {
+      "group": "blacksuit",
+      "altname": null,
+      "victims": 184
+    },
+    {
+      "group": "devman",
+      "altname": "Devman 2.0",
+      "victims": 184
+    },
+    {
+      "group": "babuk2",
+      "altname": "Satanlock",
+      "victims": 180
+    },
+    {
+      "group": "nova",
+      "altname": null,
+      "victims": 178
+    },
+    {
+      "group": "handala",
+      "altname": null,
+      "victims": 175
+    },
+    {
+      "group": "worldleaks",
+      "altname": null,
+      "victims": 175
+    },
+    {
+      "group": "funksec",
+      "altname": null,
+      "victims": 172
+    },
+    {
+      "group": "malas",
+      "altname": null,
+      "victims": 170
+    },
+    {
+      "group": "cloak",
+      "altname": null,
+      "victims": 166
+    },
+    {
+      "group": "apt73",
+      "altname": "bashe",
+      "victims": 157
+    },
+    {
+      "group": "spacebears",
+      "altname": null,
+      "victims": 152
+    },
+    {
+      "group": "blackbyte",
+      "altname": null,
+      "victims": 147
+    },
+    {
+      "group": "avaddon",
+      "altname": null,
+      "victims": 146
+    },
+    {
+      "group": "shinyhunters",
+      "altname": null,
+      "victims": 146
+    },
+    {
+      "group": "meow",
+      "altname": null,
+      "victims": 145
+    },
+    {
+      "group": "snatch",
+      "altname": null,
+      "victims": 142
+    },
+    {
+      "group": "sarcoma",
+      "altname": null,
+      "victims": 141
+    },
+    {
+      "group": "ragnarlocker",
+      "altname": null,
+      "victims": 128
+    },
+    {
+      "group": "silentransomgroup",
+      "altname": "Luna Moth",
+      "victims": 127
+    },
+    {
+      "group": "noescape",
+      "altname": null,
+      "victims": 126
+    },
+    {
+      "group": "raworld",
+      "altname": "ragroup",
+      "victims": 126
+    },
+    {
+      "group": "interlock",
+      "altname": null,
+      "victims": 122
+    },
+    {
+      "group": "toufan",
+      "altname": null,
+      "victims": 117
+    },
+    {
+      "group": "pear",
+      "altname": "Pure Extraction And Ransom",
+      "victims": 115
+    },
+    {
+      "group": "direwolf",
+      "altname": null,
+      "victims": 113
+    },
+    {
+      "group": "genesis",
+      "altname": null,
+      "victims": 113
+    },
+    {
+      "group": "eldorado",
+      "altname": null,
+      "victims": 112
+    },
+    {
+      "group": "monti",
+      "altname": null,
+      "victims": 110
+    },
+    {
+      "group": "arcusmedia",
+      "altname": null,
+      "victims": 107
+    },
+    {
+      "group": "payoutsking",
+      "altname": "Payouts King",
+      "victims": 107
+    },
+    {
+      "group": "krybit",
+      "altname": null,
+      "victims": 106
+    },
+    {
+      "group": "anubis",
+      "altname": null,
+      "victims": 105
+    },
+    {
+      "group": "cuba",
+      "altname": "Colddraw",
+      "victims": 103
+    },
+    {
+      "group": "deadlock",
+      "altname": null,
+      "victims": 99
+    },
+    {
+      "group": "revil",
+      "altname": null,
+      "victims": 96
+    },
+    {
+      "group": "kairos",
+      "altname": null,
+      "victims": 94
+    },
+    {
+      "group": "abyss",
+      "altname": null,
+      "victims": 90
+    },
+    {
+      "group": "threeam",
+      "altname": "3Am",
+      "victims": 90
+    },
+    {
+      "group": "ransomexx",
+      "altname": null,
+      "victims": 86
+    },
+    {
+      "group": "medusalocker",
+      "altname": null,
+      "victims": 83
+    },
+    {
+      "group": "chaos",
+      "altname": null,
+      "victims": 79
+    },
+    {
+      "group": "lorenz",
+      "altname": null,
+      "victims": 78
+    },
+    {
+      "group": "warlock",
+      "altname": null,
+      "victims": 78
+    },
+    {
+      "group": "cicada3301",
+      "altname": null,
+      "victims": 75
+    },
+    {
+      "group": "karakurt",
+      "altname": null,
+      "victims": 74
+    },
+    {
+      "group": "payload",
+      "altname": null,
+      "victims": 74
+    },
+    {
+      "group": "avoslocker",
+      "altname": null,
+      "victims": 70
+    },
+    {
+      "group": "beast",
+      "altname": "GIGAKICK",
+      "victims": 70
+    },
+    {
+      "group": "braincipher",
+      "altname": null,
+      "victims": 69
+    },
+    {
+      "group": "quantum",
+      "altname": null,
+      "victims": 68
+    },
+    {
+      "group": "ransomed",
+      "altname": null,
+      "victims": 68
+    },
+    {
+      "group": "blacklock",
+      "altname": null,
+      "victims": 64
+    },
+    {
+      "group": "lv",
+      "altname": null,
+      "victims": 63
+    },
+    {
+      "group": "flocker",
+      "altname": null,
+      "victims": 59
+    },
+    {
+      "group": "maze",
+      "altname": null,
+      "victims": 59
+    },
+    {
+      "group": "darkvault",
+      "altname": null,
+      "victims": 55
+    },
+    {
+      "group": "losttrust",
+      "altname": null,
+      "victims": 53
+    },
+    {
+      "group": "gunra",
+      "altname": null,
+      "victims": 52
+    },
+    {
+      "group": "ailock",
+      "altname": null,
+      "victims": 49
+    },
+    {
+      "group": "mallox",
+      "altname": null,
+      "victims": 49
+    },
+    {
+      "group": "tengu",
+      "altname": "Shisa",
+      "victims": 49
+    },
+    {
+      "group": "termite",
+      "altname": null,
+      "victims": 49
+    },
+    {
+      "group": "trigona",
+      "altname": null,
+      "victims": 49
+    },
+    {
+      "group": "knight",
+      "altname": null,
+      "victims": 48
+    },
+    {
+      "group": "nitrogen",
+      "altname": null,
+      "victims": 48
+    },
+    {
+      "group": "settra",
+      "altname": null,
+      "victims": 47
+    },
+    {
+      "group": "crypto24",
+      "altname": null,
+      "victims": 46
+    },
+    {
+      "group": "blacknevas",
+      "altname": "Trial Recovery",
+      "victims": 45
+    },
+    {
+      "group": "insomnia",
+      "altname": null,
+      "victims": 45
+    },
+    {
+      "group": "midas",
+      "altname": null,
+      "victims": 44
+    },
+    {
+      "group": "blackshrantac",
+      "altname": null,
+      "victims": 43
+    },
+    {
+      "group": "cmdorganization",
+      "altname": null,
+      "victims": 43
+    },
+    {
+      "group": "donutleaks",
+      "altname": null,
+      "victims": 42
+    },
+    {
+      "group": "securotrop",
+      "altname": null,
+      "victims": 42
+    },
+    {
+      "group": "j",
+      "altname": null,
+      "victims": 41
+    },
+    {
+      "group": "embargo",
+      "altname": null,
+      "victims": 40
+    },
+    {
+      "group": "darkleakmarket",
+      "altname": null,
+      "victims": 39
+    },
+    {
+      "group": "dragonransomware",
+      "altname": null,
+      "victims": 39
+    },
+    {
+      "group": "global secret group",
+      "altname": "GSG",
+      "victims": 39
+    },
+    {
+      "group": "orova",
+      "altname": null,
+      "victims": 38
+    },
+    {
+      "group": "crpxo",
+      "altname": "CRPx0",
+      "victims": 37
+    },
+    {
+      "group": "m3rx",
+      "altname": null,
+      "victims": 37
+    },
+    {
+      "group": "ciphbit",
+      "altname": null,
+      "victims": 36
+    },
+    {
+      "group": "helldown",
+      "altname": null,
+      "victims": 36
+    },
+    {
+      "group": "nokoyawa",
+      "altname": null,
+      "victims": 36
+    },
+    {
+      "group": "arvinclub",
+      "altname": null,
+      "victims": 35
+    },
+    {
+      "group": "spook",
+      "altname": null,
+      "victims": 35
+    },
+    {
+      "group": "lamashtu",
+      "altname": null,
+      "victims": 34
+    },
+    {
+      "group": "moneymessage",
+      "altname": "ThreatLabz",
+      "victims": 34
+    },
+    {
+      "group": "dan0n",
+      "altname": null,
+      "victims": 33
+    },
+    {
+      "group": "obscura",
+      "altname": null,
+      "victims": 33
+    },
+    {
+      "group": "wannacry",
+      "altname": null,
+      "victims": 33
+    },
+    {
+      "group": "blackmatter",
+      "altname": null,
+      "victims": 32
+    },
+    {
+      "group": "global",
+      "altname": null,
+      "victims": 32
+    },
+    {
+      "group": "marketo",
+      "altname": null,
+      "victims": 32
+    },
+    {
+      "group": "suncrypt",
+      "altname": null,
+      "victims": 32
+    },
+    {
+      "group": "alphalocker",
+      "altname": null,
+      "victims": 31
+    },
+    {
+      "group": "aurora",
+      "altname": null,
+      "victims": 31
+    },
+    {
+      "group": "metaencryptor",
+      "altname": null,
+      "victims": 31
+    },
+    {
+      "group": "frag",
+      "altname": null,
+      "victims": 30
+    },
+    {
+      "group": "payloadbin",
+      "altname": null,
+      "victims": 29
+    },
+    {
+      "group": "onyx",
+      "altname": null,
+      "victims": 28
+    },
+    {
+      "group": "bravox",
+      "altname": null,
+      "victims": 27
+    },
+    {
+      "group": "l group",
+      "altname": null,
+      "victims": 27
+    },
+    {
+      "group": "kelvinsecurity",
+      "altname": null,
+      "victims": 26
+    },
+    {
+      "group": "netwalker",
+      "altname": null,
+      "victims": 26
+    },
+    {
+      "group": "storm",
+      "altname": null,
+      "victims": 26
+    },
+    {
+      "group": "underground",
+      "altname": null,
+      "victims": 26
+    },
+    {
+      "group": "werewolves",
+      "altname": null,
+      "victims": 26
+    },
+    {
+      "group": "doppelpaymer",
+      "altname": null,
+      "victims": 25
+    },
+    {
+      "group": "fulcrumsec",
+      "altname": null,
+      "victims": 25
+    },
+    {
+      "group": "kraken",
+      "altname": null,
+      "victims": 25
+    },
+    {
+      "group": "lapsus$",
+      "altname": null,
+      "victims": 25
+    },
+    {
+      "group": "vect",
+      "altname": null,
+      "victims": 25
+    },
+    {
+      "group": "radar",
+      "altname": null,
+      "victims": 24
+    },
+    {
+      "group": "titan",
+      "altname": null,
+      "victims": 24
+    },
+    {
+      "group": "morpheus",
+      "altname": null,
+      "victims": 23
+    },
+    {
+      "group": "daixin",
+      "altname": null,
+      "victims": 21
+    },
+    {
+      "group": "unsafe",
+      "altname": null,
+      "victims": 21
+    },
+    {
+      "group": "xinglocker",
+      "altname": null,
+      "victims": 21
+    },
+    {
+      "group": "hellcat",
+      "altname": null,
+      "victims": 20
+    },
+    {
+      "group": "leaktheanalyst",
+      "altname": null,
+      "victims": 20
+    },
+    {
+      "group": "cephalus",
+      "altname": null,
+      "victims": 19
+    },
+    {
+      "group": "dark project",
+      "altname": null,
+      "victims": 19
+    },
+    {
+      "group": "ralord",
+      "altname": null,
+      "victims": 19
+    },
+    {
+      "group": "siegedsec",
+      "altname": null,
+      "victims": 19
+    },
+    {
+      "group": "brotherhood",
+      "altname": null,
+      "victims": 18
+    },
+    {
+      "group": "d4rk4rmy",
+      "altname": null,
+      "victims": 18
+    },
+    {
+      "group": "mountlocker",
+      "altname": null,
+      "victims": 18
+    },
+    {
+      "group": "trinity",
+      "altname": null,
+      "victims": 18
+    },
+    {
+      "group": "alp-001",
+      "altname": null,
+      "victims": 17
+    },
+    {
+      "group": "kawa4096",
+      "altname": "KaWaLocker",
+      "victims": 17
+    },
+    {
+      "group": "majinahanashi",
+      "altname": null,
+      "victims": 17
+    },
+    {
+      "group": "sabbath",
+      "altname": null,
+      "victims": 17
+    },
+    {
+      "group": "apos",
+      "altname": null,
+      "victims": 16
+    },
+    {
+      "group": "auditteam",
+      "altname": null,
+      "victims": 16
+    },
+    {
+      "group": "datacarry",
+      "altname": null,
+      "victims": 16
+    },
+    {
+      "group": "dunghill",
+      "altname": "darkangel",
+      "victims": 16
+    },
+    {
+      "group": "madliberator",
+      "altname": null,
+      "victims": 16
+    },
+    {
+      "group": "mosesstaff",
+      "altname": null,
+      "victims": 16
+    },
+    {
+      "group": "redransomware",
+      "altname": null,
+      "victims": 16
+    },
+    {
+      "group": "tridentlocker",
+      "altname": null,
+      "victims": 16
+    },
+    {
+      "group": "cheers",
+      "altname": null,
+      "victims": 15
+    },
+    {
+      "group": "exfilsquad",
+      "altname": null,
+      "victims": 15
+    },
+    {
+      "group": "nefilim",
+      "altname": null,
+      "victims": 15
+    },
+    {
+      "group": "benzona",
+      "altname": null,
+      "victims": 14
+    },
+    {
+      "group": "freecivilian",
+      "altname": null,
+      "victims": 14
+    },
+    {
+      "group": "orion",
+      "altname": null,
+      "victims": 14
+    },
+    {
+      "group": "panzer",
+      "altname": null,
+      "victims": 14
+    },
+    {
+      "group": "sparta",
+      "altname": null,
+      "victims": 14
+    },
+    {
+      "group": "weyhro",
+      "altname": null,
+      "victims": 14
+    },
+    {
+      "group": "argonauts",
+      "altname": null,
+      "victims": 13
+    },
+    {
+      "group": "groove",
+      "altname": null,
+      "victims": 13
+    },
+    {
+      "group": "mindware",
+      "altname": null,
+      "victims": 13
+    },
+    {
+      "group": "blackout",
+      "altname": null,
+      "victims": 12
+    },
+    {
+      "group": "booba project",
+      "altname": "Booba Team",
+      "victims": 12
+    },
+    {
+      "group": "icarus",
+      "altname": null,
+      "victims": 12
+    },
+    {
+      "group": "imncrew",
+      "altname": null,
+      "victims": 12
+    },
+    {
+      "group": "shadowbyt3$",
+      "altname": null,
+      "victims": 12
+    },
+    {
+      "group": "teamxxx",
+      "altname": null,
+      "victims": 12
+    },
+    {
+      "group": "cryp70n1c0d3",
+      "altname": null,
+      "victims": 11
+    },
+    {
+      "group": "icefire",
+      "altname": null,
+      "victims": 11
+    },
+    {
+      "group": "blackwater",
+      "altname": null,
+      "victims": 10
+    },
+    {
+      "group": "crazyhunter",
+      "altname": null,
+      "victims": 10
+    },
+    {
+      "group": "darkpower",
+      "altname": null,
+      "victims": 10
+    },
+    {
+      "group": "darkrace",
+      "altname": null,
+      "victims": 10
+    },
+    {
+      "group": "darkside",
+      "altname": "",
+      "victims": 10
+    },
+    {
+      "group": "kazu",
+      "altname": null,
+      "victims": 9
+    },
+    {
+      "group": "leakbazaar",
+      "altname": null,
+      "victims": 9
+    },
+    {
+      "group": "rook",
+      "altname": null,
+      "victims": 9
+    },
+    {
+      "group": "babuk",
+      "altname": null,
+      "victims": 8
+    },
+    {
+      "group": "black x",
+      "altname": null,
+      "victims": 8
+    },
+    {
+      "group": "cryptbb",
+      "altname": null,
+      "victims": 8
+    },
+    {
+      "group": "doommageddon",
+      "altname": null,
+      "victims": 8
+    },
+    {
+      "group": "mogilevich",
+      "altname": null,
+      "victims": 8
+    },
+    {
+      "group": "qiulong",
+      "altname": null,
+      "victims": 8
+    },
+    {
+      "group": "radiant",
+      "altname": null,
+      "victims": 8
+    },
+    {
+      "group": "skira",
+      "altname": null,
+      "victims": 8
+    },
+    {
+      "group": "vanhelsing",
+      "altname": null,
+      "victims": 8
+    },
+    {
+      "group": "xpl0itrs",
+      "altname": null,
+      "victims": 8
+    },
+    {
+      "group": "0mega",
+      "altname": null,
+      "victims": 7
+    },
+    {
+      "group": "bert",
+      "altname": null,
+      "victims": 7
+    },
+    {
+      "group": "chort",
+      "altname": null,
+      "victims": 7
+    },
+    {
+      "group": "cyclops",
+      "altname": null,
+      "victims": 7
+    },
+    {
+      "group": "helix",
+      "altname": "UNC7761",
+      "victims": 7
+    },
+    {
+      "group": "karma",
+      "altname": null,
+      "victims": 7
+    },
+    {
+      "group": "malekteam",
+      "altname": null,
+      "victims": 7
+    },
+    {
+      "group": "pay2key",
+      "altname": null,
+      "victims": 7
+    },
+    {
+      "group": "wallstreet",
+      "altname": null,
+      "victims": 7
+    },
+    {
+      "group": "arkana",
+      "altname": null,
+      "victims": 6
+    },
+    {
+      "group": "cipherforce",
+      "altname": null,
+      "victims": 6
+    },
+    {
+      "group": "dataleak",
+      "altname": null,
+      "victims": 6
+    },
+    {
+      "group": "netrunner",
+      "altname": null,
+      "victims": 6
+    },
+    {
+      "group": "rancoz",
+      "altname": null,
+      "victims": 6
+    },
+    {
+      "group": "redalert",
+      "altname": null,
+      "victims": 6
+    },
+    {
+      "group": "runsomewares",
+      "altname": null,
+      "victims": 6
+    },
+    {
+      "group": "secp0",
+      "altname": "secpo",
+      "victims": 6
+    },
+    {
+      "group": "silent",
+      "altname": "",
+      "victims": 6
+    },
+    {
+      "group": "yanluowang",
+      "altname": null,
+      "victims": 6
+    },
+    {
+      "group": "0day syndicate",
+      "altname": null,
+      "victims": 5
+    },
+    {
+      "group": "atomsilo",
+      "altname": null,
+      "victims": 5
+    },
+    {
+      "group": "barracuda",
+      "altname": null,
+      "victims": 5
+    },
+    {
+      "group": "bqtlock",
+      "altname": null,
+      "victims": 5
+    },
+    {
+      "group": "donex",
+      "altname": null,
+      "victims": 5
+    },
+    {
+      "group": "gdlockersec",
+      "altname": null,
+      "victims": 5
+    },
+    {
+      "group": "kryptos",
+      "altname": null,
+      "victims": 5
+    },
+    {
+      "group": "lockbit",
+      "altname": null,
+      "victims": 5
+    },
+    {
+      "group": "lockdata",
+      "altname": null,
+      "victims": 5
+    },
+    {
+      "group": "minteye",
+      "altname": null,
+      "victims": 5
+    },
+    {
+      "group": "ms13089",
+      "altname": "ms13-089",
+      "victims": 5
+    },
+    {
+      "group": "orca",
+      "altname": null,
+      "victims": 5
+    },
+    {
+      "group": "pandora",
+      "altname": null,
+      "victims": 5
+    },
+    {
+      "group": "prinzeugen",
+      "altname": null,
+      "victims": 5
+    },
+    {
+      "group": "projectrelic",
+      "altname": null,
+      "victims": 5
+    },
+    {
+      "group": "raznatovic",
+      "altname": null,
+      "victims": 5
+    },
+    {
+      "group": "ulose",
+      "altname": null,
+      "victims": 5
+    },
+    {
+      "group": "valencialeaks",
+      "altname": "Valencia",
+      "victims": 5
+    },
+    {
+      "group": "blacktor",
+      "altname": null,
+      "victims": 4
+    },
+    {
+      "group": "desolator",
+      "altname": null,
+      "victims": 4
+    },
+    {
+      "group": "emperador",
+      "altname": null,
+      "victims": 4
+    },
+    {
+      "group": "exitium",
+      "altname": null,
+      "victims": 4
+    },
+    {
+      "group": "gammax",
+      "altname": null,
+      "victims": 4
+    },
+    {
+      "group": "linkc",
+      "altname": null,
+      "victims": 4
+    },
+    {
+      "group": "ransomcortex",
+      "altname": null,
+      "victims": 4
+    },
+    {
+      "group": "satanlockv2",
+      "altname": null,
+      "victims": 4
+    },
+    {
+      "group": "shaoleaks",
+      "altname": null,
+      "victims": 4
+    },
+    {
+      "group": "triple x",
+      "altname": "triplex",
+      "victims": 4
+    },
+    {
+      "group": "blackshadow",
+      "altname": null,
+      "victims": 3
+    },
+    {
+      "group": "bluebox",
+      "altname": null,
+      "victims": 3
+    },
+    {
+      "group": "bonacigroup",
+      "altname": null,
+      "victims": 3
+    },
+    {
+      "group": "d1r",
+      "altname": null,
+      "victims": 3
+    },
+    {
+      "group": "ethics",
+      "altname": null,
+      "victims": 3
+    },
+    {
+      "group": "grief",
+      "altname": null,
+      "victims": 3
+    },
+    {
+      "group": "hellogookie",
+      "altname": null,
+      "victims": 3
+    },
+    {
+      "group": "iah6477",
+      "altname": null,
+      "victims": 3
+    },
+    {
+      "group": "mnt6",
+      "altname": null,
+      "victims": 3
+    },
+    {
+      "group": "noname",
+      "altname": null,
+      "victims": 3
+    },
+    {
+      "group": "ragnarok",
+      "altname": null,
+      "victims": 3
+    },
+    {
+      "group": "rebornvc",
+      "altname": "RansomedVC2",
+      "victims": 3
+    },
+    {
+      "group": "timc",
+      "altname": null,
+      "victims": 3
+    },
+    {
+      "group": "trisec",
+      "altname": null,
+      "victims": 3
+    },
+    {
+      "group": "vanirgroup",
+      "altname": null,
+      "victims": 3
+    },
+    {
+      "group": "vendetta",
+      "altname": null,
+      "victims": 3
+    },
+    {
+      "group": "yurei",
+      "altname": null,
+      "victims": 3
+    },
+    {
+      "group": "blackfield",
+      "altname": null,
+      "victims": 2
+    },
+    {
+      "group": "bluewhale",
+      "altname": null,
+      "victims": 2
+    },
+    {
+      "group": "cry0",
+      "altname": null,
+      "victims": 2
+    },
+    {
+      "group": "cryptnet",
+      "altname": null,
+      "victims": 2
+    },
+    {
+      "group": "kittykatkrew",
+      "altname": null,
+      "victims": 2
+    },
+    {
+      "group": "lunalock",
+      "altname": null,
+      "victims": 2
+    },
+    {
+      "group": "nightsky",
+      "altname": null,
+      "victims": 2
+    },
+    {
+      "group": "osiris",
+      "altname": null,
+      "victims": 2
+    },
+    {
+      "group": "prolock",
+      "altname": null,
+      "victims": 2
+    },
+    {
+      "group": "redact",
+      "altname": null,
+      "victims": 2
+    },
+    {
+      "group": "sensayq",
+      "altname": null,
+      "victims": 2
+    },
+    {
+      "group": "the green blood group",
+      "altname": null,
+      "victims": 2
+    },
+    {
+      "group": "zerolockersec",
+      "altname": null,
+      "victims": 2
+    },
+    {
+      "group": "crosslock",
+      "altname": null,
+      "victims": 1
+    },
+    {
+      "group": "eclipse",
+      "altname": null,
+      "victims": 1
+    },
+    {
+      "group": "hades",
+      "altname": null,
+      "victims": 1
+    },
+    {
+      "group": "insane",
+      "altname": null,
+      "victims": 1
+    },
+    {
+      "group": "kyber",
+      "altname": null,
+      "victims": 1
+    },
+    {
+      "group": "la_piovra",
+      "altname": null,
+      "victims": 1
+    },
+    {
+      "group": "loki",
+      "altname": null,
+      "victims": 1
+    },
+    {
+      "group": "notpetya",
+      "altname": null,
+      "victims": 1
+    },
+    {
+      "group": "playboy",
+      "altname": null,
+      "victims": 1
+    },
+    {
+      "group": "ranstreet",
+      "altname": null,
+      "victims": 1
+    },
+    {
+      "group": "reynolds",
+      "altname": null,
+      "victims": 1
+    },
+    {
+      "group": "robinhood",
+      "altname": null,
+      "victims": 1
+    },
+    {
+      "group": "sicarii",
+      "altname": null,
+      "victims": 1
+    },
+    {
+      "group": "slug",
+      "altname": null,
+      "victims": 1
+    },
+    {
+      "group": "sovcali",
+      "altname": null,
+      "victims": 1
+    },
+    {
+      "group": "synack",
+      "altname": null,
+      "victims": 1
+    },
+    {
+      "group": "walocker",
+      "altname": null,
+      "victims": 1
+    },
+    {
+      "group": "zerotolerance",
+      "altname": null,
+      "victims": 1
+    },
+    {
+      "group": "0apt",
+      "altname": null,
+      "victims": 0
+    },
+    {
+      "group": "abrahams_ax",
+      "altname": null,
+      "victims": 0
+    },
+    {
+      "group": "adminlocker",
+      "altname": null,
+      "victims": 0
+    },
+    {
+      "group": "againstthewest",
+      "altname": null,
+      "victims": 0
+    },
+    {
+      "group": "agl0bgvycg",
+      "altname": null,
+      "victims": 0
+    },
+    {
+      "group": "ako",
+      "altname": null,
+      "victims": 0
+    },
+    {
+      "group": "aptlock",
+      "altname": null,
+      "victims": 0
+    },
+    {
+      "group": "avos",
+      "altname": null,
+      "victims": 0
+    },
+    {
+      "group": "aware",
+      "altname": null,
+      "victims": 0
+    },
+    {
+      "group": "aztroteam",
+      "altname": null,
+      "victims": 0
+    },
+    {
+      "group": "babyduck",
+      "altname": null,
+      "victims": 0
+    },
+    {
+      "group": "bluelocker",
+      "altname": null,
+      "victims": 0
+    },
+    {
+      "group": "bluesky",
+      "altname": null,
+      "victims": 0
+    },
+    {
+      "group": "chilelocker",
+      "altname": null,
+      "victims": 0
+    },
+    {
+      "group": "contfr",
+      "altname": "",
+      "victims": 0
+    },
+    {
+      "group": "cooming",
+      "altname": null,
+      "victims": 0
+    },
+    {
+      "group": "crylock",
+      "altname": null,
+      "victims": 0
+    },
+    {
+      "group": "dagonlocker",
+      "altname": null,
+      "victims": 0
+    },
+    {
+      "group": "darkangels",
+      "altname": null,
+      "victims": 0
+    },
+    {
+      "group": "darkbit",
+      "altname": null,
+      "victims": 0
+    },
+    {
+      "group": "darkmatter",
+      "altname": null,
+      "victims": 0
+    },
+    {
+      "group": "datakeeper",
+      "altname": null,
+      "victims": 0
+    },
+    {
+      "group": "diavol",
+      "altname": null,
+      "victims": 0
+    },
+    {
+      "group": "dread",
+      "altname": null,
+      "victims": 0
+    },
+    {
+      "group": "dysphor1a",
+      "altname": null,
+      "victims": 0
+    },
+    {
+      "group": "ech0raix",
+      "altname": null,
+      "victims": 0
+    },
+    {
+      "group": "entropy",
+      "altname": null,
+      "victims": 0
+    },
+    {
+      "group": "ep918",
+      "altname": null,
+      "victims": 0
+    },
+    {
+      "group": "esxiargs",
+      "altname": null,
+      "victims": 0
+    },
+    {
+      "group": "exorcist",
+      "altname": null,
+      "victims": 0
+    },
+    {
+      "group": "fletchen",
+      "altname": null,
+      "victims": 0
+    },
+    {
+      "group": "fsteam",
+      "altname": null,
+      "victims": 0
+    },
+    {
+      "group": "goddamn ransomwhere",
+      "altname": null,
+      "victims": 0
+    },
+    {
+      "group": "haron",
+      "altname": null,
+      "victims": 0
+    },
+    {
+      "group": "hellokitty",
+      "altname": null,
+      "victims": 0
+    },
+    {
+      "group": "holyghost",
+      "altname": null,
+      "victims": 0
+    },
+    {
+      "group": "hotarus",
+      "altname": null,
+      "victims": 0
+    },
+    {
+      "group": "lilith",
+      "altname": null,
+      "victims": 0
+    },
+    {
+      "group": "lockbit3_fs",
+      "altname": null,
+      "victims": 0
+    },
+    {
+      "group": "lolnek",
+      "altname": null,
+      "victims": 0
+    },
+    {
+      "group": "madcat",
+      "altname": null,
+      "victims": 0
+    },
+    {
+      "group": "mamona",
+      "altname": null,
+      "victims": 0
+    },
+    {
+      "group": "mbc",
+      "altname": null,
+      "victims": 0
+    },
+    {
+      "group": "montage",
+      "altname": null,
+      "victims": 0
+    },
+    {
+      "group": "mortar",
+      "altname": null,
+      "victims": 0
+    },
+    {
+      "group": "mydecryptor",
+      "altname": null,
+      "victims": 0
+    },
+    {
+      "group": "n3tworm",
+      "altname": null,
+      "victims": 0
+    },
+    {
+      "group": "nasirsecurity",
+      "altname": null,
+      "victims": 0
+    },
+    {
+      "group": "nblock",
+      "altname": null,
+      "victims": 0
+    },
+    {
+      "group": "nemty",
+      "altname": null,
+      "victims": 0
+    },
+    {
+      "group": "nevada",
+      "altname": null,
+      "victims": 0
+    },
+    {
+      "group": "onepercent",
+      "altname": null,
+      "victims": 0
+    },
+    {
+      "group": "payday",
+      "altname": null,
+      "victims": 0
+    },
+    {
+      "group": "prometheus",
+      "altname": null,
+      "victims": 0
+    },
+    {
+      "group": "promptlock",
+      "altname": null,
+      "victims": 0
+    },
+    {
+      "group": "qlocker",
+      "altname": null,
+      "victims": 0
+    },
+    {
+      "group": "rabbithole",
+      "altname": null,
+      "victims": 0
+    },
+    {
+      "group": "ramp",
+      "altname": null,
+      "victims": 0
+    },
+    {
+      "group": "ranion",
+      "altname": null,
+      "victims": 0
+    },
+    {
+      "group": "ransombay",
+      "altname": "",
+      "victims": 0
+    },
+    {
+      "group": "ransomcartel",
+      "altname": null,
+      "victims": 0
+    },
+    {
+      "group": "ranzy",
+      "altname": null,
+      "victims": 0
+    },
+    {
+      "group": "rransom",
+      "altname": null,
+      "victims": 0
+    },
+    {
+      "group": "section9",
+      "altname": null,
+      "victims": 0
+    },
+    {
+      "group": "sevyware",
+      "altname": null,
+      "victims": 0
+    },
+    {
+      "group": "shadow",
+      "altname": null,
+      "victims": 0
+    },
+    {
+      "group": "shiba",
+      "altname": null,
+      "victims": 0
+    },
+    {
+      "group": "shinysp1d3r",
+      "altname": "ShinySpider",
+      "victims": 0
+    },
+    {
+      "group": "solidbit",
+      "altname": null,
+      "victims": 0
+    },
+    {
+      "group": "sugar",
+      "altname": null,
+      "victims": 0
+    },
+    {
+      "group": "the syndicate",
+      "altname": null,
+      "victims": 0
+    },
+    {
+      "group": "thegreenbloodgroup",
+      "altname": null,
+      "victims": 0
+    },
+    {
+      "group": "tommyleaks",
+      "altname": null,
+      "victims": 0
+    },
+    {
+      "group": "u-bomb",
+      "altname": null,
+      "victims": 0
+    },
+    {
+      "group": "unknown",
+      "altname": null,
+      "victims": 0
+    },
+    {
+      "group": "vfokx",
+      "altname": null,
+      "victims": 0
+    },
+    {
+      "group": "x001xs",
+      "altname": null,
+      "victims": 0
+    },
+    {
+      "group": "xinof",
+      "altname": null,
+      "victims": 0
+    },
+    {
+      "group": "xp95",
+      "altname": null,
+      "victims": 0
+    },
+    {
+      "group": "zeon",
+      "altname": null,
+      "victims": 0
+    }
+  ],
+  "details": [
+    {
+      "group": "qilin",
+      "altname": null,
+      "victimsTotal": 2195,
+      "description": "Qilin ransomware was first observed in July of 2022. Qilin Ransomware is written in Golang and supports multiple encryption modes; all of which are controlled by the operator. Qilin actors practice double extortion – demanding payment for a decryptor, as well as for the non-release of stolen data.",
+      "firstSeen": "2022-10-08T05:43:10.034028+00:00",
+      "lastSeen": "2026-08-21T14:55:56.695559+00:00",
+      "leakSiteCount": 4
+    },
+    {
+      "group": "lockbit3",
+      "altname": null,
+      "victimsTotal": 2016,
+      "description": "LockBit, also recognized as LockBit Black or Lockbit 3.0, is one of the largest Ransomware Groups in the world and has orchestrated extensive cyberattacks across various industries, impacting thousands of organizations globally with its relentless and adaptive strategies.",
+      "firstSeen": "2021-12-26T00:00:00+00:00",
+      "lastSeen": "2025-12-05T10:16:00+00:00",
+      "leakSiteCount": 38
+    },
+    {
+      "group": "akira",
+      "altname": null,
+      "victimsTotal": 1572,
+      "description": "The Akira ransomware group is said to have emerged in March 2023, and there's much speculation about its ties to the former CONTI ransomware group.<br> <br> It's worth noting that with the end of CONTI's operation, several affiliates migrated to independent campaigns such as Royal, BlackBasta, and others.<br> <br> According to some reports, Akira affiliates also work with other ransomware operations, such as Snatch and BlackByte, as an open directory of tools used by an Akira operator was identified, which also had connections to the Snatch ransomware.<br> <br> The first version of the Akira ransomware was written in C++ and appended files with the '.akira' extension, creating a ransom note named 'akira_readme.txt,' partially based on the Conti V2 source code. However, on June 29, 2023, a decryptor for this version was reportedly released by Avast.<br> <br> Subsequently, a version was released that fixed the decryption flaw on July 2, 2023. Since then, the new version is said to be written in Rust, this time called 'megazord.exe,' and it changes the extension to '.powerranges' for encrypted files.<br> <br> Most of Akira's initial access vectors use brute-force attempts on Cisco VPN devices (which use single-factor authentication only).<br> Additionally, exploitation of CVEs: CVE-2019-6693 and CVE-2022-40684 for initial access has been identified.<BR>Source: https://github.com/crocodyli/ThreatActors-TTPs",
+      "firstSeen": "2023-04-12T00:00:00+00:00",
+      "lastSeen": "2026-08-21T00:00:00+00:00",
+      "leakSiteCount": 2
+    },
+    {
+      "group": "play",
+      "altname": null,
+      "victimsTotal": 1304,
+      "description": "Initially observed in June 2022, the Play ransomware (a.k.a PlayCrypt) operates through double extortion, targeting numerous organizations in Latin America. Its Initial Access method is quite similar to other ransomwares, involving attacks such as Phishing, Exposed Services to the Internet, and Valid Account compromises.<br> <br> On April 19, 2023, the security company Symantec published two new tools developed by the Play group. These tools allow the malicious actor to enumerate and exfiltrate data from the internal network. The post mentions the following: 'Play threat actors use the .NET infostealer to enumerate software and services via WMI, WinRM, Remote Registry, and Remote Service. The malware checks for the existence of security and backup software, as well as remote administration tools and other programs, saving the information in .CSV files that are compressed into a .ZIP file for later manual exfiltration by threat actors.'Source: https://github.com/crocodyli/ThreatActors-TTPs",
+      "firstSeen": "2022-11-26T19:33:43.668769+00:00",
+      "lastSeen": "2026-08-20T17:27:46.550664+00:00",
+      "leakSiteCount": 4
+    },
+    {
+      "group": "clop",
+      "altname": "Cl0p",
+      "victimsTotal": 1300,
+      "description": "The ransomware group known as Cl0p is a variant of a previously known strain dubbed CryptoMix. It is worth noting that this variant was delivered as the final payload in a phishing campaign in 2019 and was exclusively financially motivated, with attacks carried out by the threat actors TA505.<br> <br> At that time, malicious actors sent phishing emails that led to a macro-enabled document that would drop a loader called 'Get2.' After gaining an initial foothold in the system or infrastructure, the actors began using reconnaissance, lateral movement, and exfiltration techniques to prepare for the deployment of the ransomware.<br> <br> After the execution of the ransomware, Cl0p appends the extension '.clop' to the end of files, or other types of extensions such as '.CIIp, .Cllp, and .C_L_O_P,' as well as different versions of the ransom note that were also observed after encryption. Depending on the variant, any of the ransom text files were created with names like 'ClopReadMe.txt, README_README.txt, Cl0pReadMe.txt, and READ_ME_!!!.TXT.'<br> <br> The Clop operation has shifted from delivering its final payload via phishing and has begun initiating attacks using vulnerabilities that resulted in the exploitation and infection of victims' infrastructures.<BR>Source: https://github.com/crocodyli/ThreatActors-TTPs",
+      "firstSeen": "2020-03-13T00:00:00+00:00",
+      "lastSeen": "2026-08-14T09:15:06+00:00",
+      "leakSiteCount": 3
+    },
+    {
+      "group": "lockbit2",
+      "altname": null,
+      "victimsTotal": 1002,
+      "description": "LockBit 2.0 is the second major iteration of the LockBit RaaS platform, launched in mid-2021, introducing automated domain-wide encryption via Active Directory Group Policy and claiming the fastest encryption speed among ransomware families, accounting for 46% of ransomware breach events in early 2022.",
+      "firstSeen": "2021-09-09T23:46:53.997398+00:00",
+      "lastSeen": "2022-06-28T14:02:38.510305+00:00",
+      "leakSiteCount": 5
+    },
+    {
+      "group": "incransom",
+      "altname": "Inc Ransom",
+      "victimsTotal": 912,
+      "description": "INC Ransom is a prolific ransomware-as-a-service operation active since July 2023 that systematically targets healthcare, government, education, and manufacturing sectors in North America and Europe, having posted over 200 victims in 2025 alone with no sector off-limits.",
+      "firstSeen": "2023-08-06T16:58:36.719909+00:00",
+      "lastSeen": "2026-08-19T11:11:00+00:00",
+      "leakSiteCount": 7
+    },
+    {
+      "group": "ransomhub",
+      "altname": null,
+      "victimsTotal": 842,
+      "description": "The group emerged in mid-February 2024 and has already listed several organizations as alleged victims of their attacks, resulting from extortion through encryption and data leaks.<br> <br> The announcement of the sale of the new Ransomware-as-a-Service (RaaS) by RansomHub was published on one of the Russian-origin forums used by cybercrime to advertise malicious services, known as RAMP4U (or RAMP). A user with the nickname and persona of 'koley' announced the affiliate program on February 2, 2024.<br> <br> In the new RaaS announcement, it was mentioned that the money laundering operation of the paid ransoms is the responsibility of the affiliate. This means that all communication and sending of the decryptor to the victim are done through chat. The split of this RaaS would be 90% of the value for the affiliate and 10% for the developer, who in this case would be the persona of Koley.<br> <br> Furthermore, according to the publication, the ransomware payload is written in Golang language, uses the asymmetric algorithm based on x25519, and encryption algorithms AES256, ChaCha20, and xChaCha20, standing out for its speed. The encryption is obfuscated using AST.<br> <br> The payload would support network propagation and encryption of data both in secure and local mode. According to Koley, the ransomware is designed to operate on platforms such as Windows, Linux, and ESXi, as well as other architectures such as ARM and MIPS.<br> <br> As pointed out by the panel and already highlighted by the intelligence team, Koley stated that the panel uses a .onion domain, allowing the affiliate to organize and manage targets and chat rooms, view access logs, automatically respond when offline, and create private blog pages.<BR>Source: https://github.com/crocodyli/ThreatActors-TTPs",
+      "firstSeen": "2023-03-09T00:00:00+00:00",
+      "lastSeen": "2025-03-31T16:17:39+00:00",
+      "leakSiteCount": 3
+    },
+    {
+      "group": "thegentlemen",
+      "altname": "Storm-2697",
+      "victimsTotal": 778,
+      "description": "The Gentlemen is a RaaS group that emerged in July–August 2025, rapidly claiming over 320 victims across 17+ countries by offering affiliates a 90% revenue share, deploying a Go-based locker against Windows, Linux, NAS, and BSD systems; a compromised C2 server in 2026 revealed more than 1,570 linked victims.",
+      "firstSeen": "2023-02-28T06:59:00+00:00",
+      "lastSeen": "2026-08-22T00:00:00+00:00",
+      "leakSiteCount": 2
+    },
+    {
+      "group": "alphv",
+      "altname": "blackcat",
+      "victimsTotal": 731,
+      "description": "The operators of the ALPHV/BlackCat ransomware began their activity in December 2021, making posts on Dark Web forums to promote their affiliate program, offering other actors the opportunity to engage in a 'new type of ransomware family' developed from scratch using the Rust programming language.<BR> <BR> Some clear evidence indicates that the actors behind this new ransomware are not new to cybercrime, and there were links to other affiliate programs such as DarkSide, BlackMatter, and REvil. (After several attacks against large companies, these groups faced pressure and arrests, necessitating the termination of their operations).<BR> <BR> As a security measure, the operators of ALPHV implemented the requirement for the execution of the ransomware payload by providing an 'access token,' which is supplied by the owners of the Ransomware-as-a-Service to the affiliate. This token is added to the victim's ransom note so that they can contact the threat actor responsible for encrypting the data.<BR> <BR> ALPHV affiliates employ double and triple extortion techniques, meaning the publication of the company's name on leak sites, threats of data leakage, and lastly, threats of DDoS attacks against the organization.<BR>Source: https://github.com/crocodyli/ThreatActors-TTPs",
+      "firstSeen": "2021-09-09T23:46:53.997398+00:00",
+      "lastSeen": "2024-03-03T15:40:36.123456+00:00",
+      "leakSiteCount": 4
+    },
+    {
+      "group": "dragonforce",
+      "altname": null,
+      "victimsTotal": 641,
+      "description": "DragonForce is a major ransomware-as-a-service operation first observed in August 2023 that launched a formal affiliate program offering 80% revenue share, then rebranded as a \"ransomware cartel\" in 2025, gaining notoriety for high-profile attacks on UK retailers Marks & Spencer, Co-op, and Harrods.",
+      "firstSeen": "2022-10-20T21:51:27.146973+00:00",
+      "lastSeen": "2026-08-21T06:04:52.978569+00:00",
+      "leakSiteCount": 4
+    },
+    {
+      "group": "bianlian",
+      "altname": null,
+      "victimsTotal": 552,
+      "description": "BianLian ransomware operations began in late 2021. The group practices multi-pronged extortion, demanding payment for a decryptor, as well as the non-release of stolen data. The ransomware group hosts a public, TOR-based, blog to post victim identities and stolen data. Somewhat unique to BianLian at the time of their launch was their inclusion of an I2P mirror for their blog.",
+      "firstSeen": "2022-07-14T00:20:23.051488+00:00",
+      "lastSeen": "2025-03-31T15:57:33.563153+00:00",
+      "leakSiteCount": 3
+    },
+    {
+      "group": "safepay",
+      "altname": null,
+      "victimsTotal": 547,
+      "description": "SafePay emerged in September 2024 as a rapidly growing ransomware operation that explicitly disavows the RaaS model and manages all operations internally, claiming over 300 victims worldwide by mid-2025 with a high-profile early attack against UK telematics firm Microlise stealing 1.2 TB of data.",
+      "firstSeen": "2023-11-10T19:13:13+00:00",
+      "lastSeen": "2026-08-03T18:29:12.402481+00:00",
+      "leakSiteCount": 5
+    },
+    {
+      "group": "blackbasta",
+      "altname": null,
+      "victimsTotal": 523,
+      "description": "\"Black Basta\" is a new ransomware strain discovered during April 2022 - looks in dev since at least early February 2022 - and due to their ability to quickly amass new victims and the style of their negotiations, this is likely not a new operation but rather a rebrand of a previous top-tier ransomware gang that brought along their affiliates.\n",
+      "firstSeen": "2022-04-26T21:12:12.555173+00:00",
+      "lastSeen": "2025-01-11T11:23:24.949208+00:00",
+      "leakSiteCount": 3
+    },
+    {
+      "group": "medusa",
+      "altname": null,
+      "victimsTotal": 517,
+      "description": "Medusa is a ransomware-as-a-service operation active since June 2021 that has targeted over 300 victims across critical infrastructure sectors including healthcare, education, legal, and manufacturing using double-extortion, with attacks surging 42% between 2023 and 2024 and a formal CISA advisory issued in early 2025.",
+      "firstSeen": "2023-01-11T15:05:52.348863+00:00",
+      "lastSeen": "2026-02-13T07:04:35+00:00",
+      "leakSiteCount": 11
+    }
+  ]
+}
