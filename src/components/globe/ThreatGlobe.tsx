@@ -100,6 +100,11 @@ function ThreatGlobe({ victims, c2, scanners, showRansomware, showC2, showScan, 
   const [Globe, setGlobe] = useState<any>(null);
   const [land, setLand] = useState<any[]>([]);
   const [hover, setHover] = useState<string | null>(null);
+  // Software rendering (no GPU: SwiftShader, llvmpipe, remote desktops, some CI
+  // browsers) cannot sustain a 60fps WebGL scene and would pin a CPU core. In
+  // that mode we draw on demand instead of continuously.
+  const [lowPower, setLowPower] = useState(false);
+  const lowPowerRef = useRef(false);
 
   const [failed, setFailed] = useState<string | null>(null);
   const now = useNow(60_000);
@@ -108,19 +113,41 @@ function ThreatGlobe({ victims, c2, scanners, showRansomware, showC2, showScan, 
 
   useEffect(() => {
     let alive = true;
-    const probe = document.createElement("canvas");
-    const hasWebGL = !!(probe.getContext("webgl2") || probe.getContext("webgl"));
-    if (!hasWebGL) setTimeout(() => alive && setFailed("WebGL is unavailable in this browser, so the 3D globe can't render. The live stream and panels still work."), 0);
-    else
+    // The 3D library is ~600 KB gzipped. The dashboard (stream, stats, panels) is
+    // server-rendered and usable first; the globe is a progressive enhancement
+    // that starts loading once the page has settled, or at once on any touch,
+    // click or key press. A static placeholder fills the space meanwhile.
+    let started = false;
+    let timer: ReturnType<typeof setTimeout> | undefined;
+    const start = () => {
+      if (started || !alive) return;
+      started = true;
+      const probe = document.createElement("canvas");
+      const hasWebGL = !!(probe.getContext("webgl2") || probe.getContext("webgl"));
+      if (!hasWebGL) {
+        setFailed("WebGL is unavailable in this browser, so the 3D globe can't render. The live stream and panels still work.");
+        return;
+      }
       import("react-globe.gl")
         .then((m) => alive && setGlobe(() => m.default))
         .catch((e) => alive && setFailed(`Globe failed to load: ${e?.message ?? e}`));
-    fetch(LAND_URL)
-      .then((r) => r.json())
-      .then((g) => alive && setLand(g.features ?? []))
-      .catch(() => {});
+      fetch(LAND_URL)
+        .then((r) => r.json())
+        .then((g) => alive && setLand(g.features ?? []))
+        .catch(() => {});
+    };
+    const schedule = () => {
+      timer = setTimeout(start, 3000);
+    };
+    if (document.readyState === "complete") schedule();
+    else window.addEventListener("load", schedule, { once: true });
+    const events = ["pointerdown", "keydown", "wheel", "touchstart"] as const;
+    events.forEach((e) => window.addEventListener(e, start, { once: true, passive: true }));
     return () => {
       alive = false;
+      clearTimeout(timer);
+      window.removeEventListener("load", schedule);
+      events.forEach((e) => window.removeEventListener(e, start));
     };
   }, []);
 
@@ -137,7 +164,18 @@ function ThreatGlobe({ victims, c2, scanners, showRansomware, showC2, showScan, 
     if (!g) return;
     const c = g.controls();
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    c.autoRotate = !reduce;
+    let software = false;
+    try {
+      const gl = g.renderer().getContext() as WebGLRenderingContext;
+      const ext = gl.getExtension("WEBGL_debug_renderer_info");
+      const name = ext ? String(gl.getParameter(ext.UNMASKED_RENDERER_WEBGL)) : "";
+      software = /swiftshader|llvmpipe|software|basic render|softpipe/i.test(name);
+    } catch {
+      /* unknown renderer: assume a GPU */
+    }
+    lowPowerRef.current = software;
+    if (software) setLowPower(true);
+    c.autoRotate = !reduce && !software;
     c.autoRotateSpeed = 0.3;
     // react-globe.gl uses TrackballControls: smoothness comes from the dynamic
     // damping factor (lower = longer glide) and a gentle zoom step per wheel tick.
@@ -147,7 +185,7 @@ function ThreatGlobe({ victims, c2, scanners, showRansomware, showC2, showScan, 
     c.zoomSpeed = 0.45;
     c.minDistance = 150;
     c.maxDistance = 500;
-    g.renderer().setPixelRatio(Math.min(window.devicePixelRatio || 1, window.innerWidth < 1280 ? 1.25 : 1.5));
+    g.renderer().setPixelRatio(software ? 1 : Math.min(window.devicePixelRatio || 1, window.innerWidth < 1280 ? 1.25 : 1.5));
     const narrow = window.innerWidth < 1280;
     g.pointOfView({ lat: 25, lng: 10, altitude: narrow ? 2.05 : 1.75 }, 0);
 
@@ -156,20 +194,30 @@ function ThreatGlobe({ victims, c2, scanners, showRansomware, showC2, showScan, 
     let resume: ReturnType<typeof setTimeout> | undefined;
     // Hover raycasting against ~170 polygons on every mouse move is the main
     // CPU cost while dragging/zooming, so it is switched off for the gesture.
+    let idle: ReturnType<typeof setTimeout> | undefined;
+    const sleep = () => {
+      clearTimeout(idle);
+      if (software) idle = setTimeout(() => g.pauseAnimation(), 1500);
+    };
     const pause = () => {
       c.autoRotate = false;
       clearTimeout(resume);
+      clearTimeout(idle);
+      if (software) g.resumeAnimation();
     };
     const later = () => {
       clearTimeout(resume);
-      if (!reduce) resume = setTimeout(() => (c.autoRotate = true), 8000);
+      if (software) sleep();
+      else if (!reduce) resume = setTimeout(() => (c.autoRotate = true), 8000);
     };
+    if (software) idle = setTimeout(() => g.pauseAnimation(), 2500); // first frames, then rest
     c.addEventListener("start", pause);
     c.addEventListener("end", later);
     return () => {
       clearTimeout(resume);
       c.removeEventListener("start", pause);
       c.removeEventListener("end", later);
+      clearTimeout(idle);
     };
   }, [Globe]);
 
@@ -331,10 +379,10 @@ function ThreatGlobe({ victims, c2, scanners, showRansomware, showC2, showScan, 
 
   const [cursor, setCursor] = useState(0);
   useEffect(() => {
-    if (sequence.length === 0) return;
+    if (sequence.length === 0 || lowPower) return;
     const t = setInterval(() => setCursor((c) => c + 1), 2200);
     return () => clearInterval(t);
-  }, [sequence.length]);
+  }, [sequence.length, lowPower]);
 
   const active = useMemo(() => {
     const n = sequence.length;
@@ -384,13 +432,33 @@ function ThreatGlobe({ victims, c2, scanners, showRansomware, showC2, showScan, 
     return out;
   }, [active, freshIds]);
 
+  // In low-power mode the loop is paused; render a few frames after any change.
+  useEffect(() => {
+    const g = globeRef.current;
+    if (!g || !lowPowerRef.current) return;
+    g.resumeAnimation();
+    const t = setTimeout(() => g.pauseAnimation(), 1500);
+    return () => clearTimeout(t);
+  }, [capColor, points, arcs, rings, size, focus]);
+
   return (
     <div
       ref={wrapRef}
       className="dash-globe absolute inset-x-0 top-[var(--hdr)] bottom-[var(--sheet)] xl:bottom-[var(--stats)] touch-none">
       {!Globe && (
-        <div className="absolute inset-0 grid place-items-center text-xs text-[var(--muted-foreground)] pointer-events-none">
-          {failed ?? "Loading globe…"}
+        <div className="absolute inset-0 grid place-items-center pointer-events-none" aria-live="polite">
+          {/* Static stand-in for the globe: same size and glow, no JS cost. */}
+          <div
+            aria-hidden
+            className="rounded-full"
+            style={{
+              width: "min(70%, 70vh, 520px)",
+              aspectRatio: "1",
+              background: "radial-gradient(circle at 38% 34%, #1a1d24 0%, #0b0c10 55%, #050608 100%)",
+              boxShadow: "0 0 80px rgba(255,60,60,0.35), inset 0 0 40px rgba(255,60,60,0.12)",
+            }}
+          />
+          <p className="absolute bottom-4 text-xs text-[var(--muted-foreground)]">{failed ?? "Loading 3D globe…"}</p>
         </div>
       )}
       {Globe && (
