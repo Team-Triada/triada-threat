@@ -112,6 +112,9 @@ export type ThreatEvent = {
 
 export type ThreatSnapshot = {
   generatedAt: string;
+  // True for the trimmed copy embedded in the server-rendered page; the client
+  // replaces it with the full snapshot right after hydration.
+  slim?: boolean;
   events: ThreatEvent[];
   victims: Victim[];
   kev: KevItem[];

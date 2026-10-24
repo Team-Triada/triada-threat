@@ -1,5 +1,5 @@
 import Dashboard from "@/components/live/Dashboard";
-import { buildSnapshot } from "@/lib/live/snapshot";
+import { buildSnapshot, slimSnapshot } from "@/lib/live/snapshot";
 
 // Incremental static regeneration: the HTML ships with a recent snapshot already
 // inside it (no "Connecting..." flash, fast LCP), and is rebuilt in the
@@ -7,6 +7,7 @@ import { buildSnapshot } from "@/lib/live/snapshot";
 export const revalidate = 60;
 
 export default async function Home() {
-  const initial = await buildSnapshot().catch(() => null);
+  const full = await buildSnapshot().catch(() => null);
+  const initial = full ? slimSnapshot(full) : null;
   return <Dashboard initial={initial} />;
 }
