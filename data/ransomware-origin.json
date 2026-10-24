@@ -1,0 +1,86 @@
+{
+  "lockbit": {
+    "countryCode": "RU",
+    "note": "LockBit: FBI/NCA Operation Cronos (2024) named the lead administrator, LockBitSupp, as a Russian national"
+  },
+  "alphv": {
+    "countryCode": "RU",
+    "note": "Russian-speaking RaaS, widely assessed as a successor to DarkSide/BlackMatter (industry reporting)"
+  },
+  "blackcat": {
+    "countryCode": "RU",
+    "note": "Also known as ALPHV. Russian-speaking RaaS (industry reporting)"
+  },
+  "clop": {
+    "countryCode": "RU",
+    "note": "Russian-speaking group. US State Department Rewards for Justice offer (2023) cited possible links to a foreign government"
+  },
+  "cl0p": {
+    "countryCode": "RU",
+    "note": "Also spelled Clop. Russian-speaking group (industry reporting)"
+  },
+  "conti": {
+    "countryCode": "RU",
+    "note": "Leaked internal chats (2022) showed Russia-based operators"
+  },
+  "blackbasta": {
+    "countryCode": "RU",
+    "note": "Assessed Conti offshoot. Leaked chats (2025) pointed to Russia-based leadership"
+  },
+  "black basta": {
+    "countryCode": "RU",
+    "note": "Assessed Conti offshoot. Leaked chats (2025) pointed to Russia-based leadership"
+  },
+  "royal": {
+    "countryCode": "RU",
+    "note": "Assessed to include former Conti members (industry reporting)"
+  },
+  "hunters international": {
+    "countryCode": "RU",
+    "note": "Assessed rebrand of Hive, a Russian-speaking RaaS (industry reporting)"
+  },
+  "revil": {
+    "countryCode": "RU",
+    "note": "Russia's FSB announced arrests of REvil members in January 2022"
+  },
+  "ragnarlocker": {
+    "countryCode": null,
+    "note": "No consistent public attribution to a single nation"
+  },
+  "qilin": {
+    "countryCode": "RU",
+    "note": "Russian-speaking RaaS that recruits affiliates on Russian-language forums (industry reporting)"
+  },
+  "akira": {
+    "countryCode": "RU",
+    "note": "Industry reporting links its operators to former Conti members"
+  },
+  "medusa": {
+    "countryCode": null,
+    "note": "No consistent public attribution to a single nation"
+  },
+  "play": {
+    "countryCode": null,
+    "note": "No consistent public attribution to a single nation"
+  },
+  "rhysida": {
+    "countryCode": null,
+    "note": "No consistent public attribution to a single nation"
+  },
+  "spacebears": {
+    "countryCode": null,
+    "note": "No consistent public attribution to a single nation"
+  },
+  "lockbit3": {
+    "countryCode": "RU",
+    "note": "LockBit: FBI/NCA Operation Cronos (2024) named the lead administrator, LockBitSupp, as a Russian national"
+  },
+  "lockbit5": {
+    "countryCode": "RU",
+    "note": "LockBit: FBI/NCA Operation Cronos (2024) named the lead administrator, LockBitSupp, as a Russian national"
+  },
+  "lockbit5.0": {
+    "countryCode": "RU",
+    "note": "LockBit: FBI/NCA Operation Cronos (2024) named the lead administrator, LockBitSupp, as a Russian national"
+  }
+}
