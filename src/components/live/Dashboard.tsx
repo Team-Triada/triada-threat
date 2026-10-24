@@ -107,17 +107,15 @@ export default function Dashboard({ initial }: { initial: ThreatSnapshot | null 
       <LiveHeader snapshot={snapshot} error={error} loading={loading} nextAt={nextAt} layers={layers} onToggle={toggle} onRefresh={refresh} />
 
       <div
-        role="tablist"
+        role="group"
         aria-label="Dashboard sections"
         className="dash-tabs xl:hidden border-t border-[var(--border-strong)] bg-[rgba(12,13,17,0.98)]"
       >
         {tabs.map((t) => (
           <button
             key={t.id}
-            role="tab"
-            id={`tab-${t.id}`}
             aria-controls={`panel-${t.id}`}
-            aria-selected={tab === t.id}
+            aria-pressed={tab === t.id}
             onClick={() => setTab(t.id)}
             className={`text-[12px] font-medium tracking-wide transition-colors ${tab === t.id ? "text-white border-b-2 border-[var(--triada-cyan)]" : "text-[var(--muted-foreground)]"}`}
           >
@@ -133,8 +131,7 @@ export default function Dashboard({ initial }: { initial: ThreatSnapshot | null 
 
       <div
         id="panel-stream"
-        role="tabpanel"
-        aria-labelledby="tab-stream"
+        aria-label="Live threat stream"
         className={`dash-panel absolute z-10 pointer-events-none flex flex-col p-3 bg-[rgba(12,13,17,0.98)] xl:bg-transparent xl:p-4 xl:inset-x-auto xl:left-0 xl:top-[var(--hdr)] xl:bottom-0 xl:h-auto xl:w-[360px] ${tab === "stream" ? "" : "max-xl:hidden"}`}
       >
         <LiveStream
@@ -149,14 +146,13 @@ export default function Dashboard({ initial }: { initial: ThreatSnapshot | null 
 
       {snapshot && (
         <>
-          <aside
+          <section
             id="panel-insights"
-            role="tabpanel"
-            aria-labelledby="tab-insights"
+            aria-label="Insights"
             className={`dash-panel absolute z-10 pointer-events-none flex flex-col p-3 bg-[rgba(12,13,17,0.98)] xl:bg-transparent xl:p-4 xl:inset-x-auto xl:right-0 xl:top-[var(--hdr)] xl:bottom-0 xl:h-auto xl:w-[360px] ${tab === "insights" ? "" : "max-xl:hidden"} ${selection ? "xl:hidden" : ""}`}
           >
             <PulsePanel snapshot={snapshot} onSelectCountry={selectCountry} />
-          </aside>
+          </section>
           {selection && <DetailPanel selection={selection} snapshot={snapshot} onClose={() => setSelection(null)} />}
         </>
       )}
