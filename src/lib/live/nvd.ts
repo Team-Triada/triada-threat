@@ -75,7 +75,23 @@ async function loadRecentCves(hours: number): Promise<CveRecord[]> {
     .sort((a, b) => (b.cvss?.score ?? 0) - (a.cvss?.score ?? 0) || b.published.localeCompare(a.published));
 }
 
+// Single-CVE lookups are driven by whatever IDs visitors (or crawlers) request.
+// Cap them so a bot cycling random IDs cannot spend the whole NVD quota that the
+// dashboard's own refresh also relies on. Over the cap we answer "unknown".
+const LOOKUP_WINDOW_MS = 60_000;
+const LOOKUP_MAX = 30;
+let lookups: number[] = [];
+
+function allowLookup(): boolean {
+  const now = Date.now();
+  lookups = lookups.filter((t) => now - t < LOOKUP_WINDOW_MS);
+  if (lookups.length >= LOOKUP_MAX) return false;
+  lookups.push(now);
+  return true;
+}
+
 export async function fetchCve(id: string): Promise<CveRecord | null> {
+  if (!allowLookup()) return null;
   try {
     const data = await getJson<{ vulnerabilities?: RawCve[] }>(`${API}?cveId=${encodeURIComponent(id)}`, 3600, { headers: AUTH });
     const v = data.vulnerabilities?.[0];
