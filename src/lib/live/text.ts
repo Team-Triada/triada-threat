@@ -4,5 +4,6 @@ export function plain(s: string): string;
 export function plain(s: string | null | undefined): string | null;
 export function plain(s: string | null | undefined): string | null {
   if (s == null) return null;
-  return s.replace(/\s*[–—]\s*/g, " - ");
+  // No \s*-around-the-dash pattern here: it backtracks quadratically on long whitespace runs.
+  return s.replace(/[–—]/g, " - ").replace(/ {2,}/g, " ");
 }

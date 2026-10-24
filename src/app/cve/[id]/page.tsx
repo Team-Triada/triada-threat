@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { pageMeta } from "@/lib/seo";
 import { fetchKev } from "@/lib/live/kev";
-import { fetchCve } from "@/lib/live/nvd";
+import { fetchCve, NvdUnavailable } from "@/lib/live/nvd";
 import { fetchEpss } from "@/lib/live/epss";
 import { fetchArticles } from "@/lib/live/feeds";
 import { articlesForCve, assessCve, ago } from "@/lib/live/analysis";
@@ -24,8 +24,13 @@ const CVE_RE = /^CVE-\d{4}-\d{4,7}$/;
 const validCve = (id: string) => CVE_RE.test(id) && +id.slice(4, 8) >= 1999 && +id.slice(4, 8) <= new Date().getFullYear() + 1;
 
 async function load(id: string) {
+  let unavailable = false;
   const [cve, kevAll, epss, feed] = await Promise.all([
-    fetchCve(id),
+    fetchCve(id).catch((e) => {
+      if (!(e instanceof NvdUnavailable)) throw e;
+      unavailable = true;
+      return null;
+    }),
     fetchKev().catch(() => []),
     fetchEpss([id]).catch(() => new Map()),
     fetchArticles().catch(() => ({ articles: [], errors: [] })),
@@ -36,7 +41,7 @@ async function load(id: string) {
     cve.epss = e.epss;
     cve.epssPercentile = e.percentile;
   }
-  return { cve, kev, related: articlesForCve(id, feed.articles) };
+  return { cve, kev, unavailable, related: articlesForCve(id, feed.articles) };
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ id: string }> }): Promise<Metadata> {
@@ -53,8 +58,13 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
 export default async function CvePage({ params }: { params: Promise<{ id: string }> }) {
   const id = (await params).id.toUpperCase();
   if (!validCve(id)) notFound();
-  const { cve, kev, related } = await load(id);
-  if (!cve && !kev) notFound();
+  const { cve, kev, unavailable, related } = await load(id);
+  if (!cve && !kev) {
+    // NVD could not be asked: fail this render instead of caching a false 404.
+    // (A thrown error is never stored by ISR; the last good page keeps serving.)
+    if (unavailable) throw new Error("CVE data temporarily unavailable");
+    notFound();
+  }
 
   const a = assessCve(cve, kev);
   const fmt = (iso?: string) => (iso ? new Date(iso).toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" }) : "n/a");

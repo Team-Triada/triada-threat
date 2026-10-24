@@ -1,6 +1,7 @@
 import { getText } from "./http";
 import { safeUrl } from "../html";
 import { geotag } from "./geotag";
+import { codePoint, splitItems, stripTags, tagReader, unwrapCdata } from "./xml";
 import type { Article, Severity } from "./types";
 
 const FEEDS: { name: string; url: string }[] = [
@@ -20,25 +21,22 @@ const FEEDS: { name: string; url: string }[] = [
 const ENTITIES: Record<string, string> = { amp: "&", lt: "<", gt: ">", quot: '"', apos: "'", nbsp: " ", hellip: "…", rsquo: "’", lsquo: "‘", rdquo: "”", ldquo: "“", ndash: "-", mdash: "-" };
 
 function decode(s: string): string {
-  return s
-    .replace(/<!\[CDATA\[([\s\S]*?)\]\]>/g, "$1")
-    .replace(/&#(\d+);/g, (_, n) => String.fromCodePoint(Number(n)))
-    .replace(/&#x([0-9a-f]+);/gi, (_, n) => String.fromCodePoint(parseInt(n, 16)))
-    .replace(/&([a-z]+);/gi, (m, n) => ENTITIES[n.toLowerCase()] ?? m);
+  return unwrapCdata(s)
+    .replace(/&#(\d{1,7});/g, (_, n) => codePoint(Number(n)))
+    .replace(/&#x([0-9a-f]{1,6});/gi, (_, n) => codePoint(parseInt(n, 16)))
+    .replace(/&([a-z]{2,8});/gi, (m, n) => ENTITIES[n.toLowerCase()] ?? m);
 }
 
 function strip(html: string): string {
-  return decode(html)
-    .replace(/<[^>]+>/g, " ")
-    .replace(/\s*[\u2013\u2014]\s*/g, " - ")
+  return stripTags(decode(html))
+    .replace(/[\u2013\u2014]/g, " - ")
     .replace(/\s+/g, " ")
     .trim();
 }
 
-function tag(block: string, name: string): string | null {
-  const m = block.match(new RegExp(`<${name}(?:\\s[^>]*)?>([\\s\\S]*?)</${name}>`, "i"));
-  return m ? m[1] : null;
-}
+// Upper bounds on what one feed may hand us.
+const MAX_FEED_CHARS = 4_000_000;
+const MAX_ITEM_CHARS = 200_000;
 
 const CVE_RE = /CVE-\d{4}-\d{4,7}/gi;
 
@@ -63,13 +61,15 @@ function severityOf(text: string, cves: string[]): Severity {
 
 async function fetchFeed(feed: { name: string; url: string }): Promise<Article[]> {
   const xml = await getText(feed.url, 300);
-  const items = xml.match(/<item[\s>][\s\S]*?<\/item>/gi) ?? [];
-  return items.slice(0, 20).flatMap((block): Article[] => {
-    const title = strip(tag(block, "title") ?? "");
-    const link = safeUrl(strip(tag(block, "link") ?? "")) ?? "";
-    const pub = strip(tag(block, "pubDate") ?? "");
+  if (xml.length > MAX_FEED_CHARS) throw new Error("feed too large");
+  return splitItems(xml, 20).flatMap((block): Article[] => {
+    if (block.length > MAX_ITEM_CHARS) return [];
+    const tag = tagReader(block);
+    const title = strip(tag("title") ?? "");
+    const link = safeUrl(strip(tag("link") ?? "")) ?? "";
+    const pub = strip(tag("pubDate") ?? "");
     if (!title || !link) return [];
-    const summary = strip(tag(block, "description") ?? tag(block, "content:encoded") ?? "").slice(0, 420);
+    const summary = strip(tag("description") ?? tag("content:encoded") ?? "").slice(0, 420);
     const text = `${title} ${summary}`;
     const cves = Array.from(new Set((text.match(CVE_RE) ?? []).map((c) => c.toUpperCase())));
     const date = new Date(/^\w{3}, \d+ \w{3} \d{2} /.test(pub) ? pub.replace(/ (\d{2}) (\d\d:)/, " 20$1 $2") : pub);
