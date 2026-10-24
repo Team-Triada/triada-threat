@@ -1,7 +1,17 @@
 import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 import BackgroundFX from "@/components/ui/BackgroundFX";
+
+const telegraf = localFont({
+  src: [
+    { path: "../fonts/Telegraf-Regular.woff", weight: "400", style: "normal" },
+    { path: "../fonts/Telegraf-UltraBold.woff", weight: "800", style: "normal" },
+  ],
+  variable: "--font-telegraf",
+  display: "swap",
+});
 
 const inter = Inter({
   variable: "--font-inter",
@@ -12,7 +22,7 @@ export const metadata: Metadata = {
   title: "TRIADA Threat | Real-Time Global Cyber Threat Intelligence",
   description:
     "Live global cyber threat intelligence: ransomware leak-site claims, actively exploited vulnerabilities, new critical CVEs, botnet C2 servers and security news on an interactive 3D globe.",
-  icons: { icon: "/images/favicon.png" },
+  icons: { icon: "/images/favicon-64.png", apple: "/images/favicon-256.png" },
   metadataBase: new URL("https://threat.triada.in"),
 };
 
@@ -25,7 +35,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="dark">
-      <body className={`${inter.variable} antialiased`}>
+      <body className={`${inter.variable} ${telegraf.variable} antialiased`}>
         <BackgroundFX />
         <div className="relative z-[1]">{children}</div>
       </body>

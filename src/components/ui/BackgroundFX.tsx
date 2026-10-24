@@ -22,7 +22,6 @@ export default function BackgroundFX() {
         </g>
       </svg>
       <div className="fx-grid"><div className="fx-grid-i" /></div>
-      <div className="fx-scan" />
       <div className="fx-sweep" />
       <div className="fx-vignette" />
     </div>

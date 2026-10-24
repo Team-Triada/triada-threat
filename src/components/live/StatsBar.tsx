@@ -18,15 +18,14 @@ export default function StatsBar({ snapshot, detailOpen, className = "" }: { sna
   return (
     <div
       id="panel-stats"
-      role="tabpanel"
-      aria-labelledby="tab-stats"
+      aria-label="Key numbers"
       className={`dash-panel pointer-events-auto absolute z-10 overflow-y-auto thin-scroll p-3 bg-[rgba(10,11,14,0.97)] xl:pointer-events-none xl:bg-transparent xl:overflow-visible xl:h-auto xl:p-0 xl:bottom-4 xl:left-[376px] xl:inset-x-auto xl:flex xl:justify-center ${detailOpen ? "xl:right-[416px]" : "xl:right-[376px]"} ${className}`}
     >
       <div className="pointer-events-auto grid grid-cols-2 sm:grid-cols-3 min-[1900px]:grid-cols-6 gap-2 xl:gap-2.5 w-full max-w-[1100px]">
         {cards.map((c) => (
           <div key={c.label} title={c.title} className="stat-card px-3 py-2.5 xl:px-4 xl:py-3 min-w-0">
             <div className="text-[11px] font-medium uppercase tracking-wide text-[#b4bcc9] truncate">{c.label}</div>
-            <div className="mt-1 text-[24px] xl:text-[28px] leading-none font-semibold tabular-nums" style={{ color: c.color, fontFamily: "Telegraf, sans-serif" }}>
+            <div className="mt-1 text-[24px] xl:text-[28px] leading-none font-semibold tabular-nums" style={{ color: c.color, fontFamily: "var(--font-telegraf), sans-serif" }}>
               {c.value === undefined ? "-" : c.value.toLocaleString()}
             </div>
             <div className="mt-1.5 text-[12px] leading-snug text-[var(--muted-foreground)] line-clamp-2">{c.sub}</div>
