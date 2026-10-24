@@ -24,6 +24,16 @@ export default function Dashboard({ initial }: { initial: ThreatSnapshot | null 
   const [tab, setTab] = useState<"stream" | "stats" | "insights">("stream");
   const [snap, setSnap] = useState<Snap>("half");
   const { handlers: sheetDrag, goTo } = useSheetDrag(snap, setSnap);
+  // Below xl the detail panel covers the sheet; keep the covered controls out of
+  // the tab order and the accessibility tree while it is open.
+  const [narrow, setNarrow] = useState(false);
+  useEffect(() => {
+    const mq = window.matchMedia("(max-width: 1279px)");
+    const apply = () => setNarrow(mq.matches);
+    apply();
+    mq.addEventListener("change", apply);
+    return () => mq.removeEventListener("change", apply);
+  }, []);
   const [wideDetail, setWideDetail] = useState(false);
   const [filter, setFilter] = useState<StreamFilter>(DEFAULT_FILTER);
   const [focus, setFocus] = useState<{ lat: number; lng: number } | null>(null);
@@ -91,6 +101,7 @@ export default function Dashboard({ initial }: { initial: ThreatSnapshot | null 
   }, [selection]);
 
   const fresh = useMemo(() => newIds, [newIds]);
+  const covered = narrow && !!selection;
   const selectedCode = selection ? (selection.type === "country" ? selection.code : selection.event.countryCode) : null;
 
   const tabs = [
@@ -126,6 +137,7 @@ export default function Dashboard({ initial }: { initial: ThreatSnapshot | null 
       <div
         role="group"
         aria-label="Dashboard sections"
+        inert={covered}
         className="dash-tabs xl:hidden border-t border-[var(--border-strong)] bg-[rgba(12,13,17,0.98)] touch-none select-none"
         {...sheetDrag}
       >
@@ -146,10 +158,11 @@ export default function Dashboard({ initial }: { initial: ThreatSnapshot | null 
 
       <MapLegend hideOnDesktop={!!selection && wideDetail} />
 
-      <StatsBar snapshot={snapshot} detailOpen={!!selection} detailWide={wideDetail} className={tab === "stats" ? "" : "max-xl:hidden"} />
+      <StatsBar snapshot={snapshot} detailOpen={!!selection} detailWide={wideDetail} covered={covered} className={tab === "stats" ? "" : "max-xl:hidden"} />
 
       <div
         id="panel-stream"
+        inert={covered}
         aria-label="Live threat stream"
         className={`dash-panel absolute z-10 pointer-events-none flex flex-col p-3 bg-[rgba(12,13,17,0.98)] xl:bg-transparent xl:p-4 xl:inset-x-auto xl:left-0 xl:top-[var(--hdr)] xl:bottom-0 xl:h-auto xl:w-[360px] ${tab === "stream" ? "" : "max-xl:hidden"}`}
       >
@@ -169,6 +182,7 @@ export default function Dashboard({ initial }: { initial: ThreatSnapshot | null 
         <>
           <section
             id="panel-insights"
+            inert={covered}
             aria-label="Insights"
             className={`dash-panel absolute z-10 pointer-events-none flex flex-col p-3 bg-[rgba(12,13,17,0.98)] xl:bg-transparent xl:p-4 xl:inset-x-auto xl:right-0 xl:top-[var(--hdr)] xl:bottom-0 xl:h-auto xl:w-[360px] ${tab === "insights" ? "" : "max-xl:hidden"} ${selection ? "xl:hidden" : ""}`}
           >

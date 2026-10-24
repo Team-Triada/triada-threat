@@ -4,7 +4,7 @@ import type { ThreatSnapshot } from "@/lib/live/types";
 
 type Card = { label: string; value?: number; sub: string; color: string; title: string };
 
-export default function StatsBar({ snapshot, detailOpen, detailWide = false, className = "" }: { snapshot: ThreatSnapshot | null; detailOpen: boolean; detailWide?: boolean; className?: string }) {
+export default function StatsBar({ snapshot, detailOpen, detailWide = false, covered = false, className = "" }: { snapshot: ThreatSnapshot | null; detailOpen: boolean; detailWide?: boolean; covered?: boolean; className?: string }) {
   const s = snapshot?.stats;
   const cards: Card[] = [
     { label: "Victims, last 24h", value: s?.victims24h, sub: s?.victimsTotal ? `${s.victimsTotal.toLocaleString()} all-time` : "leak-site claims", color: "#ff8c3c", title: "Victims posted on gang leak sites in the last 24 hours (ransomware.live)" },
@@ -18,6 +18,7 @@ export default function StatsBar({ snapshot, detailOpen, detailWide = false, cla
   return (
     <div
       id="panel-stats"
+      inert={covered}
       aria-label="Key numbers"
       className={`dash-panel pointer-events-auto absolute z-10 overflow-y-auto thin-scroll p-3 bg-[rgba(10,11,14,0.97)] xl:pointer-events-none xl:bg-transparent xl:overflow-visible xl:h-auto xl:p-0 xl:bottom-4 xl:left-[376px] xl:inset-x-auto xl:flex xl:justify-center ${detailOpen ? "xl:right-[416px]" : "xl:right-[376px]"} ${detailOpen && detailWide ? "xl:hidden" : ""} ${className}`}
     >
