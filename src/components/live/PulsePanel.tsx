@@ -66,6 +66,11 @@ export default function PulsePanel({ snapshot, onSelectCountry }: { snapshot: Th
             </li>
           ))}
         </ul>
+        <p className="mt-2 text-[11px] leading-snug text-[var(--muted-foreground)]">
+          IP geolocation by{" "}
+          <a href="https://ipinfo.io" target="_blank" rel="noopener noreferrer" className="text-cyan hover:underline">IPinfo</a>
+          . Scanner and botnet dots sit at the country, not the exact location.
+        </p>
         <p suppressHydrationWarning className="mt-2 text-[11px] leading-snug text-[var(--muted-foreground)]">&quot;Newest&quot; is the age of the latest item each source has published. A quiet source is not a broken one. Dashboard fetched {ago(snapshot.generatedAt, now)}.</p>
       </div>
     </div>
