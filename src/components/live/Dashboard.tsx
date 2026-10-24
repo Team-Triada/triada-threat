@@ -23,7 +23,7 @@ export default function Dashboard({ initial }: { initial: ThreatSnapshot | null 
   const [selection, setSelection] = useState<Selection | null>(null);
   const [tab, setTab] = useState<"stream" | "stats" | "insights">("stream");
   const [snap, setSnap] = useState<Snap>("half");
-  const sheetDrag = useSheetDrag(snap, setSnap);
+  const { handlers: sheetDrag, goTo } = useSheetDrag(snap, setSnap);
   const [wideDetail, setWideDetail] = useState(false);
   const [filter, setFilter] = useState<StreamFilter>(DEFAULT_FILTER);
   const [focus, setFocus] = useState<{ lat: number; lng: number } | null>(null);
@@ -118,6 +118,7 @@ export default function Dashboard({ initial }: { initial: ThreatSnapshot | null 
         focus={focus}
         selectedCode={selectedCode}
         onSelectCountry={selectCountry}
+        suspended={snap === "full"}
       />
 
       <LiveHeader snapshot={snapshot} error={error} loading={loading} nextAt={nextAt} layers={layers} onToggle={toggle} onRefresh={refresh} />
@@ -128,13 +129,13 @@ export default function Dashboard({ initial }: { initial: ThreatSnapshot | null 
         className="dash-tabs xl:hidden border-t border-[var(--border-strong)] bg-[rgba(12,13,17,0.98)] touch-none select-none"
         {...sheetDrag}
       >
-        <SheetGrip snap={snap} setSnap={setSnap} />
+        <SheetGrip snap={snap} setSnap={goTo} />
         {tabs.map((t) => (
           <button
             key={t.id}
             aria-controls={`panel-${t.id}`}
             aria-pressed={tab === t.id}
-            onClick={() => { setTab(t.id); if (snap === "collapsed") setSnap("half"); }}
+            onClick={() => { setTab(t.id); if (snap === "collapsed") goTo("half"); }}
             className={`text-[12px] font-medium tracking-wide transition-colors ${tab === t.id ? "text-white border-b-2 border-[var(--triada-cyan)]" : "text-[var(--muted-foreground)]"}`}
           >
             {t.label}

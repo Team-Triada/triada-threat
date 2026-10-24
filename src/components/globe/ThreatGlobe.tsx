@@ -72,6 +72,8 @@ type Props = {
   focus: { lat: number; lng: number } | null;
   selectedCode: string | null;
   onSelectCountry: (code: string) => void;
+  // True while something fully covers the globe (full-height mobile sheet): stop rendering.
+  suspended?: boolean;
 };
 
 // Natural Earth 110m countries, self-hosted so the globe has no runtime CDN dependency.
@@ -93,7 +95,7 @@ const ARC_CACHE = new Map<string, Arc>();
 const RING_CACHE = new Map<string, { lat: number; lng: number; fresh: boolean }>();
 
 // react-globe.gl touches `window` at import, so it loads after mount only.
-function ThreatGlobe({ victims, c2, scanners, showRansomware, showC2, showScan, showNews, newsCounts, freshIds, focus, selectedCode, onSelectCountry }: Props) {
+function ThreatGlobe({ victims, c2, scanners, showRansomware, showC2, showScan, showNews, newsCounts, freshIds, focus, selectedCode, onSelectCountry, suspended = false }: Props) {
   const wrapRef = useRef<HTMLDivElement>(null);
   const globeRef = useRef<any>(null);
   const [size, setSize] = useState({ width: 800, height: 600 });
@@ -432,14 +434,21 @@ function ThreatGlobe({ victims, c2, scanners, showRansomware, showC2, showScan, 
     return out;
   }, [active, freshIds]);
 
+  useEffect(() => {
+    const g = globeRef.current;
+    if (!g) return;
+    if (suspended) g.pauseAnimation();
+    else if (!lowPowerRef.current) g.resumeAnimation();
+  }, [suspended, Globe]);
+
   // In low-power mode the loop is paused; render a few frames after any change.
   useEffect(() => {
     const g = globeRef.current;
-    if (!g || !lowPowerRef.current) return;
+    if (!g || !lowPowerRef.current || suspended) return;
     g.resumeAnimation();
     const t = setTimeout(() => g.pauseAnimation(), 1500);
     return () => clearTimeout(t);
-  }, [capColor, points, arcs, rings, size, focus]);
+  }, [capColor, points, arcs, rings, size, focus, suspended]);
 
   return (
     <div

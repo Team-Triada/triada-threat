@@ -141,6 +141,17 @@ h1, h2, h3, h4, h5, h6 {
 }
 .flash-new { animation: flash-new 4s ease-out 1; }
 
+/* Entrances: opacity/transform only, short, and skipped for reduced motion
+   (the global rule above clamps durations). */
+@keyframes panel-in-x { from { opacity: 0; transform: translate3d(14px, 0, 0); } }
+@keyframes panel-in-y { from { opacity: 0; transform: translate3d(0, 20px, 0); } }
+@keyframes fade-in { from { opacity: 0; } }
+.dash-detail > .card-surface { animation: panel-in-y 0.24s cubic-bezier(0.2, 0.8, 0.2, 1) both; }
+@media (min-width: 1280px) {
+  .dash-detail > .card-surface { animation-name: panel-in-x; }
+}
+@media (max-width: 1279px) { .dash-panel { animation: fade-in 0.18s ease-out both; } }
+
 /* ---------- site-wide atmosphere (see components/ui/BackgroundFX.tsx) ---------- */
 .fx-root { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; background: #07080b; contain: strict; }
 .fx-glow {

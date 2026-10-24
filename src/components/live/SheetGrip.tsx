@@ -65,22 +65,23 @@ export function useSheetDrag(snap: Snap, setSnap: (s: Snap) => void) {
     document.documentElement.style.setProperty("--sheet-dy", `${hs.full - s.cur}px`);
   }, []);
 
-  const finish = useCallback((e: RPointerEvent<HTMLElement>) => {
+  // Ease the sheet from `from` px to the `target` snap point, then commit.
+  const settle = useCallback((from: number, target: Snap) => {
     const s = st.current;
-    if (e.pointerId !== s.id) return;
-    s.id = -1;
-    if (!s.moved) return;
-    s.suppress = true;
-    setTimeout(() => (s.suppress = false), 0);
     const hs = heights();
-    let idx = ORDER.reduce((best, k, i) => (Math.abs(hs[k] - s.cur) < Math.abs(hs[ORDER[best]] - s.cur) ? i : best), 0);
-    if (Math.abs(s.v) > 0.5) idx = Math.min(2, Math.max(0, ORDER.indexOf(snap) + (s.v > 0 ? 1 : -1)));
-    const target = ORDER[idx];
-    const from = s.cur, to = hs[target], t0 = performance.now();
     const root = document.documentElement;
+    const to = hs[target];
+    if (!root.dataset.drag) {
+      root.style.setProperty("--sheet-g", `${hs[snap]}px`);
+      root.style.setProperty("--sheet", `${hs.full}px`);
+      root.style.setProperty("--sheet-dy", `${hs.full - from}px`);
+      root.dataset.drag = "1";
+    }
+    cancelAnimationFrame(s.raf);
+    const t0 = performance.now();
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const step = (now: number) => {
-      const p = reduce ? 1 : Math.min(1, (now - t0) / 200);
+      const p = reduce ? 1 : Math.min(1, (now - t0) / 240);
       const k = 1 - Math.pow(1 - p, 3);
       root.style.setProperty("--sheet-dy", `${hs.full - (from + (to - from) * k)}px`);
       if (p < 1) s.raf = requestAnimationFrame(step);
@@ -96,6 +97,26 @@ export function useSheetDrag(snap: Snap, setSnap: (s: Snap) => void) {
     s.raf = requestAnimationFrame(step);
   }, [snap, setSnap]);
 
+  // Animated jump to a snap point (grip tap, keyboard, tab tap while collapsed).
+  const goTo = useCallback((target: Snap) => {
+    if (target === snap) return;
+    settle(heights()[snap], target);
+  }, [snap, settle]);
+
+  const finish = useCallback((e: RPointerEvent<HTMLElement>) => {
+    const s = st.current;
+    if (e.pointerId !== s.id) return;
+    s.id = -1;
+    if (!s.moved) return;
+    s.suppress = true;
+    setTimeout(() => (s.suppress = false), 0);
+    const hs = heights();
+    let idx = ORDER.reduce((best, k, i) => (Math.abs(hs[k] - s.cur) < Math.abs(hs[ORDER[best]] - s.cur) ? i : best), 0);
+    if (Math.abs(s.v) > 0.5) idx = Math.min(2, Math.max(0, ORDER.indexOf(snap) + (s.v > 0 ? 1 : -1)));
+    const target = ORDER[idx];
+    settle(s.cur, target);
+  }, [snap, settle]);
+
   // A drag that ends over a tab button must not also count as a click on it.
   const onClickCapture = useCallback((e: React.MouseEvent) => {
     if (st.current.suppress) {
@@ -104,7 +125,7 @@ export function useSheetDrag(snap: Snap, setSnap: (s: Snap) => void) {
     }
   }, []);
 
-  return { onPointerDown, onPointerMove, onPointerUp: finish, onPointerCancel: finish, onClickCapture };
+  return { handlers: { onPointerDown, onPointerMove, onPointerUp: finish, onPointerCancel: finish, onClickCapture }, goTo };
 }
 
 // Visible grip plus a keyboard/screen-reader control for the same job.
