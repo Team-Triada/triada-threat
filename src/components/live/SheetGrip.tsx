@@ -4,7 +4,7 @@ import { useCallback, useEffect, useRef, type PointerEvent as RPointerEvent } fr
 
 export type Snap = "collapsed" | "half" | "full";
 const ORDER: Snap[] = ["collapsed", "half", "full"];
-const TABS = 48;
+const TABS = 58;
 const LABEL: Record<Snap, string> = { collapsed: "map only", half: "half height", full: "full height" };
 
 function heights(): Record<Snap, number> {
@@ -141,7 +141,7 @@ export default function SheetGrip({ snap, setSnap }: { snap: Snap; setSnap: (s: 
         if (e.key === "ArrowDown") { e.preventDefault(); setSnap(ORDER[Math.max(0, i - 1)]); }
       }}
       aria-label={`Resize panel, currently ${LABEL[snap]}. Activate for ${LABEL[next]}.`}
-      className="absolute left-1/2 top-0 z-10 h-4 w-24 -translate-x-1/2 rounded-b-md"
+      className="absolute inset-x-0 top-0 z-10 h-6"
     />
   );
 }

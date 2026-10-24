@@ -136,7 +136,7 @@ export default function Dashboard({ initial }: { initial: ThreatSnapshot | null 
             aria-controls={`panel-${t.id}`}
             aria-pressed={tab === t.id}
             onClick={() => { setTab(t.id); if (snap === "collapsed") goTo("half"); }}
-            className={`text-[12px] font-medium tracking-wide transition-colors ${tab === t.id ? "text-white border-b-2 border-[var(--triada-cyan)]" : "text-[var(--muted-foreground)]"}`}
+            className={`text-[12px] font-medium tracking-wide transition-colors ${tab === t.id ? "text-white border-b-2 border-[var(--triada-cyan)]" : "text-[var(--muted-foreground)] border-b-2 border-transparent"}`}
           >
             {t.label}
             {t.id === "stream" && snapshot ? <span className="ml-1.5 text-[11px] tabular-nums text-[var(--muted-foreground)]">{snapshot.events.length}</span> : null}

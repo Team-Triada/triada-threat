@@ -215,7 +215,7 @@ h1, h2, h3, h4, h5, h6 {
   --sheet: clamp(250px, 44dvh, 560px);
   /* what the globe and background size against; pinned while the sheet is dragged */
   --sheet-g: var(--sheet);
-  --tabs: 48px;
+  --tabs: 58px; /* 24px grip row + 34px tab row */
   --gx: 50%;
   --gy: calc(var(--hdr) + (100dvh - var(--hdr) - var(--sheet-g)) / 2);
   --gmin: min(100vw, max(40px, calc(100dvh - var(--hdr) - var(--sheet-g))));
@@ -232,6 +232,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 @media (max-width: 1279px) and (orientation: landscape) {
   :root {
+    --tabs: 48px;
     --sheet: 0px;
     --gx: 27%;
     --gy: calc(var(--hdr) + (100dvh - var(--hdr)) / 2);
@@ -257,7 +258,8 @@ h1, h2, h3, h4, h5, h6 {
     border-radius: 18px 18px 0 0; box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.55); overflow: hidden;
   }
   .dash-tabs::before { content: ""; position: absolute; top: 6px; left: 50%; width: 36px; height: 4px; margin-left: -18px; border-radius: 4px; background: rgba(255, 255, 255, 0.22); }
-  .dash-tabs button { padding-top: 10px; }
+  /* buttons start below the 24px grip row so the two never overlap */
+  .dash-tabs button[aria-pressed] { margin-top: 24px; display: flex; align-items: center; justify-content: center; }
   .dash-panel {
     position: absolute; z-index: 10; left: 0; right: 0; bottom: 0; height: calc(var(--sheet) - var(--tabs));
     padding-bottom: calc(0.75rem + env(safe-area-inset-bottom));
@@ -285,7 +287,8 @@ h1, h2, h3, h4, h5, h6 {
   .dash-globe { top: var(--hdr); bottom: 0; left: 0; right: 46%; }
   .dash-tabs { left: 54%; right: 0; top: var(--hdr); bottom: auto; border-radius: 0; box-shadow: none; }
   .dash-tabs::before { display: none; }
-  .dash-tabs button { padding-top: 0; }
+  .dash-tabs > button[aria-label^="Resize"] { display: none; }
+  .dash-tabs button[aria-pressed] { margin-top: 0; padding-top: 0; }
   .dash-panel { left: 54%; right: 0; top: calc(var(--hdr) + var(--tabs)); bottom: 0; height: auto; }
   .dash-detail { left: 54%; }
 }
