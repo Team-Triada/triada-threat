@@ -20,6 +20,10 @@ const nextConfig: NextConfig = {
   // /_next/* for non-localhost origins, so the page renders but never hydrates).
   allowedDevOrigins: ['10.*.*.*', '192.168.*.*', '172.*.*.*', '*.local'],
   poweredByHeader: false,
+  // Lets browsers and Lighthouse map the shipped bundle back to source.
+  productionBrowserSourceMaps: true,
+  // Inline the (small) stylesheet so it does not block first paint.
+  experimental: { inlineCss: true },
   async headers() {
     const longCache = [{ key: 'Cache-Control', value: 'public, max-age=604800, stale-while-revalidate=86400' }];
     return [
