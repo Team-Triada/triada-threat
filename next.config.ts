@@ -20,6 +20,9 @@ const nextConfig: NextConfig = {
   // /_next/* for non-localhost origins, so the page renders but never hydrates).
   allowedDevOrigins: ['10.*.*.*', '192.168.*.*', '172.*.*.*', '*.local'],
   poweredByHeader: false,
+  // The image optimizer only ever serves the logo. No remote sources, and only
+  // that one local path, which keeps the /_next/image attack surface minimal.
+  images: { localPatterns: [{ pathname: '/images/Triada_typo.png' }], remotePatterns: [] },
   // Lets browsers and Lighthouse map the shipped bundle back to source.
   productionBrowserSourceMaps: true,
   // Inline the (small) stylesheet so it does not block first paint.
@@ -38,6 +41,7 @@ const nextConfig: NextConfig = {
           { key: 'X-Frame-Options', value: 'SAMEORIGIN' },
           { key: 'X-Content-Type-Options', value: 'nosniff' },
           { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
+          { key: 'Cross-Origin-Opener-Policy', value: 'same-origin' },
           { key: 'Permissions-Policy', value: 'camera=(), microphone=(), geolocation=(), browsing-topics=()' },
           { key: 'Content-Security-Policy', value: csp },
         ],
