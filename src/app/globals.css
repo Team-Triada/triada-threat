@@ -259,7 +259,10 @@ h1, h2, h3, h4, h5, h6 {
 /* Bottom-sheet snap points (set on <html> by the dashboard); portrait only. */
 @media (max-width: 1279px) and (orientation: portrait) {
   :root[data-snap="collapsed"] { --sheet: var(--tabs); }
-  :root[data-snap="full"] { --sheet: calc(100dvh - var(--hdr) - 40px); }
+  /* Full height covers the whole globe area. The globe keeps its half-height size underneath, hidden. */
+  :root[data-snap="full"] { --sheet: calc(100dvh - var(--hdr)); --sheet-g: clamp(250px, 44dvh, 560px); }
+  :root[data-snap="full"]:not([data-drag]) .dash-globe { visibility: hidden; }
+  :root[data-snap="full"] .dash-tabs { border-radius: 0; box-shadow: none; }
   :root[data-snap="collapsed"]:not([data-drag]) .dash-panel { display: none; }
   /* While dragging, the sheet is laid out at full height once and moved with a
      compositor-only transform, so no frame triggers layout of the globe. */

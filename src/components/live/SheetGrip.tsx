@@ -10,7 +10,7 @@ const LABEL: Record<Snap, string> = { collapsed: "map only", half: "half height"
 function heights(): Record<Snap, number> {
   const h = window.innerHeight;
   const hdr = parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--hdr")) || 84;
-  return { collapsed: TABS, half: Math.min(560, Math.max(250, h * 0.44)), full: Math.max(TABS + 120, h - hdr - 40) };
+  return { collapsed: TABS, half: Math.min(560, Math.max(250, h * 0.44)), full: Math.max(TABS + 120, h - hdr) };
 }
 
 /**
