@@ -7,6 +7,7 @@ import LiveStream from "@/components/live/LiveStream";
 import MapLegend from "@/components/live/MapLegend";
 import StatsBar from "@/components/live/StatsBar";
 import PulsePanel from "@/components/live/PulsePanel";
+import SheetGrip, { useSheetDrag, type Snap } from "@/components/live/SheetGrip";
 import DetailPanel, { type Selection } from "@/components/live/DetailPanel";
 import { useThreatFeed } from "@/lib/use-threat-feed";
 import { DEFAULT_FILTER, type StreamFilter } from "@/lib/stream-filter";
@@ -21,6 +22,8 @@ export default function Dashboard({ initial }: { initial: ThreatSnapshot | null 
   const [layers, setLayers] = useState<LayerState>(DEFAULT_LAYERS);
   const [selection, setSelection] = useState<Selection | null>(null);
   const [tab, setTab] = useState<"stream" | "stats" | "insights">("stream");
+  const [snap, setSnap] = useState<Snap>("half");
+  const sheetDrag = useSheetDrag(snap, setSnap);
   const [wideDetail, setWideDetail] = useState(false);
   const [filter, setFilter] = useState<StreamFilter>(DEFAULT_FILTER);
   const [focus, setFocus] = useState<{ lat: number; lng: number } | null>(null);
@@ -70,6 +73,15 @@ export default function Dashboard({ initial }: { initial: ThreatSnapshot | null 
     return out;
   }, [snapshot]);
 
+  // The sheet height is a CSS variable set per snap point on <html>, so the
+  // globe, legend and background all follow it.
+  useEffect(() => {
+    document.documentElement.dataset.snap = snap;
+    return () => {
+      delete document.documentElement.dataset.snap;
+    };
+  }, [snap]);
+
   // Escape closes the detail view.
   useEffect(() => {
     if (!selection) return;
@@ -113,14 +125,16 @@ export default function Dashboard({ initial }: { initial: ThreatSnapshot | null 
       <div
         role="group"
         aria-label="Dashboard sections"
-        className="dash-tabs xl:hidden border-t border-[var(--border-strong)] bg-[rgba(12,13,17,0.98)]"
+        className="dash-tabs xl:hidden border-t border-[var(--border-strong)] bg-[rgba(12,13,17,0.98)] touch-none select-none"
+        {...sheetDrag}
       >
+        <SheetGrip snap={snap} setSnap={setSnap} />
         {tabs.map((t) => (
           <button
             key={t.id}
             aria-controls={`panel-${t.id}`}
             aria-pressed={tab === t.id}
-            onClick={() => setTab(t.id)}
+            onClick={() => { setTab(t.id); if (snap === "collapsed") setSnap("half"); }}
             className={`text-[12px] font-medium tracking-wide transition-colors ${tab === t.id ? "text-white border-b-2 border-[var(--triada-cyan)]" : "text-[var(--muted-foreground)]"}`}
           >
             {t.label}
