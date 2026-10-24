@@ -21,6 +21,7 @@ export default function Dashboard({ initial }: { initial: ThreatSnapshot | null 
   const [layers, setLayers] = useState<LayerState>(DEFAULT_LAYERS);
   const [selection, setSelection] = useState<Selection | null>(null);
   const [tab, setTab] = useState<"stream" | "stats" | "insights">("stream");
+  const [wideDetail, setWideDetail] = useState(false);
   const [filter, setFilter] = useState<StreamFilter>(DEFAULT_FILTER);
   const [focus, setFocus] = useState<{ lat: number; lng: number } | null>(null);
 
@@ -130,7 +131,7 @@ export default function Dashboard({ initial }: { initial: ThreatSnapshot | null 
 
       <MapLegend />
 
-      <StatsBar snapshot={snapshot} detailOpen={!!selection} className={tab === "stats" ? "" : "max-xl:hidden"} />
+      <StatsBar snapshot={snapshot} detailOpen={!!selection} detailWide={wideDetail} className={tab === "stats" ? "" : "max-xl:hidden"} />
 
       <div
         id="panel-stream"
@@ -158,7 +159,7 @@ export default function Dashboard({ initial }: { initial: ThreatSnapshot | null 
           >
             <PulsePanel snapshot={snapshot} onSelectCountry={selectCountry} />
           </section>
-          {selection && <DetailPanel selection={selection} snapshot={snapshot} onClose={() => setSelection(null)} />}
+          {selection && <DetailPanel selection={selection} snapshot={snapshot} onClose={() => setSelection(null)} wide={wideDetail} onToggleWide={() => setWideDetail((w) => !w)} />}
         </>
       )}
 
