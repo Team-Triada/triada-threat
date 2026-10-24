@@ -202,10 +202,12 @@ h1, h2, h3, h4, h5, h6 {
 :root {
   --hdr: 84px;
   --sheet: clamp(250px, 44dvh, 560px);
+  /* what the globe and background size against; pinned while the sheet is dragged */
+  --sheet-g: var(--sheet);
   --tabs: 48px;
   --gx: 50%;
-  --gy: calc(var(--hdr) + (100dvh - var(--hdr) - var(--sheet)) / 2);
-  --gmin: min(100vw, calc(100dvh - var(--hdr) - var(--sheet)));
+  --gy: calc(var(--hdr) + (100dvh - var(--hdr) - var(--sheet-g)) / 2);
+  --gmin: min(100vw, max(40px, calc(100dvh - var(--hdr) - var(--sheet-g))));
   /* height reserved for the desktop stat cards (2 rows; 1 row from 1900px) */
   --stats: 236px;
 }
@@ -237,7 +239,7 @@ h1, h2, h3, h4, h5, h6 {
 .fx-dots { mask-image: radial-gradient(ellipse 80% 70% at var(--gx) var(--gy), #000 15%, transparent 85%); -webkit-mask-image: radial-gradient(ellipse 80% 70% at var(--gx) var(--gy), #000 15%, transparent 85%); }
 
 @media (max-width: 1279px) {
-  .dash-globe { top: var(--hdr); bottom: var(--sheet); }
+  .dash-globe { top: var(--hdr); bottom: var(--sheet-g); }
   .dash-tabs {
     position: absolute; z-index: 11; left: 0; right: 0; height: var(--tabs); bottom: calc(var(--sheet) - var(--tabs));
     display: grid; grid-template-columns: repeat(3, 1fr);
@@ -253,6 +255,17 @@ h1, h2, h3, h4, h5, h6 {
   .dash-panel .card-surface { background: transparent; border: 0; border-radius: 0; }
   .dash-panel .card-surface:hover { border-color: transparent; }
   .fx-sweep { display: none; }
+}
+/* Bottom-sheet snap points (set on <html> by the dashboard); portrait only. */
+@media (max-width: 1279px) and (orientation: portrait) {
+  :root[data-snap="collapsed"] { --sheet: var(--tabs); }
+  :root[data-snap="full"] { --sheet: calc(100dvh - var(--hdr) - 40px); }
+  :root[data-snap="collapsed"]:not([data-drag]) .dash-panel { display: none; }
+  /* While dragging, the sheet is laid out at full height once and moved with a
+     compositor-only transform, so no frame triggers layout of the globe. */
+  .dash-tabs, .dash-panel { transform: translate3d(0, var(--sheet-dy, 0px), 0); }
+  :root[data-drag] .dash-tabs, :root[data-drag] .dash-panel { will-change: transform; }
+  :root[data-snap="full"] .dash-legend { display: none; }
 }
 @media (max-width: 1279px) and (orientation: landscape) {
   .dash-globe { top: var(--hdr); bottom: 0; left: 0; right: 46%; }

@@ -444,7 +444,7 @@ function ThreatGlobe({ victims, c2, scanners, showRansomware, showC2, showScan, 
   return (
     <div
       ref={wrapRef}
-      className="dash-globe absolute inset-x-0 top-[var(--hdr)] bottom-[var(--sheet)] xl:bottom-[var(--stats)] touch-none">
+      className="dash-globe absolute inset-x-0 top-[var(--hdr)] bottom-[var(--sheet-g)] xl:bottom-[var(--stats)] touch-none">
       {!Globe && (
         <div className="absolute inset-0 grid place-items-center pointer-events-none" aria-live="polite">
           {/* Static stand-in for the globe: same size and glow, no JS cost. */}
