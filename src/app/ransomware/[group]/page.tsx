@@ -9,11 +9,19 @@ import { countryName } from "@/lib/countries";
 
 export const revalidate = 600;
 
-const NAME_RE = /^[a-z0-9 _.-]{1,60}$/;
+// No pages are built ahead of time; an empty list opts the route into on-demand
+// ISR, so each page is generated once per revalidate window and then cached.
+export function generateStaticParams() {
+  return [];
+}
+
+// Starts and ends alphanumeric and never contains "..": the name is placed in an upstream URL path.
+const NAME_RE = /^[a-z0-9]([a-z0-9 _.-]{0,58}[a-z0-9])?$/;
+const validName = (n: string) => NAME_RE.test(n) && !n.includes("..");
 
 export async function generateMetadata({ params }: { params: Promise<{ group: string }> }): Promise<Metadata> {
   const name = decodeURIComponent((await params).group).toLowerCase();
-  if (!NAME_RE.test(name)) return { title: "Not found" };
+  if (!validName(name)) return { title: "Not found" };
   const label = titleCase(name);
   return pageMeta({
     title: `${label} | Ransomware Group Profile`,
@@ -24,7 +32,7 @@ export async function generateMetadata({ params }: { params: Promise<{ group: st
 
 export default async function GroupPage({ params }: { params: Promise<{ group: string }> }) {
   const name = decodeURIComponent((await params).group).toLowerCase();
-  if (!NAME_RE.test(name)) notFound();
+  if (!validName(name)) notFound();
   const p = await fetchGroupProfile(name);
   if (!p) notFound();
   const origin = groupOrigin(name);

@@ -13,7 +13,15 @@ import { KevBadge, RansomwareBadge } from "@/components/ui/Badges";
 
 export const revalidate = 300;
 
+// No pages are built ahead of time; an empty list opts the route into on-demand
+// ISR, so each page is generated once per revalidate window and then cached.
+export function generateStaticParams() {
+  return [];
+}
+
 const CVE_RE = /^CVE-\d{4}-\d{4,7}$/;
+// Reject IDs from impossible years before they cost an upstream lookup.
+const validCve = (id: string) => CVE_RE.test(id) && +id.slice(4, 8) >= 1999 && +id.slice(4, 8) <= new Date().getFullYear() + 1;
 
 async function load(id: string) {
   const [cve, kevAll, epss, feed] = await Promise.all([
@@ -33,7 +41,7 @@ async function load(id: string) {
 
 export async function generateMetadata({ params }: { params: Promise<{ id: string }> }): Promise<Metadata> {
   const id = (await params).id.toUpperCase();
-  if (!CVE_RE.test(id)) return { title: "Not found" };
+  if (!validCve(id)) return { title: "Not found" };
   const { cve, kev } = await load(id);
   return pageMeta({
     title: `${id}${kev ? ": Actively Exploited" : ""}`,
@@ -44,7 +52,7 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
 
 export default async function CvePage({ params }: { params: Promise<{ id: string }> }) {
   const id = (await params).id.toUpperCase();
-  if (!CVE_RE.test(id)) notFound();
+  if (!validCve(id)) notFound();
   const { cve, kev, related } = await load(id);
   if (!cve && !kev) notFound();
 
