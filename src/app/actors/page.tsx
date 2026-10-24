@@ -92,9 +92,9 @@ function Section({ id, title, count, actors, children }: { id: string; title: st
         <h2 id={`${id}-h`} className="heading-card" style={{ fontSize: 20 }}>{title}</h2>
         <span className="text-xs text-[var(--muted-foreground)] tabular-nums">{count} {count === 1 ? "group" : "groups"}</span>
       </div>
-      <ul className="grid gap-2.5 sm:grid-cols-2 lg:grid-cols-3">
+      <ul className="grid grid-cols-[minmax(0,1fr)] gap-2.5 sm:grid-cols-2 lg:grid-cols-3">
         {actors.map((a) => (
-          <li key={a.id} className="cv-row-card">
+          <li key={a.id} className="cv-row-card min-w-0">
             <Link href={`/actor/${a.id}`} prefetch={false} className="card-surface group flex h-full flex-col gap-1.5 px-4 py-3.5 transition-colors hover:border-[var(--triada-cyan)]">
               <span className="flex items-baseline justify-between gap-3">
                 <span className="truncate text-[15px] text-[#f2f4f7] group-hover:text-cyan">{a.name}</span>

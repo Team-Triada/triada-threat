@@ -12,14 +12,14 @@ export default function PageTop({ current }: { current?: "/ransomware" | "/actor
   return (
     <div className="flex items-center justify-between gap-4">
       <Logo height={16} />
-      <nav aria-label="Sections" className="flex items-center gap-1 text-[13px]">
+      <nav aria-label="Sections" className="flex min-w-0 items-center gap-0.5 text-[12px] sm:gap-1 sm:text-[13px]">
         {NAV.map((n) => (
           <Link
             key={n.href}
             href={n.href}
             prefetch={false}
             aria-current={current === n.href ? "page" : undefined}
-            className={`rounded-full px-3 py-1.5 transition-colors ${current === n.href ? "bg-[var(--muted)] text-white" : "text-[var(--muted-foreground)] hover:text-white"}`}
+            className={`rounded-full px-2 py-1.5 transition-colors sm:px-3 ${n.href === "/" ? "max-[359px]:hidden" : ""} ${current === n.href ? "bg-[var(--muted)] text-white" : "text-[var(--muted-foreground)] hover:text-white"}`}
           >
             {n.label}
           </Link>
