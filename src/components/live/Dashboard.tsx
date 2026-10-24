@@ -9,6 +9,7 @@ import StatsBar from "@/components/live/StatsBar";
 import PulsePanel from "@/components/live/PulsePanel";
 import DetailPanel, { type Selection } from "@/components/live/DetailPanel";
 import { useThreatFeed } from "@/lib/use-threat-feed";
+import { DEFAULT_FILTER, type StreamFilter } from "@/lib/stream-filter";
 import { DEFAULT_LAYERS, type LayerState } from "@/lib/layers";
 import { country } from "@/lib/countries";
 import type { EventKind, ThreatEvent, ThreatSnapshot } from "@/lib/live/types";
@@ -20,6 +21,7 @@ export default function Dashboard({ initial }: { initial: ThreatSnapshot | null 
   const [layers, setLayers] = useState<LayerState>(DEFAULT_LAYERS);
   const [selection, setSelection] = useState<Selection | null>(null);
   const [tab, setTab] = useState<"stream" | "stats" | "insights">("stream");
+  const [filter, setFilter] = useState<StreamFilter>(DEFAULT_FILTER);
   const [focus, setFocus] = useState<{ lat: number; lng: number } | null>(null);
 
   const toggle = (k: EventKind) => setLayers((p) => ({ ...p, [k]: !p[k] }));
@@ -31,6 +33,7 @@ export default function Dashboard({ initial }: { initial: ThreatSnapshot | null 
 
   const selectCountry = useCallback((code: string) => {
     setSelection({ type: "country", code });
+    setFilter((f) => ({ ...f, countryCode: code }));
     const c = country(code);
     if (c) setFocus({ lat: c.lat, lng: c.lng });
   }, []);
@@ -141,6 +144,8 @@ export default function Dashboard({ initial }: { initial: ThreatSnapshot | null 
           selectedId={selection?.type === "event" ? selection.event.id : null}
           onSelect={selectEvent}
           loaded={!!snapshot}
+          filter={filter}
+          onFilterChange={setFilter}
         />
       </div>
 
