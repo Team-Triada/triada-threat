@@ -1,10 +1,12 @@
 "use client";
 
 import Link from "next/link";
+import Logo from "@/components/ui/Logo";
 
 export default function ErrorPage({ reset }: { error: Error & { digest?: string }; reset: () => void }) {
   return (
     <main className="mx-auto flex min-h-screen w-full max-w-xl flex-col items-start justify-center gap-5 px-6">
+      <Logo height={16} />
       <span className="section-label">Something broke</span>
       <h1 className="heading-hero" style={{ fontSize: "clamp(28px, 6vw, 44px)" }}>Couldn&apos;t load this page</h1>
       <p className="text-sm text-[var(--muted-foreground)]">An upstream feed may be down. Try again in a moment.</p>
