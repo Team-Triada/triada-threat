@@ -1,5 +1,5 @@
 import Link from "next/link";
-import Logo from "@/components/ui/Logo";
+import PageTop from "@/components/ui/PageTop";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { fetchGroupProfile } from "@/lib/live/ransomware";
@@ -29,8 +29,8 @@ export default async function GroupPage({ params }: { params: Promise<{ group: s
 
   return (
     <div className="min-h-screen">
-      <main className="mx-auto flex w-full flex-col gap-8 px-4 py-10 sm:px-8 sm:py-16" style={{ maxWidth: 1000 }}>
-        <Logo height={16} />
+      <main className="mx-auto flex w-full flex-col gap-8 px-4 py-6 sm:px-8 sm:py-10" style={{ maxWidth: 1180 }}>
+        <PageTop />
         <Link href="/ransomware" className="text-sm text-cyan hover:underline w-fit">← All ransomware activity</Link>
 
         <header className="flex flex-col gap-3">

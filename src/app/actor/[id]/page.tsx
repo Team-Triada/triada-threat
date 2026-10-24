@@ -1,5 +1,5 @@
 import Link from "next/link";
-import Logo from "@/components/ui/Logo";
+import PageTop from "@/components/ui/PageTop";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { getActorById, getActors, getArticlesForActor } from "@/lib/actors";
@@ -34,8 +34,8 @@ export default async function ActorPage({ params }: { params: Promise<{ id: stri
 
   return (
     <div className="min-h-screen">
-      <main className="mx-auto flex w-full flex-col gap-8 px-4 py-10 sm:px-8 sm:py-16" style={{ maxWidth: 1000 }}>
-        <Logo height={16} />
+      <main className="mx-auto flex w-full flex-col gap-8 px-4 py-6 sm:px-8 sm:py-10" style={{ maxWidth: 1180 }}>
+        <PageTop />
         <Link href="/" className="text-sm text-cyan hover:underline w-fit">
           ← Back to live map
         </Link>
