@@ -108,7 +108,7 @@ export async function fetchGroupProfile(name: string): Promise<GroupProfile | nu
     getJson<RawGroup>(infoUrl, 3600, { headers: AUTH }),
     KEY
       ? memo(`group-victims-${slug}`, 15 * 60_000, async () => {
-          const r = await getJson<{ victims?: RawVictim[] }>(`${BASE}/victims/?group=${slug}`, 0, { headers: AUTH }, 30000);
+          const r = await getJson<{ victims?: RawVictim[] }>(`${BASE}/victims/?group=${slug}`, 600, { headers: AUTH }, 30000);
           return (r.victims ?? []).map((v) => normalize({ ...v, group: name })).filter((v): v is Victim => v !== null);
         })
       : fetchRecentVictims().then((all) => all.filter((v) => v.group === name.toLowerCase())),

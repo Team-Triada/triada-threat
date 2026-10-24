@@ -25,8 +25,10 @@ export function fetchKev(): Promise<KevItem[]> {
 }
 
 async function loadKev(): Promise<KevItem[]> {
-  // revalidate: 0 because the body exceeds the 2 MB fetch-cache limit anyway.
-  const raw = await getJson<Raw>(URL_KEV, 0);
+  // The body is over Next's 2 MB fetch-cache limit, so it is not stored there
+  // (memo above holds it). A positive revalidate matters: 0 would force every
+  // route that reads KEV, including the home page, to render dynamically.
+  const raw = await getJson<Raw>(URL_KEV, 3600);
   return raw.vulnerabilities
     .map((v) => ({
       id: v.cveID,
