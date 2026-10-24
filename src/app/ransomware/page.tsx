@@ -12,8 +12,8 @@ export const metadata: Metadata = {
   description: "Latest ransomware gang leak-site postings, refreshed every two minutes from ransomware.live.",
 };
 
-export default async function RansomwarePage({ searchParams }: { searchParams: Promise<{ group?: string; sector?: string }> }) {
-  const { group, sector } = await searchParams;
+export default async function RansomwarePage({ searchParams }: { searchParams: Promise<{ group?: string; sector?: string; all?: string }> }) {
+  const { group, sector, all: showAll } = await searchParams;
   const all = await fetchRecentVictims().catch(() => []);
   const victims = all.filter((v) => (!group || v.group === group) && (!sector || v.sector === sector));
 
@@ -42,16 +42,16 @@ export default async function RansomwarePage({ searchParams }: { searchParams: P
 
         <section className="flex flex-col gap-3">
           <div className="no-scrollbar -mx-4 flex gap-2 overflow-x-auto px-4 sm:mx-0 sm:flex-wrap sm:overflow-visible sm:px-0">
-            <Link href="/ransomware" className={`pill-tag shrink-0 whitespace-nowrap ${!group && !sector ? "border-[var(--border-strong)] text-white" : ""}`}>All</Link>
+            <Link href="/ransomware" prefetch={false} className={`pill-tag shrink-0 whitespace-nowrap ${!group && !sector ? "border-[var(--border-strong)] text-white" : ""}`}>All</Link>
             {groups.map(([g, n]) => (
-              <Link key={g} href={`/ransomware?group=${encodeURIComponent(g)}`} className={`pill-tag shrink-0 whitespace-nowrap capitalize ${group === g ? "border-[var(--triada-cyan)] text-white" : ""}`}>
+              <Link key={g} prefetch={false} href={`/ransomware?group=${encodeURIComponent(g)}`} className={`pill-tag shrink-0 whitespace-nowrap capitalize ${group === g ? "border-[var(--triada-cyan)] text-white" : ""}`}>
                 {g} <span className="text-[var(--muted-foreground)] ml-1">×{n}</span>
               </Link>
             ))}
           </div>
           <div className="no-scrollbar -mx-4 flex gap-2 overflow-x-auto px-4 sm:mx-0 sm:flex-wrap sm:overflow-visible sm:px-0">
             {sectors.map(([s, n]) => (
-              <Link key={s} href={`/ransomware?sector=${encodeURIComponent(s)}`} className={`pill-tag shrink-0 whitespace-nowrap ${sector === s ? "border-[var(--triada-cyan)] text-white" : ""}`}>
+              <Link key={s} prefetch={false} href={`/ransomware?sector=${encodeURIComponent(s)}`} className={`pill-tag shrink-0 whitespace-nowrap ${sector === s ? "border-[var(--triada-cyan)] text-white" : ""}`}>
                 {s} <span className="text-[var(--muted-foreground)] ml-1">×{n}</span>
               </Link>
             ))}
@@ -59,14 +59,14 @@ export default async function RansomwarePage({ searchParams }: { searchParams: P
         </section>
 
         <section className="flex flex-col gap-3">
-          <span className="section-label">{victims.length} victims</span>
+          <span className="section-label">{victims.length} victims{!showAll && victims.length > 30 ? " (showing the latest 30)" : ""}</span>
           <ul className="flex flex-col gap-3">
-            {victims.map((v) => {
+            {(showAll ? victims : victims.slice(0, 30)).map((v) => {
               const origin = groupOrigin(v.group);
               return (
-                <li key={v.id} className="card-surface p-5">
+                <li key={v.id} className="card-surface cv-row-card p-5">
                   <div className="flex flex-wrap items-center gap-2 mb-2">
-                    <Link href={`/ransomware/${encodeURIComponent(v.group)}`} className="pill-tag capitalize hover:text-cyan">{v.group}</Link>
+                    <Link href={`/ransomware/${encodeURIComponent(v.group)}`} prefetch={false} className="pill-tag capitalize hover:text-cyan">{v.group}</Link>
                     {v.countryCode && <span className="pill-tag">{countryName(v.countryCode)}</span>}
                     {v.sector && <span className="pill-tag">{v.sector}</span>}
                     <span className="ml-auto text-xs text-[var(--muted-foreground)]">{ago(v.discoveredAt)}</span>
@@ -82,6 +82,15 @@ export default async function RansomwarePage({ searchParams }: { searchParams: P
             })}
             {victims.length === 0 && <li className="text-sm text-[var(--muted-foreground)]">No records (or the upstream feed is unavailable).</li>}
           </ul>
+          {!showAll && victims.length > 30 && (
+            <Link
+              href={`/ransomware?${new URLSearchParams({ ...(group ? { group } : {}), ...(sector ? { sector } : {}), all: "1" })}`}
+              prefetch={false}
+              className="w-fit rounded-full border border-[var(--border-strong)] px-4 py-2 text-sm text-[#c8cdd5] hover:text-white hover:border-[var(--triada-cyan)] transition-colors"
+            >
+              Show all {victims.length} victims
+            </Link>
+          )}
         </section>
       </main>
     </div>

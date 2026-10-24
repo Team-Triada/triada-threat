@@ -118,7 +118,7 @@ export default async function GroupPage({ params }: { params: Promise<{ group: s
           <h2 className="section-label">Most recent victims</h2>
           <ul className="flex flex-col gap-2">
             {p.recentVictims.map((v) => (
-              <li key={v.id} className="card-surface px-4 py-3 sm:px-5 flex flex-wrap items-center gap-x-4 gap-y-1">
+              <li key={v.id} className="card-surface cv-row px-4 py-3 sm:px-5 flex flex-wrap items-center gap-x-4 gap-y-1">
                 <span className="text-[#e8eaed] min-w-0 break-words">{v.victim}</span>
                 <span className="text-xs text-[var(--muted-foreground)]">{[v.sector, v.countryCode ? countryName(v.countryCode) : null].filter(Boolean).join(" · ")}</span>
                 <span className="ml-auto text-xs text-[var(--muted-foreground)]">{ago(v.discoveredAt)}</span>

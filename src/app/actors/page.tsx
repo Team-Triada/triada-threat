@@ -5,13 +5,14 @@ import { getActors } from "@/lib/actors";
 
 export const metadata: Metadata = { title: "Threat Actors | MITRE ATT&CK Groups" };
 
-export default function ActorsPage() {
+export default async function ActorsPage({ searchParams }: { searchParams: Promise<{ all?: string }> }) {
+  const { all } = await searchParams;
   const actors = getActors();
   const attributed = actors.filter((a) => a.countryCode);
   const rest = actors.filter((a) => !a.countryCode);
   const Row = ({ a }: { a: (typeof actors)[number] }) => (
-    <li>
-      <Link href={`/actor/${a.id}`} className="card-surface flex items-center justify-between gap-3 px-4 py-3 hover:text-cyan transition-colors">
+    <li className="cv-row-sm">
+      <Link href={`/actor/${a.id}`} prefetch={false} className="card-surface flex items-center justify-between gap-3 px-4 py-3 hover:text-cyan transition-colors">
         <span className="truncate">{a.name}</span>
         <span className="text-xs text-[var(--muted-foreground)] shrink-0">{a.country}</span>
       </Link>
@@ -29,7 +30,12 @@ export default function ActorsPage() {
         <span className="section-label">Attributed ({attributed.length})</span>
         <ul className="grid gap-2 sm:grid-cols-2">{attributed.map((a) => <Row key={a.id} a={a} />)}</ul>
         <span className="section-label">Unattributed ({rest.length})</span>
-        <ul className="grid gap-2 sm:grid-cols-2">{rest.map((a) => <Row key={a.id} a={a} />)}</ul>
+        <ul className="grid gap-2 sm:grid-cols-2">{(all ? rest : rest.slice(0, 24)).map((a) => <Row key={a.id} a={a} />)}</ul>
+        {!all && rest.length > 24 && (
+          <Link href="/actors?all=1" prefetch={false} className="w-fit rounded-full border border-[var(--border-strong)] px-4 py-2 text-sm text-[#c8cdd5] hover:text-white hover:border-[var(--triada-cyan)] transition-colors">
+            Show all {rest.length} unattributed groups
+          </Link>
+        )}
       </main>
     </div>
   );
