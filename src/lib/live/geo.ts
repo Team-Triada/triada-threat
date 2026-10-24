@@ -1,39 +1,55 @@
-// Real IP geolocation (city-level lat/lng) via ip-api.com batch endpoint.
-// Free tier is limited to 45 req/min, so results are memoised per process.
+// IP -> country and network owner via IPinfo Lite (https://ipinfo.io/lite):
+// HTTPS, free, no request quota, commercial use allowed with attribution.
+// Needs a free token in IPINFO_TOKEN; without one nothing is looked up and
+// callers fall back to whatever country data they already have.
+//
+// Lite has no coordinates, so a dot is placed at its country's centroid with a
+// small stable jitter (the same offsets the globe uses for C2 servers), which
+// keeps points in one country from stacking and from moving between polls.
+import { getJson } from "./http";
+import { country, jitter } from "../countries";
+import { isIp } from "../html";
+import { plain } from "./text";
+
 export type Geo = { lat: number; lng: number; countryCode: string; city: string | null; org: string | null };
 
+const TOKEN = process.env.IPINFO_TOKEN;
 const TTL = 12 * 3600_000;
-const cache = new Map<string, { geo: Geo | null; at: number }>();
+const RETRY_AFTER_FAIL = 15 * 60_000;
+const CONCURRENCY = 6;
+const cache = new Map<string, { geo: Geo | null; until: number }>();
+
+type Raw = { country_code?: string; asn?: string; as_name?: string };
+
+async function lookup(ip: string): Promise<Geo | null> {
+  const r = await getJson<Raw>(`https://api.ipinfo.io/lite/${encodeURIComponent(ip)}`, 43200, { headers: { Authorization: `Bearer ${TOKEN}` } }, 8000);
+  const code = typeof r.country_code === "string" ? r.country_code.toUpperCase() : "";
+  const c = /^[A-Z]{2}$/.test(code) ? country(code) : null;
+  if (!c) return null;
+  const org = plain([r.asn, r.as_name].filter((x): x is string => typeof x === "string" && x !== "").join(" ").slice(0, 80)) || null;
+  return { lat: c.lat + jitter(`${ip}a`, 1.5), lng: c.lng + jitter(`${ip}b`, 1.5), countryCode: code, city: null, org };
+}
 
 export async function geolocate(ips: string[]): Promise<Map<string, Geo>> {
-  const now = Date.now();
-  const todo = Array.from(new Set(ips)).filter((ip) => {
-    const c = cache.get(ip);
-    return !c || now - c.at > TTL;
-  });
-  for (let i = 0; i < todo.length; i += 100) {
-    const chunk = todo.slice(i, i + 100);
-    try {
-      const res = await fetch("http://ip-api.com/batch?fields=status,query,countryCode,city,lat,lon,org", {
-        method: "POST",
-        body: JSON.stringify(chunk),
-        headers: { "Content-Type": "application/json" },
-        signal: AbortSignal.timeout(10000),
-      });
-      if (!res.ok) continue;
-      const rows = (await res.json()) as { status: string; query: string; countryCode: string; city: string; lat: number; lon: number; org: string }[];
-      for (const r of rows) {
-        cache.set(r.query, {
-          at: now,
-          geo: r.status === "success" ? { lat: r.lat, lng: r.lon, countryCode: r.countryCode, city: r.city || null, org: r.org || null } : null,
-        });
-      }
-    } catch {
-      /* geolocation is best-effort; callers fall back to country centroids */
-    }
-  }
   const out = new Map<string, Geo>();
-  for (const ip of ips) {
+  if (!TOKEN) return out;
+  const now = Date.now();
+  const unique = Array.from(new Set(ips)).filter(isIp);
+  const todo = unique.filter((ip) => (cache.get(ip)?.until ?? 0) <= now);
+  // A few requests at a time: polite to the API, and one failure (rate limit,
+  // bad token) does not hold up the rest.
+  for (let i = 0; i < todo.length; i += CONCURRENCY) {
+    await Promise.all(
+      todo.slice(i, i + CONCURRENCY).map(async (ip) => {
+        try {
+          cache.set(ip, { geo: await lookup(ip), until: now + TTL });
+        } catch {
+          cache.set(ip, { geo: null, until: now + RETRY_AFTER_FAIL });
+        }
+      }),
+    );
+  }
+  for (const ip of unique) {
     const g = cache.get(ip)?.geo;
     if (g) out.set(ip, g);
   }
