@@ -129,7 +129,7 @@ export default function Dashboard({ initial }: { initial: ThreatSnapshot | null 
         ))}
       </div>
 
-      <MapLegend />
+      <MapLegend hideOnDesktop={!!selection && wideDetail} />
 
       <StatsBar snapshot={snapshot} detailOpen={!!selection} detailWide={wideDetail} className={tab === "stats" ? "" : "max-xl:hidden"} />
 
