@@ -2,6 +2,7 @@ import Link from "next/link";
 import PageTop from "@/components/ui/PageTop";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
+import { pageMeta } from "@/lib/seo";
 import { fetchKev } from "@/lib/live/kev";
 import { fetchCve } from "@/lib/live/nvd";
 import { fetchEpss } from "@/lib/live/epss";
@@ -34,11 +35,11 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
   const id = (await params).id.toUpperCase();
   if (!CVE_RE.test(id)) return { title: "Not found" };
   const { cve, kev } = await load(id);
-  return {
+  return pageMeta({
     title: `${id}${kev ? ": Actively Exploited" : ""}`,
     description: (kev?.description ?? cve?.description ?? id).slice(0, 200),
-    alternates: { canonical: `/cve/${id}` },
-  };
+    path: `/cve/${id}`,
+  });
 }
 
 export default async function CvePage({ params }: { params: Promise<{ id: string }> }) {

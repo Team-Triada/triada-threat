@@ -1,12 +1,14 @@
 import Link from "next/link";
 import type { Metadata } from "next";
+import { pageMeta } from "@/lib/seo";
 import PageTop from "@/components/ui/PageTop";
 import { getActors, type ThreatActor } from "@/lib/actors";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMeta({
   title: "Threat Actors | MITRE ATT&CK Groups",
   description: "Intrusion sets from MITRE ATT&CK grouped by assessed country of origin, with TTPs, malware and live news coverage.",
-};
+  path: "/actors",
+});
 
 const PAGE = 24;
 

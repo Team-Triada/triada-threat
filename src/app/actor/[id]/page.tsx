@@ -2,6 +2,7 @@ import Link from "next/link";
 import PageTop from "@/components/ui/PageTop";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
+import { pageMeta } from "@/lib/seo";
 import { getActorById, getActors, getArticlesForActor } from "@/lib/actors";
 import { fetchArticles } from "@/lib/live/feeds";
 import { ago } from "@/lib/live/analysis";
@@ -17,11 +18,7 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
   const { id } = await params;
   const actor = getActorById(id);
   if (!actor) return { title: "Not found" };
-  return {
-    title: `${actor.name} | Threat Actor Profile`,
-    description: actor.description,
-    alternates: { canonical: `/actor/${actor.id}` },
-  };
+  return pageMeta({ title: `${actor.name} | Threat Actor Profile`, description: actor.description, path: `/actor/${actor.id}` });
 }
 
 export default async function ActorPage({ params }: { params: Promise<{ id: string }> }) {

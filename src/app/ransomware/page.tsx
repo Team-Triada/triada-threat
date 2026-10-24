@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { Metadata } from "next";
+import { pageMeta } from "@/lib/seo";
 import PageTop from "@/components/ui/PageTop";
 import { fetchRecentVictims } from "@/lib/live/ransomware";
 import { ago, groupOrigin } from "@/lib/live/analysis";
@@ -7,10 +8,11 @@ import { countryName } from "@/lib/countries";
 
 export const revalidate = 120;
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMeta({
   title: "Ransomware Activity | Live Leak-Site Tracker",
   description: "Latest ransomware gang leak-site postings, refreshed every two minutes from ransomware.live.",
-};
+  path: "/ransomware",
+});
 
 const PAGE = 30;
 type Params = { group?: string; sector?: string; country?: string; all?: string };

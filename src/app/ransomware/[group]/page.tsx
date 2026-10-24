@@ -2,6 +2,7 @@ import Link from "next/link";
 import PageTop from "@/components/ui/PageTop";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
+import { pageMeta, titleCase } from "@/lib/seo";
 import { fetchGroupProfile } from "@/lib/live/ransomware";
 import { ago, groupOrigin } from "@/lib/live/analysis";
 import { countryName } from "@/lib/countries";
@@ -13,10 +14,12 @@ const NAME_RE = /^[a-z0-9 _.-]{1,60}$/;
 export async function generateMetadata({ params }: { params: Promise<{ group: string }> }): Promise<Metadata> {
   const name = decodeURIComponent((await params).group).toLowerCase();
   if (!NAME_RE.test(name)) return { title: "Not found" };
-  return {
-    title: `${name} | Ransomware Group Profile`,
-    description: `Live leak-site activity, targeted sectors and countries, TTPs and exploited vulnerabilities for the ${name} ransomware group.`,
-  };
+  const label = titleCase(name);
+  return pageMeta({
+    title: `${label} | Ransomware Group Profile`,
+    description: `Live leak-site activity, targeted sectors and countries, TTPs and exploited vulnerabilities for the ${label} ransomware group.`,
+    path: `/ransomware/${encodeURIComponent(name)}`,
+  });
 }
 
 export default async function GroupPage({ params }: { params: Promise<{ group: string }> }) {
