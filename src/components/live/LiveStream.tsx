@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import type { EventKind, ThreatEvent } from "@/lib/live/types";
 import { LAYER_META, type LayerState } from "@/lib/layers";
 import { SEVERITY_COLOR } from "@/lib/severity";
@@ -24,13 +25,15 @@ export default function LiveStream({
   loaded: boolean;
 }) {
   const now = useNow();
-  const shown = events.filter((e) => layers[e.kind]);
+  const [limit, setLimit] = useState(60);
+  const matching = events.filter((e) => layers[e.kind]);
+  const shown = matching.slice(0, limit);
 
   return (
     <div className="card-surface pointer-events-auto flex flex-col overflow-hidden min-h-0 flex-1">
       <div className="px-4 pt-3.5 pb-2 flex items-center justify-between shrink-0">
         <span className="section-label" style={{ marginBottom: 0 }}>Live Threat Stream</span>
-        <span className="text-[11px] text-[var(--muted-foreground)] tabular-nums">{shown.length} events</span>
+        <span className="text-[11px] text-[var(--muted-foreground)] tabular-nums">{matching.length} events</span>
       </div>
       <ul className="flex flex-col overflow-y-auto thin-scroll">
         {!loaded && <li className="px-4 py-6 text-xs text-[var(--muted-foreground)]">Pulling live feeds…</li>}
@@ -57,6 +60,13 @@ export default function LiveStream({
             </li>
           );
         })}
+        {matching.length > shown.length && (
+          <li className="border-t border-[var(--border)] p-3">
+            <button onClick={() => setLimit((n) => n + 60)} className="w-full rounded-lg border border-[var(--border-strong)] py-2 text-[12px] text-[#c8cdd5] hover:text-white hover:border-[var(--triada-cyan)] transition-colors">
+              Show more ({matching.length - shown.length} older)
+            </button>
+          </li>
+        )}
         {loaded && shown.length === 0 && <li className="px-4 py-6 text-xs text-[var(--muted-foreground)]">No events for the selected layers.</li>}
       </ul>
     </div>
