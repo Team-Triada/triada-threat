@@ -18,8 +18,15 @@ const PAGE = 30;
 type Params = { group?: string; sector?: string; country?: string; all?: string };
 
 export default async function RansomwarePage({ searchParams }: { searchParams: Promise<Params> }) {
-  const { group, sector, country, all: showAll } = await searchParams;
+  const params = await searchParams;
+  const showAll = params.all;
   const all = await fetchRecentVictims().catch(() => []);
+  // Filter values come from the URL: honour only ones that exist in the data, so
+  // a crafted link cannot put arbitrary text into the page.
+  const known = (pick: (v: (typeof all)[number]) => string | null, v?: string) => (v && all.some((x) => pick(x) === v) ? v : undefined);
+  const group = known((v) => v.group, params.group);
+  const sector = known((v) => v.sector, params.sector);
+  const country = known((v) => v.countryCode, params.country);
   const victims = all.filter((v) => (!group || v.group === group) && (!sector || v.sector === sector) && (!country || v.countryCode === country));
 
   const tally = (key: (v: (typeof all)[number]) => string | null) => {
