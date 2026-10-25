@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 
-export const SITE_URL = "https://threat.triada.in";
+// Public address of the site, used for canonical links, social cards, the sitemap and structured data.
+// Set SITE_URL on the host (before the build) if you deploy somewhere else; no trailing slash.
+export const SITE_URL = (process.env.SITE_URL || "https://threat.triada.in").replace(/\/+$/, "");
 export const SITE_NAME = "TRIADA Threat";
 export const SITE_TITLE = "TRIADA Threat | Real-Time Global Cyber Threat Intelligence";
 export const SITE_DESCRIPTION =

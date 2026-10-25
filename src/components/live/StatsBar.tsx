@@ -13,7 +13,7 @@ export default function StatsBar({ snapshot, detailOpen, detailWide = false, cov
     { label: "Active gangs, 24h", short: "Gangs, 24h", value: s?.activeGroups24h, sub: snapshot?.topGroup24h ? `most active: ${snapshot.topGroup24h}` : "posting now", color: "#ffcc3c", title: "Distinct ransomware groups that posted a victim in the last 24 hours", Icon: UserGroupIcon },
     { label: "Newly exploited, 7d", short: "Exploited, 7d", value: s?.kevAdded7d, sub: s ? `of ${s.kevTotal.toLocaleString()} in KEV · ${s.kevRansomware} ransomware` : "CISA KEV", color: "#ff3c3c", title: "CVEs added to CISA's Known Exploited Vulnerabilities catalog in the last 7 days", Icon: BugAntIcon },
     { label: "Critical CVEs, 48h", short: "Critical, 48h", value: s?.critical24h, sub: "CVSS 9.0 or higher (NVD)", color: "#ff6b6b", title: "CVEs published in the last 48h that NVD has already scored 9.0 or higher", Icon: ExclamationTriangleIcon },
-    { label: "Botnet C2 online", short: "Botnet C2", value: s?.c2Online, sub: "abuse.ch Feodo Tracker", color: "#c77dff", title: "Botnet command-and-control servers currently online", Icon: ServerStackIcon },
+    { label: "Botnet C2 online", short: "Botnet C2", value: s?.c2Online, sub: s?.c2Online === 0 ? "none seen in the last 14 days" : "abuse.ch Feodo Tracker", color: "#c77dff", title: "Botnet command-and-control servers currently online", Icon: ServerStackIcon },
     { label: "Mass scanners, today", short: "Scanners", value: snapshot?.scanners.length, sub: "SANS DShield top IPs", color: "#19d3c5", title: "Top attacking IPs seen by the DShield sensor network today, geolocated", Icon: MagnifyingGlassIcon },
   ];
 

@@ -1,5 +1,5 @@
 import "server-only";
-import { getJson } from "./http";
+import { getBigJson, getJson } from "./http";
 import { MEMO_MS, REVALIDATE } from "./config";
 import { plain } from "./text";
 import { memo } from "./memo";
@@ -137,7 +137,7 @@ export async function fetchGroupProfile(name: string): Promise<GroupProfile | nu
     getJson<RawGroup>(infoUrl, REVALIDATE.ransomwareGroup, { headers: AUTH }),
     KEY
       ? memo(`group-victims-${slug}`, MEMO_MS.groupVictims, async () => {
-          const r = await getJson<{ victims?: RawVictim[] }>(`${BASE}/victims/?group=${slug}`, REVALIDATE.ransomwareGroupVictims, { headers: AUTH }, 30000);
+          const r = await getBigJson<{ victims?: RawVictim[] }>(`${BASE}/victims/?group=${slug}`, KEY ? { "X-Api-Key": KEY } : {}, 30000);
           return (r.victims ?? []).map((v) => normalize({ ...v, group: name })).filter((v): v is Victim => v !== null);
         })
       : fetchRecentVictims().then((all) => all.filter((v) => v.group === name.toLowerCase())),

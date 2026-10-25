@@ -5,12 +5,12 @@ import "server-only";
 // `revalidate` values are seconds and go to Next's fetch cache (see http.ts). `*_MS` values are
 // milliseconds and drive the in-process caches (see memo.ts, geo.ts, snapshot.ts). Keep the
 // revalidate values above zero: 0 makes every route that reads the source render dynamically.
+// KEV and a gang's full victim history have no revalidate entry: they are over Next's 2 MB fetch-cache
+// limit, so they are fetched outside it (see getBigJson in http.ts) and held by the memo cache instead.
 export const REVALIDATE = {
   ransomwareRecent: 120,
   ransomwareStats: 600,
   ransomwareGroup: 3600,
-  ransomwareGroupVictims: 600,
-  kev: 3600,
   nvdRecent: 600,
   nvdCve: 3600,
   epss: 3600,
