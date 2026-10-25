@@ -2,6 +2,7 @@ import "server-only";
 import { getText } from "./http";
 import { safeUrl } from "../html";
 import { geotag } from "./geotag";
+import { parseFeedDate } from "./feed-date";
 import { codePoint, splitItems, stripTags, tagReader, unwrapCdata } from "./xml";
 import type { Article, Severity } from "../domain/types";
 
@@ -73,7 +74,8 @@ async function fetchFeed(feed: { name: string; url: string }): Promise<Article[]
     const summary = strip(tag("description") ?? tag("content:encoded") ?? "").slice(0, 420);
     const text = `${title} ${summary}`;
     const cves = Array.from(new Set((text.match(CVE_RE) ?? []).map((c) => c.toUpperCase())));
-    const date = new Date(/^\w{3}, \d+ \w{3} \d{2} /.test(pub) ? pub.replace(/ (\d{2}) (\d\d:)/, " 20$1 $2") : pub);
+    const date = parseFeedDate(pub);
+    if (!date) return [];
     return [
       {
         id: link,
@@ -81,7 +83,7 @@ async function fetchFeed(feed: { name: string; url: string }): Promise<Article[]
         summary,
         link,
         source: feed.name,
-        publishedAt: Number.isNaN(date.getTime()) ? new Date().toISOString() : date.toISOString(),
+        publishedAt: date.toISOString(),
         cves,
         tags: TAGS.filter(([, re]) => re.test(text)).map(([t]) => t),
         severity: severityOf(text, cves),
