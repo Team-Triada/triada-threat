@@ -1,4 +1,4 @@
-import type { Severity, ThreatEvent } from "@/lib/live/types";
+import type { Severity, ThreatEvent } from "@/lib/domain/types";
 import { countryName } from "@/lib/countries";
 
 export type SortMode = "newest" | "severity";

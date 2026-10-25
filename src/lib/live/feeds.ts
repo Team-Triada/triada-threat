@@ -1,8 +1,9 @@
+import "server-only";
 import { getText } from "./http";
 import { safeUrl } from "../html";
 import { geotag } from "./geotag";
 import { codePoint, splitItems, stripTags, tagReader, unwrapCdata } from "./xml";
-import type { Article, Severity } from "./types";
+import type { Article, Severity } from "../domain/types";
 
 const FEEDS: { name: string; url: string }[] = [
   { name: "The Hacker News", url: "https://feeds.feedburner.com/TheHackersNews" },

@@ -1,8 +1,9 @@
+import "server-only";
 import { getJson } from "./http";
 import { plain } from "./text";
 import { memo } from "./memo";
 import { safeUrl } from "../html";
-import type { CveRecord } from "./types";
+import type { CveRecord } from "../domain/types";
 
 const API = "https://services.nvd.nist.gov/rest/json/cves/2.0";
 const KEY = process.env.NVD_API_KEY;

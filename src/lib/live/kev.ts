@@ -1,7 +1,8 @@
+import "server-only";
 import { getJson } from "./http";
 import { memo } from "./memo";
 import { plain } from "./text";
-import type { KevItem } from "./types";
+import type { KevItem } from "../domain/types";
 
 const URL_KEV = "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json";
 

@@ -1,6 +1,7 @@
 // Process-level TTL cache with in-flight de-duplication and stale-on-error.
 // Needed where the response is too large for Next's fetch data cache (2 MB
 // limit; CISA's KEV feed is ~2.4 MB) or where we want one shared parse.
+import "server-only";
 type Entry<T> = { at: number; value: T };
 const store = new Map<string, Entry<unknown>>();
 const pending = new Map<string, Promise<unknown>>();

@@ -1,3 +1,4 @@
+import "server-only";
 import { fetchRecentVictims, fetchTotalVictims } from "./ransomware";
 import { fetchKev } from "./kev";
 import { fetchRecentCves } from "./nvd";
@@ -5,12 +6,12 @@ import { fetchEpss } from "./epss";
 import { fetchC2 } from "./c2";
 import { fetchScanners } from "./scanners";
 import { fetchArticles } from "./feeds";
-import type { Severity, SourceHealth, ThreatEvent, ThreatSnapshot, Victim } from "./types";
+import type { Severity, SourceHealth, ThreatEvent, ThreatSnapshot, Victim } from "../domain/types";
 
 const HOUR = 3600_000;
 const CRITICAL_SECTORS = /health|hospital|energy|utilit|financ|bank|government|public|education|transport|telecom|water/i;
 
-export function victimSeverity(v: Victim): Severity {
+function victimSeverity(v: Victim): Severity {
   return v.sector && CRITICAL_SECTORS.test(v.sector) ? "critical" : "high";
 }
 

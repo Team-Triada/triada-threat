@@ -1,10 +1,10 @@
 "use client";
 
 import { useDeferredValue, useMemo, useState } from "react";
-import type { EventKind, ThreatEvent } from "@/lib/live/types";
+import type { EventKind, ThreatEvent } from "@/lib/domain/types";
 import { LAYER_META, type LayerState } from "@/lib/layers";
 import { SEVERITY_COLOR } from "@/lib/severity";
-import { ago } from "@/lib/live/analysis";
+import { ago } from "@/lib/domain/analysis";
 import { useNow } from "@/lib/use-threat-feed";
 import { countryName } from "@/lib/countries";
 import { DEFAULT_FILTER, filterEvents, isFiltered, type MinSeverity, type SortMode, type StreamFilter } from "@/lib/stream-filter";

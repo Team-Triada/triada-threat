@@ -27,7 +27,7 @@ export function groupOrigin(group: string) {
   return ORIGINS[group.toLowerCase().replace(/\s+/g, "")] ?? null;
 }
 
-export function daysUntil(iso: string, now = Date.now()): number {
+function daysUntil(iso: string, now = Date.now()): number {
   return Math.ceil((new Date(iso).getTime() - now) / 86400_000);
 }
 
@@ -88,7 +88,7 @@ export function assessCve(cve: CveRecord | null, kev: KevItem | null): Assessmen
   return { score, level: levelOf(score), headline, findings, actions };
 }
 
-export function groupTempo(group: string, victims: Victim[], now = Date.now()) {
+function groupTempo(group: string, victims: Victim[], now = Date.now()) {
   const mine = victims.filter((v) => v.group === group);
   const last24 = mine.filter((v) => now - new Date(v.discoveredAt).getTime() < 86400_000);
   const sectors = new Map<string, number>();

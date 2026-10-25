@@ -1,8 +1,9 @@
+import "server-only";
 import { getJson } from "./http";
 import { plain } from "./text";
 import { memo } from "./memo";
 import { safeUrl } from "../html";
-import type { Victim } from "./types";
+import type { Victim } from "../domain/types";
 
 type RawVictim = {
   id?: string;

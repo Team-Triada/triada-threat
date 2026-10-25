@@ -1,7 +1,9 @@
 // Server-side fetch helpers. Every upstream call goes through Next's data
 // cache (`next.revalidate`) so the dashboard polling us never fans out into
 // one upstream request per visitor.
-export const UA = "triada-threat/1.0 (+https://threat.triada.in)";
+import "server-only";
+import { SITE_URL } from "../seo";
+export const UA = `triada-threat/1.0 (+${SITE_URL})`;
 
 async function request(url: string, revalidate: number, init: RequestInit = {}, timeoutMs = 15000) {
   const res = await fetch(url, {

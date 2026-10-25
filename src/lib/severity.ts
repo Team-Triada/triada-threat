@@ -1,4 +1,4 @@
-import type { Severity } from "@/lib/live/types";
+import type { Severity } from "@/lib/domain/types";
 
 export const SEVERITY_COLOR: Record<Severity, string> = {
   critical: "#ff3c3c",

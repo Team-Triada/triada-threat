@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { pageMeta, titleCase } from "@/lib/seo";
 import { fetchGroupProfile } from "@/lib/live/ransomware";
-import { ago, groupOrigin } from "@/lib/live/analysis";
+import { ago, groupOrigin } from "@/lib/domain/analysis";
 import { countryName } from "@/lib/countries";
 
 export const revalidate = 600;

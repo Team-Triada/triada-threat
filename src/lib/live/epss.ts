@@ -1,3 +1,4 @@
+import "server-only";
 import { getJson } from "./http";
 
 // EPSS = FIRST.org's probability a CVE is exploited in the wild in the next

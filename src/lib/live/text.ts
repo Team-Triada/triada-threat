@@ -1,5 +1,6 @@
 // Upstream text (CISA, NVD, leak sites) is full of typographic dashes; the UI
 // uses plain hyphens and commas instead.
+import "server-only";
 export function plain(s: string): string;
 export function plain(s: string | null | undefined): string | null;
 export function plain(s: string | null | undefined): string | null {

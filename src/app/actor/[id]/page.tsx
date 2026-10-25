@@ -5,7 +5,7 @@ import type { Metadata } from "next";
 import { pageMeta } from "@/lib/seo";
 import { getActorById, getActors, getArticlesForActor } from "@/lib/actors";
 import { fetchArticles } from "@/lib/live/feeds";
-import { ago } from "@/lib/live/analysis";
+import { ago } from "@/lib/domain/analysis";
 import { SeverityBadge, CategoryBadge } from "@/components/ui/Badges";
 
 export const revalidate = 600;

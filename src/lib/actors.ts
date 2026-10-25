@@ -1,6 +1,6 @@
 import attackData from "../../data/attack-groups.json";
 import attributionData from "../../data/actor-attribution.json";
-import type { Article } from "./live/types";
+import type { Article } from "./domain/types";
 
 type RawAttackGroup = {
   mitreId: string;

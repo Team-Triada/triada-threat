@@ -1,7 +1,8 @@
+import "server-only";
 import { getJson } from "./http";
 import { geolocate } from "./geo";
 import { isIp } from "../html";
-import type { ScannerSource } from "./types";
+import type { ScannerSource } from "../domain/types";
 
 type Raw = { rank: number; source: string; reports: number; targets: number }[];
 

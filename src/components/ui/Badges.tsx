@@ -1,4 +1,4 @@
-import type { Severity } from "@/lib/live/types";
+import type { Severity } from "@/lib/domain/types";
 import { SEVERITY_COLOR, SEVERITY_LABEL } from "@/lib/severity";
 
 export function SeverityBadge({ severity }: { severity: Severity }) {

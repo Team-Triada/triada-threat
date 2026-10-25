@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Logo from "@/components/ui/Logo";
-import type { EventKind, ThreatSnapshot } from "@/lib/live/types";
+import type { EventKind, ThreatSnapshot } from "@/lib/domain/types";
 import { LAYER_META, type LayerState } from "@/lib/layers";
 import { useNow } from "@/lib/use-threat-feed";
 

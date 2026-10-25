@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import { pageMeta } from "@/lib/seo";
 import PageTop from "@/components/ui/PageTop";
 import { fetchRecentVictims } from "@/lib/live/ransomware";
-import { ago, groupOrigin } from "@/lib/live/analysis";
+import { ago, groupOrigin } from "@/lib/domain/analysis";
 import { countryName } from "@/lib/countries";
 
 export const revalidate = 120;

@@ -5,6 +5,7 @@
 // go quadratic on input with many opening markers and no closing ones (a few
 // hundred KB is enough to block the event loop for tens of seconds). Everything
 // here advances through the string with indexOf, so cost is proportional to size.
+import "server-only";
 
 // ASCII-only lowercase. toLowerCase() can change string length for some Unicode
 // characters, which would misalign indexes into the original string.

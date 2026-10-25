@@ -1,6 +1,7 @@
 // Best-effort country tagging for news by name/demonym/known-org mention.
 // Deliberately conservative: capitalised whole-word matches only, and names
 // that collide with common words (Chad, Jordan, Georgia, Mali...) are left out.
+import "server-only";
 import centroids from "../../../data/country-centroids.json";
 
 const NAMES = centroids as Record<string, { name: string }>;

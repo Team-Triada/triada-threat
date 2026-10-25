@@ -1,8 +1,8 @@
 "use client";
 
-import type { ThreatSnapshot } from "@/lib/live/types";
+import type { ThreatSnapshot } from "@/lib/domain/types";
 import { countryName } from "@/lib/countries";
-import { ago } from "@/lib/live/analysis";
+import { ago } from "@/lib/domain/analysis";
 import { useNow } from "@/lib/use-threat-feed";
 import Link from "next/link";
 

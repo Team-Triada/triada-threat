@@ -1,4 +1,4 @@
-import type { EventKind } from "@/lib/live/types";
+import type { EventKind } from "@/lib/domain/types";
 
 export type LayerState = Record<EventKind, boolean>;
 

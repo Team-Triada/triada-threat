@@ -1,9 +1,9 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import type { ThreatSnapshot } from "@/lib/live/types";
+import type { ThreatSnapshot } from "@/lib/domain/types";
 
-export const POLL_MS = 60_000;
+const POLL_MS = 60_000;
 
 export function useThreatFeed(initial: ThreatSnapshot | null = null) {
   const [snapshot, setSnapshot] = useState<ThreatSnapshot | null>(initial);

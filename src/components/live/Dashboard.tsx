@@ -13,7 +13,7 @@ import { useThreatFeed } from "@/lib/use-threat-feed";
 import { DEFAULT_FILTER, type StreamFilter } from "@/lib/stream-filter";
 import { DEFAULT_LAYERS, type LayerState } from "@/lib/layers";
 import { country } from "@/lib/countries";
-import type { EventKind, ThreatEvent, ThreatSnapshot } from "@/lib/live/types";
+import type { EventKind, ThreatEvent, ThreatSnapshot } from "@/lib/domain/types";
 
 const ThreatGlobe = dynamic(() => import("@/components/globe/ThreatGlobe"), { ssr: false });
 

@@ -6,6 +6,7 @@
 // Lite has no coordinates, so a dot is placed at its country's centroid with a
 // small stable jitter (the same offsets the globe uses for C2 servers), which
 // keeps points in one country from stacking and from moving between polls.
+import "server-only";
 import { getJson } from "./http";
 import { country, jitter } from "../countries";
 import { isIp } from "../html";

@@ -1,6 +1,6 @@
 "use client";
 
-import type { ThreatSnapshot } from "@/lib/live/types";
+import type { ThreatSnapshot } from "@/lib/domain/types";
 
 type Card = { label: string; value?: number; sub: string; color: string; title: string };
 

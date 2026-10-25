@@ -1,6 +1,7 @@
+import "server-only";
 import { getJson } from "./http";
 import { geolocate } from "./geo";
-import type { C2Server } from "./types";
+import type { C2Server } from "../domain/types";
 
 type Raw = {
   ip_address: string;
