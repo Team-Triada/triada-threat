@@ -1,112 +1,53 @@
 # TRIADA Threat
 
-Real-time global cyber threat map. Ransomware leak-site claims, vulnerabilities known to be exploited, new critical CVEs, botnet command-and-control servers, mass scanners and security news, drawn on an interactive 3D globe with a live stream, stats and per-record analysis.
+A live map of what's going on in cybersecurity right now.
 
-Live at <https://threat.triada.in> (planned domain).
+We pull in ransomware leak-site posts, vulnerabilities that are actively being exploited, new critical CVEs, botnet servers, mass scanners and security news, and put it all on one 3D globe with a live feed next to it. It updates every minute, and you don't need an account or any setup to use it.
 
-## Quick start
+## What it does
+
+- Shows a 3D globe where countries are shaded by ransomware activity and news coverage. You can replay the last 24 hours of claims and watch them land.
+- Keeps one live feed of everything (ransomware claims, exploited vulnerabilities, critical CVEs, botnet servers, scanners, headlines), newest first.
+- Lets you search the feed by CVE, gang, victim or country, filter by severity, and click a country to see who's being hit there.
+- Gives every item a quick risk score from 0 to 100, with the reasons behind it and what to do next.
+- Has a page for each ransomware gang (who they go after, their techniques, tools and exploited CVEs, latest victims), each known exploited CVE, and 176 threat actor groups from MITRE ATT&CK.
+- Shows the headline numbers on top: victims in the last 24h, active gangs, newly exploited vulnerabilities, critical CVEs, botnet servers online, scanners today.
+
+Works on desktop and phones.
+
+## Who it's useful for
+
+Anyone who wants a fast read on the threat landscape without opening ten tabs. For example:
+
+- Security analysts, to see which new vulnerabilities are really being exploited and which ones ransomware crews are using.
+- IT and security managers, for a quick "what's hitting us this week" overview.
+- Consultants and MSPs, to check which sectors and vendors are being targeted.
+- Researchers and journalists, to follow a gang or a CVE from the first claim to the latest victim.
+- Students, to see how real attacks play out with live data.
+
+## Where the data comes from
+
+[ransomware.live](https://www.ransomware.live), [CISA KEV](https://www.cisa.gov/known-exploited-vulnerabilities-catalog), [NVD](https://nvd.nist.gov), [FIRST EPSS](https://www.first.org/epss/), [abuse.ch Feodo Tracker](https://feodotracker.abuse.ch), [SANS ISC DShield](https://isc.sans.edu), [MITRE ATT&CK](https://attack.mitre.org), [IPinfo](https://ipinfo.io), and 11 security news feeds.
+
+A few things worth knowing:
+
+- Ransomware claims are what the gangs post themselves, so they aren't independently confirmed.
+- A gang's home country is an assessment from public reporting, not something we measured.
+- Dots on the map are placed at country level, not exact locations.
+- The risk score is built from CVSS, exploit likelihood, confirmed exploitation and ransomware use. It's a quick guide, not a verdict.
+
+There are no accounts, cookies or trackers, and API keys stay on the server.
+
+## Running it
 
 ```bash
 npm install
-cp .env.example .env     # optional: add your keys, see below
-npm run dev              # http://localhost:3000
+cp .env.example .env   # optional, the API keys unlock a bit more data
+npm run dev            # http://localhost:3000
 ```
 
-Requires Node 20.9 or newer.
+It's built with Next.js, React, TypeScript and Tailwind. `npm test` runs the tests.
 
-| Script | What it does |
-|---|---|
-| `npm run dev` | Development server |
-| `npm run build` / `npm start` | Production build and server |
-| `npm run lint` | ESLint |
-| `npm run typecheck` | TypeScript, no emit |
-| `npm test` | Unit tests (Vitest) in `tests/` |
-| `npm run fetch:attack` | Re-download the MITRE ATT&CK group data in `data/` |
+## Credits
 
-## Environment variables
-
-All optional. The app runs without them, with less data. They are read on the server only and must never be prefixed with `NEXT_PUBLIC_`. On a host, set them in its environment settings: `.env` is git-ignored and not deployed.
-
-| Variable | Used for | Without it |
-|---|---|---|
-| `RANSOMWARE_API_KEY` | ransomware.live Pro: victims, group profiles | Falls back to the public API (fewer fields) |
-| `NVD_API_KEY` | NVD CVE lookups | About 5 requests per 30 s instead of 50 |
-| `IPINFO_TOKEN` | Placing scanner IPs on the map (IPinfo Lite) | Scanner layer is empty |
-
-## Data sources
-
-| Layer | Source | Notes |
-|---|---|---|
-| Ransomware claims, group profiles | [ransomware.live](https://www.ransomware.live) | Claims are the gang's own statements |
-| Exploited vulnerabilities | [CISA KEV](https://www.cisa.gov/known-exploited-vulnerabilities-catalog) | |
-| New CVEs, CVSS | [NVD](https://nvd.nist.gov) | |
-| Exploit likelihood | [FIRST EPSS](https://www.first.org/epss/) | |
-| Botnet C2 servers | [abuse.ch Feodo Tracker](https://feodotracker.abuse.ch) | |
-| Mass scanners | [SANS ISC DShield](https://isc.sans.edu) | |
-| IP to country and network | [IPinfo Lite](https://ipinfo.io/lite) | Attribution is shown in the UI |
-| News | 11 security RSS feeds | See `src/lib/live/feeds.ts` |
-| Threat actors | [MITRE ATT&CK](https://attack.mitre.org) | Stored in `data/`, refreshed with `npm run fetch:attack` |
-| Country shapes | Natural Earth 110m | Self-hosted in `public/geo/` |
-
-Country of origin for gangs and actors (`data/ransomware-origin.json`, `data/actor-attribution.json`) is a hand-maintained, assessed link from public reporting. It is labelled as such in the UI and is not telemetry. All map dots are country-level.
-
-## Architecture
-
-```
-src/
-  app/                 Next.js App Router: pages, API route, sitemap, robots
-    page.tsx             Dashboard (ISR, 60 s)
-    api/threats/         Aggregated snapshot as JSON (polled by the dashboard)
-    ransomware/          List, and [group] profile pages
-    cve/[id]/            CVE detail (ISR)
-    actors/, actor/[id]/ MITRE ATT&CK groups
-  components/
-    live/                Dashboard shell, stream, header, stats, insights, detail panel
-      detail/            Detail views (event, country) and shared frame
-    globe/               3D globe (react-globe.gl) and its pure geometry helpers
-    ui/                  Shared presentational pieces (logo, badges, top bar, assessment)
-  lib/
-    domain/              Isomorphic: types and the analysis/scoring logic. Safe in the browser.
-    live/                SERVER ONLY (import "server-only"): upstream clients, caching, snapshot
-    ...                  Small shared helpers: countries, severity, layers, seo, html escaping
-data/                  Static datasets (ATT&CK, attribution, centroids)
-public/                Images and the self-hosted map shapes
-scripts/               Maintenance scripts
-tests/                 Unit tests for the pure logic (filter, feed parsing, scoring, validation)
-.github/workflows/     CI: typecheck, lint, test, build, audit
-```
-
-Rules:
-
-- Anything that touches an upstream API or an API key lives in `src/lib/live/` and starts with `import "server-only"`. Importing it from a client component fails the build, so keys cannot leak into the browser bundle.
-- Browser code imports only from `src/lib/domain/` and the small shared helpers.
-- Upstream text is untrusted: HTML is escaped (`lib/html.ts`), URLs are limited to http(s), IPs are validated before use, and RSS is read with linear-time helpers (`lib/live/xml.ts`) so a hostile feed cannot stall the server.
-
-### Data flow and caching
-
-1. `lib/live/snapshot.ts` calls every source in parallel, normalises the results into one `ThreatSnapshot`, and tracks each source's health.
-2. Individual upstream calls are cached with Next's fetch cache (`next.revalidate`). Responses over 2 MB (CISA KEV) use `lib/live/memo.ts`, an in-process cache with in-flight de-duplication and stale-on-error.
-3. The home page is rendered with a trimmed snapshot (ISR, 60 s). The browser then swaps in the full snapshot from `/api/threats` and polls it every 60 s.
-4. CVE and ransomware group pages use on-demand ISR.
-
-The in-process caches are per instance. On serverless hosts each cold start begins empty, so upstream request volume is higher there; the Next fetch cache still applies.
-
-## Security notes
-
-- Security headers and a Content Security Policy are set in `next.config.ts`. The CSP allows inline scripts because Next requires them.
-- The image optimizer is limited to the logo (`images.localPatterns`).
-- Single-CVE lookups are capped just under NVD's own limit (40 per 30 s with a key, 4 without) so crawlers can't use up the quota. Bursts queue for up to 12 s, then get a temporary error (never a cached false 404).
-- `/api/threats` has no rate limit of its own. Put a rate limit in front of it at the host.
-- Source maps are published (Lighthouse uses them). Set `productionBrowserSourceMaps` to `false` in `next.config.ts` to stop that.
-
-## Deployment
-
-Needs a Node runtime (server routes, ISR, server-side keys), so it can't be a static export. Vercel works with no config: set the three env vars and add the domain. Cloudflare Workers needs the OpenNext adapter and a shared cache for the in-process caches.
-
-## Accessibility and performance
-
-One h1 per page, labelled controls, keyboard-friendly panels, reduced-motion support. On a production build Lighthouse gives 100 for Accessibility, Best Practices and SEO. Desktop performance is 98 to 100. Mobile varies between about 70 and 95 depending on machine load, mostly because of the globe code.
-
-## Attribution
-
-IP geolocation by [IPinfo](https://ipinfo.io). Map shapes from [Natural Earth](https://www.naturalearthdata.com). ATT&CK data from MITRE. Check each provider's terms before commercial use, in particular ransomware.live and NVD.
+IP geolocation by [IPinfo](https://ipinfo.io), map shapes from [Natural Earth](https://www.naturalearthdata.com), threat actor data from [MITRE ATT&CK](https://attack.mitre.org). If you plan to use this commercially, check each data provider's terms first, especially ransomware.live and NVD.
