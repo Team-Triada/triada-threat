@@ -2,7 +2,7 @@ import Link from "next/link";
 import PageTop from "@/components/ui/PageTop";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
-import { pageMeta, titleCase } from "@/lib/seo";
+import { breadcrumbLd, jsonLd, pageMeta, titleCase } from "@/lib/seo";
 import { fetchGroupProfile } from "@/lib/live/ransomware";
 import { ago, groupOrigin } from "@/lib/domain/analysis";
 import { countryName } from "@/lib/countries";
@@ -41,6 +41,7 @@ export default async function GroupPage({ params }: { params: Promise<{ group: s
 
   return (
     <div className="min-h-screen">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd(breadcrumbLd([{ name: "Home", path: "/" }, { name: "Ransomware", path: "/ransomware" }, { name: titleCase(name), path: `/ransomware/${encodeURIComponent(name)}` }])) }} />
       <main className="mx-auto flex w-full flex-col gap-8 px-4 py-6 sm:px-8 sm:py-10" style={{ maxWidth: 1180 }}>
         <PageTop />
         <Link href="/ransomware" className="inline-flex items-center gap-1.5 text-sm text-cyan hover:underline w-fit"><ArrowLeftIcon className="h-3.5 w-3.5 shrink-0" aria-hidden />All ransomware activity</Link>

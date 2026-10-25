@@ -2,7 +2,7 @@ import Link from "next/link";
 import PageTop from "@/components/ui/PageTop";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
-import { pageMeta } from "@/lib/seo";
+import { breadcrumbLd, jsonLd, pageMeta } from "@/lib/seo";
 import { fetchKev } from "@/lib/live/kev";
 import { fetchCve, NvdUnavailable } from "@/lib/live/nvd";
 import { fetchEpss } from "@/lib/live/epss";
@@ -72,6 +72,7 @@ export default async function CvePage({ params }: { params: Promise<{ id: string
 
   return (
     <div className="min-h-screen">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd(breadcrumbLd([{ name: "Home", path: "/" }, { name: id, path: `/cve/${id}` }])) }} />
       <main className="mx-auto flex w-full flex-col gap-8 px-4 py-6 sm:px-8 sm:py-10" style={{ maxWidth: 1180 }}>
         <PageTop />
         <Link href="/" className="inline-flex items-center gap-1.5 text-sm text-cyan hover:underline w-fit"><ArrowLeftIcon className="h-3.5 w-3.5 shrink-0" aria-hidden />Back to live map</Link>

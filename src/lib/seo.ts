@@ -31,3 +31,13 @@ export function pageMeta({ title, description, path }: { title: string; descript
 export function jsonLd(data: object): string {
   return JSON.stringify(data).replace(/</g, "\\u003c");
 }
+
+// schema.org BreadcrumbList: the one structured-data type that fits these pages
+// (Google can show the trail in results). `path` is relative to SITE_URL.
+export function breadcrumbLd(trail: { name: string; path: string }[]) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: trail.map((t, i) => ({ "@type": "ListItem", position: i + 1, name: t.name, item: `${SITE_URL}${t.path}` })),
+  };
+}

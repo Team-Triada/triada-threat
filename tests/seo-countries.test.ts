@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { country, countryName, jitter } from "@/lib/countries";
-import { jsonLd, pageMeta, titleCase } from "@/lib/seo";
+import { breadcrumbLd, jsonLd, pageMeta, titleCase } from "@/lib/seo";
 
 describe("seo helpers", () => {
   it("title-cases group names", () => {
@@ -18,6 +18,15 @@ describe("seo helpers", () => {
     expect(m.alternates?.canonical).toBe("/x");
     expect((m.openGraph as { images: { width: number }[] }).images[0].width).toBe(1200);
     expect((m.twitter as { card: string }).card).toBe("summary_large_image");
+  });
+});
+
+describe("breadcrumbLd", () => {
+  it("numbers items from 1 and builds absolute URLs", () => {
+    const b = breadcrumbLd([{ name: "Home", path: "/" }, { name: "Ransomware", path: "/ransomware" }]);
+    expect(b["@type"]).toBe("BreadcrumbList");
+    expect(b.itemListElement.map((i) => i.position)).toEqual([1, 2]);
+    expect(b.itemListElement[1].item).toBe("https://threat.triada.in/ransomware");
   });
 });
 
