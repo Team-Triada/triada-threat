@@ -21,7 +21,7 @@ export default function StatsBar({ snapshot, detailOpen, detailWide = false, cov
   // panel expanded the gap is small, so the tiles regroup into 3 x 2 where it still fits (from
   // 1700px) and are hidden below that.
   const wide = detailOpen && detailWide;
-  const right = wide ? "xl:right-[calc(min(820px,58vw)+16px)]" : detailOpen ? "xl:right-[416px]" : "xl:right-[376px]";
+  const right = wide ? "xl:right-[calc(min(820px,58vw)-8px)]" : detailOpen ? "xl:right-[392px]" : "xl:right-[352px]";
   // Ranges must not overlap: Tailwind emits arbitrary min-[] rules before sm:, so override order is not reliable.
   const cols = wide ? "grid-cols-2 sm:grid-cols-3" : "grid-cols-2 sm:max-[1439px]:grid-cols-3 min-[1440px]:grid-cols-6";
 
@@ -30,9 +30,9 @@ export default function StatsBar({ snapshot, detailOpen, detailWide = false, cov
       id="panel-stats"
       inert={covered}
       aria-label="Key numbers"
-      className={`dash-panel pointer-events-auto absolute z-10 overflow-y-auto thin-scroll p-3 bg-[rgba(10,11,14,0.97)] xl:pointer-events-none xl:bg-transparent xl:overflow-visible xl:h-auto xl:p-0 xl:bottom-4 xl:left-[376px] xl:inset-x-auto xl:flex xl:justify-center xl:transition-[right] xl:duration-200 xl:ease-out motion-reduce:transition-none ${right} ${wide ? "xl:max-[1699px]:hidden" : ""} ${className}`}
+      className={`dash-panel pointer-events-auto absolute z-10 overflow-y-auto thin-scroll p-3 bg-[rgba(10,11,14,0.97)] xl:pointer-events-none xl:bg-transparent xl:overflow-visible xl:h-auto xl:p-0 xl:bottom-4 xl:left-[352px] xl:inset-x-auto xl:flex xl:justify-center xl:transition-[right] xl:duration-200 xl:ease-out motion-reduce:transition-none ${right} ${wide ? "xl:max-[1699px]:hidden" : ""} ${className}`}
     >
-      <div className={`pointer-events-auto grid w-full max-w-[1180px] gap-2 xl:gap-2 ${cols}`}>
+      <div className={`pointer-events-auto grid w-full max-w-[1760px] gap-2 xl:gap-1.5 ${cols}`}>
         {cards.map((c) => (
           <StatTile key={c.label} label={c.label} short={c.short} value={c.value} sub={c.sub} color={c.color} Icon={c.Icon} title={`${c.title}. ${c.sub}`} />
         ))}
