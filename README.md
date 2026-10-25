@@ -76,7 +76,7 @@ tests/                 Unit tests for the pure logic (filter, feed parsing, scor
 .github/workflows/     CI: typecheck, lint, test, build, audit
 ```
 
-Rules the structure enforces:
+Rules:
 
 - Anything that touches an upstream API or an API key lives in `src/lib/live/` and starts with `import "server-only"`. Importing it from a client component fails the build, so keys cannot leak into the browser bundle.
 - Browser code imports only from `src/lib/domain/` and the small shared helpers.
@@ -97,15 +97,15 @@ The in-process caches are per instance. On serverless hosts each cold start begi
 - The image optimizer is limited to the logo (`images.localPatterns`).
 - Single-CVE lookups are capped at 30 per minute so crawlers cannot exhaust the NVD quota.
 - `/api/threats` has no rate limit of its own. Put a rate limit in front of it at the host.
-- Source maps are published on purpose. Set `productionBrowserSourceMaps` to `false` in `next.config.ts` to stop that.
+- Source maps are published (Lighthouse uses them). Set `productionBrowserSourceMaps` to `false` in `next.config.ts` to stop that.
 
 ## Deployment
 
-Needs a Node runtime (it is not a static site): server routes, ISR and server-side keys. Works on Vercel with no configuration. Set the three environment variables above, and point the domain at the project. Cloudflare Workers needs the OpenNext adapter and a shared cache for the in-process caches.
+Needs a Node runtime (server routes, ISR, server-side keys), so it can't be a static export. Vercel works with no config: set the three env vars and add the domain. Cloudflare Workers needs the OpenNext adapter and a shared cache for the in-process caches.
 
 ## Accessibility and performance
 
-Targets WCAG-friendly markup: one `h1` per page, labelled controls, keyboard operable panels, reduced-motion support, and 11 px minimum text. Lighthouse on a production build scores 100 for Accessibility, Best Practices and SEO on all pages. Desktop performance is 98 to 100. Mobile performance varies with machine load (roughly 70 to 95) because of the 3D globe code.
+One h1 per page, labelled controls, keyboard-friendly panels, reduced-motion support. On a production build Lighthouse gives 100 for Accessibility, Best Practices and SEO. Desktop performance is 98 to 100. Mobile varies between about 70 and 95 depending on machine load, mostly because of the globe code.
 
 ## Attribution
 
