@@ -48,9 +48,36 @@ function normalize(v: RawVictim): Victim | null {
   };
 }
 
+const PUBLIC_BASE = "https://api.ransomware.live/v2";
+
+// The public endpoint intermittently answers a valid request with a 404 page
+// (seen alternating with 200 on identical calls), so retry a few times.
+async function withRetry<T>(fn: () => Promise<T>, attempts = 4): Promise<T> {
+  let last: unknown;
+  for (let i = 0; i < attempts; i++) {
+    try {
+      return await fn();
+    } catch (e) {
+      last = e;
+      await new Promise((r) => setTimeout(r, 250 * (i + 1)));
+    }
+  }
+  throw last;
+}
+
 export async function fetchRecentVictims(): Promise<Victim[]> {
-  const path = KEY ? "/victims/recent" : "/recentvictims";
-  const raw = await getJson<RawVictim[] | { victims: RawVictim[] }>(`${BASE}${path}`, 120, { headers: AUTH }, 25000);
+  type Resp = RawVictim[] | { victims: RawVictim[] };
+  let raw: Resp;
+  try {
+    raw = KEY
+      ? await getJson<Resp>(`${BASE}/victims/recent`, 120, { headers: AUTH }, 25000)
+      : await withRetry(() => getJson<Resp>(`${PUBLIC_BASE}/recentvictims`, 120, undefined, 25000));
+  } catch (e) {
+    // A revoked, expired or rate-limited Pro key must not blank the whole feed:
+    // the public endpoint serves the same recent claims with fewer fields.
+    if (!KEY) throw e;
+    raw = await withRetry(() => getJson<Resp>(`${PUBLIC_BASE}/recentvictims`, 120, undefined, 25000));
+  }
   const list = Array.isArray(raw) ? raw : raw.victims ?? [];
   return list
     .map(normalize)
@@ -103,7 +130,7 @@ function tally(list: Victim[], key: (v: Victim) => string | null): [string, numb
 // can be ~2 MB for big gangs, so it is memoised instead of fetch-cached.
 export async function fetchGroupProfile(name: string): Promise<GroupProfile | null> {
   const slug = encodeURIComponent(name.toLowerCase());
-  const infoUrl = KEY ? `${BASE}/group/${slug}` : `https://api.ransomware.live/v2/group/${slug}`;
+  const infoUrl = KEY ? `${BASE}/group/${slug}` : `${PUBLIC_BASE}/group/${slug}`;
   const [info, history] = await Promise.allSettled([
     getJson<RawGroup>(infoUrl, 3600, { headers: AUTH }),
     KEY
