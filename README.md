@@ -48,6 +48,12 @@ npm run dev            # http://localhost:3000
 
 It's built with Next.js, React, TypeScript and Tailwind. `npm test` runs the tests.
 
+## License
+
+The code is under the [AGPL-3.0](LICENSE). You're free to use it, learn from it and build on it, and if you run a modified version as a service you need to share your changes under the same license. If you want to use it in a closed-source product, get in touch with us about a commercial license.
+
+The TRIADA name, logo and fonts aren't part of that license, see [NOTICE](NOTICE).
+
 ## Credits
 
 IP geolocation by [IPinfo](https://ipinfo.io), map shapes from [Natural Earth](https://www.naturalearthdata.com), threat actor data from [MITRE ATT&CK](https://attack.mitre.org). If you plan to use this commercially, check each data provider's terms first, especially ransomware.live and NVD.

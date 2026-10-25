@@ -1,0 +1,29 @@
+TRIADA Threat
+Copyright (C) 2026 TRIADA
+
+The source code in this repository is licensed under the GNU Affero General
+Public License v3.0 (see LICENSE). In short: you can use, study, change and share
+it, but if you run a modified version as a network service you must offer your
+users the source of your changes under the same license.
+
+Not covered by that license
+---------------------------
+- Name and branding. "TRIADA", the wordmark and logo (public/images/Triada_typo.png),
+  the favicons and the social preview image are the property of TRIADA. Do not use
+  them to suggest your project is the original or is endorsed by us.
+- Fonts. The Telegraf typefaces in src/fonts are third-party fonts under their
+  own license, not under the AGPL. Check that license before redistributing or
+  reusing them, or replace them with a font you are allowed to use.
+
+Third-party material
+--------------------
+- MITRE ATT&CK data (data/attack-groups.json): ATT&CK(R) is a registered
+  trademark of The MITRE Corporation. (C) 2015-2026 The MITRE Corporation. This
+  work is reproduced and distributed with the permission of The MITRE Corporation.
+- Country shapes (public/geo/countries.geojson): Natural Earth, public domain.
+- Icons: Heroicons, MIT License, (c) Tailwind Labs, Inc.
+- IP geolocation: IPinfo (https://ipinfo.io). Attribution is shown in the app.
+- Live data comes from ransomware.live, CISA KEV, NVD, FIRST EPSS, abuse.ch,
+  SANS ISC, security news feeds and MITRE. Each provider has its own terms for
+  commercial use; review them before using this commercially.
+- npm dependencies keep their own licenses (see package-lock.json).
