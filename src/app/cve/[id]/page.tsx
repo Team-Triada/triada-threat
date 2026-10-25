@@ -1,5 +1,5 @@
 import Link from "next/link";
-import PageTop from "@/components/ui/PageTop";
+import PageShell from "@/components/ui/PageShell";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { breadcrumbLd, jsonLd, pageMeta } from "@/lib/seo";
@@ -78,84 +78,81 @@ export default async function CvePage({ params }: { params: Promise<{ id: string
   const fmt = (iso?: string) => (iso ? new Date(iso).toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" }) : "n/a");
 
   return (
-    <div className="min-h-screen">
+    <PageShell>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd(breadcrumbLd([{ name: "Home", path: "/" }, { name: id, path: `/cve/${id}` }])) }} />
-      <main className="mx-auto flex w-full flex-col gap-8 px-4 py-6 sm:px-8 sm:py-10" style={{ maxWidth: 1180 }}>
-        <PageTop />
-        <Link href="/" className="inline-flex items-center gap-1.5 text-sm text-cyan hover:underline w-fit"><ArrowLeftIcon className="h-3.5 w-3.5 shrink-0" aria-hidden />Back to live map</Link>
+      <Link href="/" className="inline-flex items-center gap-1.5 text-sm text-cyan hover:underline w-fit"><ArrowLeftIcon className="h-3.5 w-3.5 shrink-0" aria-hidden />Back to live map</Link>
 
-        <header className="flex flex-col gap-4">
-          <h1 className="heading-hero" style={{ fontSize: "clamp(28px, 4vw, 44px)" }}>{id}</h1>
-          <div className="flex flex-wrap items-center gap-2">
-            {kev && <KevBadge />}
-            {kev?.ransomwareUse && <RansomwareBadge />}
-            {kev && <span className="text-sm text-[#c8cdd5]">{kev.name}</span>}
-          </div>
-        </header>
+      <header className="flex flex-col gap-4">
+        <h1 className="heading-hero" style={{ fontSize: "clamp(28px, 4vw, 44px)" }}>{id}</h1>
+        <div className="flex flex-wrap items-center gap-2">
+          {kev && <KevBadge />}
+          {kev?.ransomwareUse && <RansomwareBadge />}
+          {kev && <span className="text-sm text-[#c8cdd5]">{kev.name}</span>}
+        </div>
+      </header>
 
-        <section className="grid gap-6 md:grid-cols-[minmax(0,1fr)_360px] items-start">
-          <div className="flex flex-col gap-6">
-            <div className="card-surface p-6 flex flex-col gap-4">
-              <span className="section-label">Description</span>
-              <p className="text-[#c8cdd5] leading-relaxed">{kev?.description ?? cve?.description}</p>
-              {kev && cve?.description && <p className="text-sm text-[#9aa1ab] leading-relaxed">{cve.description}</p>}
-              {cve?.cvss?.vector && (
-                <div>
-                  <span className="text-[10px] uppercase tracking-wide text-[var(--muted-foreground)] block">CVSS {cve.cvss.version} vector</span>
-                  <code className="text-xs text-[#9aa1ab] break-all">{cve.cvss.vector}</code>
-                </div>
-              )}
-              <div className="grid grid-cols-2 gap-4 text-sm">
-                <Meta label="Published" value={fmt(cve?.published)} />
-                <Meta label="Last modified" value={fmt(cve?.lastModified)} />
-                {kev && <Meta label="Added to KEV" value={fmt(kev.dateAdded)} />}
-                {kev && <Meta label="Remediation due" value={fmt(kev.dueDate)} />}
-              </div>
-            </div>
-
-            {cve && cve.references.length > 0 && (
-              <div className="card-surface p-6">
-                <span className="section-label">References</span>
-                <ul className="mt-3 flex flex-col gap-2">
-                  {cve.references.map((r) => (
-                    <li key={r.url} className="flex items-center gap-3">
-                      <a href={r.url} target="_blank" rel="noopener noreferrer" title={r.url} className="min-w-0 flex-1 truncate text-[13px] hover:underline">
-                        <span className="text-cyan">{refHost(r.url)}</span>
-                        <span className="text-[var(--muted-foreground)]">{refPath(r.url)}</span>
-                      </a>
-                      <span className="flex shrink-0 flex-wrap justify-end gap-1">
-                        {r.tags.slice(0, 2).map((t) => (
-                          <span key={t} className="rounded-full border border-[var(--border)] px-2 py-0.5 text-[10px] text-[var(--muted-foreground)]">{t}</span>
-                        ))}
-                      </span>
-                    </li>
-                  ))}
-                </ul>
+      <section className="grid grid-cols-[minmax(0,1fr)] gap-6 md:grid-cols-[minmax(0,1fr)_360px] items-start">
+        <div className="flex flex-col gap-6">
+          <div className="card-surface p-6 flex flex-col gap-4">
+            <span className="section-label">Description</span>
+            <p className="text-[#c8cdd5] leading-relaxed">{kev?.description ?? cve?.description}</p>
+            {kev && cve?.description && <p className="text-sm text-[#9aa1ab] leading-relaxed">{cve.description}</p>}
+            {cve?.cvss?.vector && (
+              <div>
+                <span className="text-[10px] uppercase tracking-wide text-[var(--muted-foreground)] block">CVSS {cve.cvss.version} vector</span>
+                <code className="text-xs text-[#9aa1ab] break-all">{cve.cvss.vector}</code>
               </div>
             )}
+            <div className="grid grid-cols-2 gap-4 text-sm">
+              <Meta label="Published" value={fmt(cve?.published)} />
+              <Meta label="Last modified" value={fmt(cve?.lastModified)} />
+              {kev && <Meta label="Added to KEV" value={fmt(kev.dateAdded)} />}
+              {kev && <Meta label="Remediation due" value={fmt(kev.dueDate)} />}
+            </div>
+          </div>
 
-            <div className="flex flex-col gap-3">
-              <span className="section-label">{related.length} recent {related.length === 1 ? "article mentions" : "articles mention"} this CVE</span>
-              <ul className="flex flex-col gap-3">
-                {related.map((r) => (
-                  <li key={r.id} className="card-surface p-4">
-                    <a href={r.link} target="_blank" rel="noopener noreferrer" className="heading-card block hover:text-cyan transition-colors" style={{ fontSize: 16 }}>{r.title}</a>
-                    <p className="mt-1.5 text-sm text-[#9aa1ab] line-clamp-3">{r.summary}</p>
-                    <div className="mt-2 text-xs text-[var(--muted-foreground)]">{r.source} · {ago(r.publishedAt)}</div>
+          {cve && cve.references.length > 0 && (
+            <div className="card-surface p-6">
+              <span className="section-label">References</span>
+              <ul className="mt-3 flex flex-col gap-2">
+                {cve.references.map((r) => (
+                  <li key={r.url} className="flex items-center gap-3">
+                    <a href={r.url} target="_blank" rel="noopener noreferrer" title={r.url} className="min-w-0 flex-1 truncate text-[13px] hover:underline">
+                      <span className="text-cyan">{refHost(r.url)}</span>
+                      <span className="text-[var(--muted-foreground)]">{refPath(r.url)}</span>
+                    </a>
+                    <span className="flex shrink-0 flex-wrap justify-end gap-1">
+                      {r.tags.slice(0, 2).map((t) => (
+                        <span key={t} className="rounded-full border border-[var(--border)] px-2 py-0.5 text-[10px] text-[var(--muted-foreground)]">{t}</span>
+                      ))}
+                    </span>
                   </li>
                 ))}
               </ul>
             </div>
-          </div>
+          )}
 
-          <div className="card-surface p-4 flex flex-col gap-4">
-            <Gauge a={a} />
-            <Findings rows={a.findings} />
-            <Actions items={a.actions} />
+          <div className="flex flex-col gap-3">
+            <span className="section-label">{related.length} recent {related.length === 1 ? "article mentions" : "articles mention"} this CVE</span>
+            <ul className="flex flex-col gap-3">
+              {related.map((r) => (
+                <li key={r.id} className="card-surface p-4">
+                  <a href={r.link} target="_blank" rel="noopener noreferrer" className="heading-card block hover:text-cyan transition-colors" style={{ fontSize: 16 }}>{r.title}</a>
+                  <p className="mt-1.5 text-sm text-[#9aa1ab] line-clamp-3">{r.summary}</p>
+                  <div className="mt-2 text-xs text-[var(--muted-foreground)]">{r.source} · {ago(r.publishedAt)}</div>
+                </li>
+              ))}
+            </ul>
           </div>
-        </section>
-      </main>
-    </div>
+        </div>
+
+        <div className="card-surface p-4 flex flex-col gap-4">
+          <Gauge a={a} />
+          <Findings rows={a.findings} />
+          <Actions items={a.actions} />
+        </div>
+      </section>
+    </PageShell>
   );
 }
 

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import PageTop from "@/components/ui/PageTop";
+import PageShell from "@/components/ui/PageShell";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { breadcrumbLd, jsonLd, pageMeta, titleCase } from "@/lib/seo";
@@ -40,108 +40,105 @@ export default async function GroupPage({ params }: { params: Promise<{ group: s
   const fmt = (iso: string) => new Date(iso).toLocaleDateString("en-US", { dateStyle: "medium" });
 
   return (
-    <div className="min-h-screen">
+    <PageShell>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd(breadcrumbLd([{ name: "Home", path: "/" }, { name: "Ransomware", path: "/ransomware" }, { name: titleCase(name), path: `/ransomware/${encodeURIComponent(name)}` }])) }} />
-      <main className="mx-auto flex w-full flex-col gap-8 px-4 py-6 sm:px-8 sm:py-10" style={{ maxWidth: 1180 }}>
-        <PageTop />
-        <Link href="/ransomware" className="inline-flex items-center gap-1.5 text-sm text-cyan hover:underline w-fit"><ArrowLeftIcon className="h-3.5 w-3.5 shrink-0" aria-hidden />All ransomware activity</Link>
+      <Link href="/ransomware" className="inline-flex items-center gap-1.5 text-sm text-cyan hover:underline w-fit"><ArrowLeftIcon className="h-3.5 w-3.5 shrink-0" aria-hidden />All ransomware activity</Link>
 
-        <header className="flex flex-col gap-3">
-          <span className="section-label">Ransomware group</span>
-          <h1 className="heading-hero capitalize" style={{ fontSize: "clamp(28px, 6vw, 48px)" }}>{p.name}</h1>
-          <div className="flex flex-wrap gap-2">
-            {p.totalVictims > 0 && <span className="pill-tag">{p.totalVictims.toLocaleString()} victims claimed</span>}
-            {p.firstSeen && <span className="pill-tag">First seen {fmt(p.firstSeen)}</span>}
-            {p.lastSeen && <span className="pill-tag">Last post {ago(p.lastSeen)}</span>}
-            {p.leakSites > 0 && <span className="pill-tag">{p.leakSites} known site{p.leakSites === 1 ? "" : "s"}</span>}
-            {origin?.countryCode && <span className="pill-tag">Assessed nexus: {countryName(origin.countryCode)}</span>}
-          </div>
-          {origin && <p className="text-xs text-[var(--muted-foreground)]">{origin.note}</p>}
-        </header>
+      <header className="flex flex-col gap-3">
+        <span className="section-label">Ransomware group</span>
+        <h1 className="heading-hero capitalize" style={{ fontSize: "clamp(28px, 6vw, 48px)" }}>{p.name}</h1>
+        <div className="flex flex-wrap gap-2">
+          {p.totalVictims > 0 && <span className="pill-tag">{p.totalVictims.toLocaleString()} victims claimed</span>}
+          {p.firstSeen && <span className="pill-tag">First seen {fmt(p.firstSeen)}</span>}
+          {p.lastSeen && <span className="pill-tag">Last post {ago(p.lastSeen)}</span>}
+          {p.leakSites > 0 && <span className="pill-tag">{p.leakSites} known site{p.leakSites === 1 ? "" : "s"}</span>}
+          {origin?.countryCode && <span className="pill-tag">Assessed nexus: {countryName(origin.countryCode)}</span>}
+        </div>
+        {origin && <p className="text-xs text-[var(--muted-foreground)]">{origin.note}</p>}
+      </header>
 
-        {p.description && (
-          <section className="card-surface p-5 sm:p-6">
-            <h2 className="section-label">Profile</h2>
-            <p className="mt-3 text-[#c8cdd5] leading-relaxed whitespace-pre-line">{p.description}</p>
-          </section>
-        )}
-
-        <section className="grid gap-4 sm:grid-cols-2">
-          <Tally title="Targeted sectors" rows={p.sectors} />
-          <Tally title="Targeted countries" rows={p.countries.map(([c, n]) => [countryName(c), n] as [string, number])} />
+      {p.description && (
+        <section className="card-surface p-5 sm:p-6">
+          <h2 className="section-label">Profile</h2>
+          <p className="mt-3 text-[#c8cdd5] leading-relaxed whitespace-pre-line">{p.description}</p>
         </section>
+      )}
 
-        {p.vulnerabilities.length > 0 && (
-          <section className="card-surface p-5 sm:p-6">
-            <h2 className="section-label">Vulnerabilities this group exploits</h2>
-            <ul className="mt-3 flex flex-col divide-y divide-[var(--border)]">
-              {p.vulnerabilities.map((v) => (
-                <li key={v.cve} className="flex flex-wrap items-baseline gap-x-3 gap-y-1 py-2.5">
-                  <Link href={`/cve/${v.cve}`} className="text-sm text-cyan hover:underline tabular-nums">{v.cve}</Link>
-                  <span className="text-sm text-[#c8cdd5]">{productLabel(v.vendor, v.product)}</span>
-                  {v.cvss !== null && <span className="ml-auto text-xs text-[var(--muted-foreground)] tabular-nums">CVSS {v.cvss.toFixed(1)}</span>}
-                </li>
-              ))}
-            </ul>
-          </section>
-        )}
+      <section className="grid gap-4 sm:grid-cols-2">
+        <Tally title="Targeted sectors" rows={p.sectors} />
+        <Tally title="Targeted countries" rows={p.countries.map(([c, n]) => [countryName(c), n] as [string, number])} />
+      </section>
 
-        {p.ttps.length > 0 && (
-          <section className="card-surface p-5 sm:p-6">
-            <h2 className="section-label">Tactics and techniques (MITRE ATT&CK)</h2>
-            <dl className="mt-3 flex flex-col gap-4">
-              {p.ttps.map((t) => (
-                <div key={t.tactic}>
-                  <dt className="text-sm text-[#e8eaed]">{t.tactic}</dt>
-                  <dd className="mt-1.5 flex flex-wrap gap-1.5">
-                    {t.techniques.map((x) => (
-                      <a
-                        key={x.id}
-                        href={`https://attack.mitre.org/techniques/${x.id.replace(".", "/")}/`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="pill-tag hover:text-cyan transition-colors"
-                        style={{ padding: "4px 10px", fontSize: 12 }}
-                      >
-                        {x.id} · {x.name}
-                      </a>
-                    ))}
-                  </dd>
-                </div>
-              ))}
-            </dl>
-          </section>
-        )}
-
-        {p.tools.length > 0 && (
-          <section className="card-surface p-5 sm:p-6">
-            <h2 className="section-label">Tools observed</h2>
-            <dl className="mt-3 grid gap-4 sm:grid-cols-2">
-              {p.tools.map((t) => (
-                <div key={t.category}>
-                  <dt className="text-sm text-[#e8eaed]">{t.category}</dt>
-                  <dd className="mt-1 text-sm text-[#9aa1ab] leading-relaxed">{t.items.join(", ")}</dd>
-                </div>
-              ))}
-            </dl>
-          </section>
-        )}
-
-        <section className="flex flex-col gap-3">
-          <h2 className="section-label">Most recent victims</h2>
-          <ul className="flex flex-col gap-2">
-            {p.recentVictims.map((v) => (
-              <li key={v.id} className="card-surface cv-row px-4 py-3 sm:px-5 flex flex-wrap items-center gap-x-4 gap-y-1">
-                <span className="text-[#e8eaed] min-w-0 break-words">{v.victim}</span>
-                <span className="text-xs text-[var(--muted-foreground)]">{[v.sector, v.countryCode ? countryName(v.countryCode) : null].filter(Boolean).join(" · ")}</span>
-                <span className="ml-auto text-xs text-[var(--muted-foreground)]">{ago(v.discoveredAt)}</span>
+      {p.vulnerabilities.length > 0 && (
+        <section className="card-surface p-5 sm:p-6">
+          <h2 className="section-label">Vulnerabilities this group exploits</h2>
+          <ul className="mt-3 flex flex-col divide-y divide-[var(--border)]">
+            {p.vulnerabilities.map((v) => (
+              <li key={v.cve} className="flex flex-wrap items-baseline gap-x-3 gap-y-1 py-2.5">
+                <Link href={`/cve/${v.cve}`} className="text-sm text-cyan hover:underline tabular-nums">{v.cve}</Link>
+                <span className="text-sm text-[#c8cdd5]">{productLabel(v.vendor, v.product)}</span>
+                {v.cvss !== null && <span className="ml-auto text-xs text-[var(--muted-foreground)] tabular-nums">CVSS {v.cvss.toFixed(1)}</span>}
               </li>
             ))}
-            {p.recentVictims.length === 0 && <li className="text-sm text-[var(--muted-foreground)]">No victim history available right now.</li>}
           </ul>
         </section>
-      </main>
-    </div>
+      )}
+
+      {p.ttps.length > 0 && (
+        <section className="card-surface p-5 sm:p-6">
+          <h2 className="section-label">Tactics and techniques (MITRE ATT&CK)</h2>
+          <dl className="mt-3 flex flex-col gap-4">
+            {p.ttps.map((t) => (
+              <div key={t.tactic}>
+                <dt className="text-sm text-[#e8eaed]">{t.tactic}</dt>
+                <dd className="mt-1.5 flex flex-wrap gap-1.5">
+                  {t.techniques.map((x) => (
+                    <a
+                      key={x.id}
+                      href={`https://attack.mitre.org/techniques/${x.id.replace(".", "/")}/`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="pill-tag hover:text-cyan transition-colors"
+                      style={{ padding: "4px 10px", fontSize: 12 }}
+                    >
+                      {x.id} · {x.name}
+                    </a>
+                  ))}
+                </dd>
+              </div>
+            ))}
+          </dl>
+        </section>
+      )}
+
+      {p.tools.length > 0 && (
+        <section className="card-surface p-5 sm:p-6">
+          <h2 className="section-label">Tools observed</h2>
+          <dl className="mt-3 grid gap-4 sm:grid-cols-2">
+            {p.tools.map((t) => (
+              <div key={t.category}>
+                <dt className="text-sm text-[#e8eaed]">{t.category}</dt>
+                <dd className="mt-1 text-sm text-[#9aa1ab] leading-relaxed">{t.items.join(", ")}</dd>
+              </div>
+            ))}
+          </dl>
+        </section>
+      )}
+
+      <section className="flex flex-col gap-3">
+        <h2 className="section-label">Most recent victims</h2>
+        <ul className="flex flex-col gap-2">
+          {p.recentVictims.map((v) => (
+            <li key={v.id} className="card-surface cv-row px-4 py-3 sm:px-5 flex flex-wrap items-center gap-x-4 gap-y-1">
+              <span className="text-[#e8eaed] min-w-0 break-words">{v.victim}</span>
+              <span className="text-xs text-[var(--muted-foreground)]">{[v.sector, v.countryCode ? countryName(v.countryCode) : null].filter(Boolean).join(" · ")}</span>
+              <span className="ml-auto text-xs text-[var(--muted-foreground)]">{ago(v.discoveredAt)}</span>
+            </li>
+          ))}
+          {p.recentVictims.length === 0 && <li className="text-sm text-[var(--muted-foreground)]">No victim history available right now.</li>}
+        </ul>
+      </section>
+    </PageShell>
   );
 }
 
