@@ -32,7 +32,6 @@ const nextConfig: NextConfig = {
     return [
       { source: '/geo/:path*', headers: longCache },
       { source: '/images/:path*', headers: longCache },
-      { source: '/fonts/:path*', headers: longCache },
       {
         source: '/(.*)',
         headers: [
