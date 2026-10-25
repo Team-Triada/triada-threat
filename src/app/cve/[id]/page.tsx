@@ -7,8 +7,8 @@ import { fetchKev } from "@/lib/live/kev";
 import { fetchCve, NvdUnavailable } from "@/lib/live/nvd";
 import { fetchEpss } from "@/lib/live/epss";
 import { fetchArticles } from "@/lib/live/feeds";
-import { articlesForCve, assessCve, ago } from "@/lib/live/analysis";
-import { Actions, Findings, Gauge } from "@/components/live/DetailPanel";
+import { articlesForCve, assessCve, ago } from "@/lib/domain/analysis";
+import { Actions, Findings, Gauge } from "@/components/ui/Assessment";
 import { KevBadge, RansomwareBadge } from "@/components/ui/Badges";
 
 export const revalidate = 300;
