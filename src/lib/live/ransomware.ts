@@ -1,5 +1,6 @@
 import "server-only";
 import { getJson } from "./http";
+import { MEMO_MS, REVALIDATE } from "./config";
 import { plain } from "./text";
 import { memo } from "./memo";
 import { safeUrl } from "../html";
@@ -71,13 +72,13 @@ export async function fetchRecentVictims(): Promise<Victim[]> {
   let raw: Resp;
   try {
     raw = KEY
-      ? await getJson<Resp>(`${BASE}/victims/recent`, 120, { headers: AUTH }, 25000)
-      : await withRetry(() => getJson<Resp>(`${PUBLIC_BASE}/recentvictims`, 120, undefined, 25000));
+      ? await getJson<Resp>(`${BASE}/victims/recent`, REVALIDATE.ransomwareRecent, { headers: AUTH }, 25000)
+      : await withRetry(() => getJson<Resp>(`${PUBLIC_BASE}/recentvictims`, REVALIDATE.ransomwareRecent, undefined, 25000));
   } catch (e) {
     // A revoked, expired or rate-limited Pro key must not blank the whole feed:
     // the public endpoint serves the same recent claims with fewer fields.
     if (!KEY) throw e;
-    raw = await withRetry(() => getJson<Resp>(`${PUBLIC_BASE}/recentvictims`, 120, undefined, 25000));
+    raw = await withRetry(() => getJson<Resp>(`${PUBLIC_BASE}/recentvictims`, REVALIDATE.ransomwareRecent, undefined, 25000));
   }
   const list = Array.isArray(raw) ? raw : raw.victims ?? [];
   return list
@@ -88,7 +89,7 @@ export async function fetchRecentVictims(): Promise<Victim[]> {
 
 export async function fetchTotalVictims(): Promise<number | null> {
   if (!KEY) return null;
-  const s = await getJson<{ stats?: { victims?: number } }>(`${BASE}/stats`, 600, { headers: AUTH });
+  const s = await getJson<{ stats?: { victims?: number } }>(`${BASE}/stats`, REVALIDATE.ransomwareStats, { headers: AUTH });
   return s.stats?.victims ?? null;
 }
 
@@ -133,10 +134,10 @@ export async function fetchGroupProfile(name: string): Promise<GroupProfile | nu
   const slug = encodeURIComponent(name.toLowerCase());
   const infoUrl = KEY ? `${BASE}/group/${slug}` : `${PUBLIC_BASE}/group/${slug}`;
   const [info, history] = await Promise.allSettled([
-    getJson<RawGroup>(infoUrl, 3600, { headers: AUTH }),
+    getJson<RawGroup>(infoUrl, REVALIDATE.ransomwareGroup, { headers: AUTH }),
     KEY
-      ? memo(`group-victims-${slug}`, 15 * 60_000, async () => {
-          const r = await getJson<{ victims?: RawVictim[] }>(`${BASE}/victims/?group=${slug}`, 600, { headers: AUTH }, 30000);
+      ? memo(`group-victims-${slug}`, MEMO_MS.groupVictims, async () => {
+          const r = await getJson<{ victims?: RawVictim[] }>(`${BASE}/victims/?group=${slug}`, REVALIDATE.ransomwareGroupVictims, { headers: AUTH }, 30000);
           return (r.victims ?? []).map((v) => normalize({ ...v, group: name })).filter((v): v is Victim => v !== null);
         })
       : fetchRecentVictims().then((all) => all.filter((v) => v.group === name.toLowerCase())),

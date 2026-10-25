@@ -1,5 +1,6 @@
 import "server-only";
 import { getJson } from "./http";
+import { REVALIDATE } from "./config";
 
 // EPSS = FIRST.org's probability a CVE is exploited in the wild in the next
 // 30 days. Public, keyless, batchable.
@@ -10,7 +11,7 @@ export async function fetchEpss(ids: string[]): Promise<Map<string, { epss: numb
     const chunk = unique.slice(i, i + 100);
     const res = await getJson<{ data?: { cve: string; epss: string; percentile: string }[] }>(
       `https://api.first.org/data/v1/epss?cve=${chunk.join(",")}`,
-      3600
+      REVALIDATE.epss
     );
     for (const r of res.data ?? []) out.set(r.cve, { epss: Number(r.epss), percentile: Number(r.percentile) });
   }

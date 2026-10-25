@@ -1,5 +1,6 @@
 import "server-only";
 import { getJson } from "./http";
+import { REVALIDATE } from "./config";
 import { geolocate } from "./geo";
 import { isIp } from "../html";
 import type { ScannerSource } from "../domain/types";
@@ -8,7 +9,7 @@ type Raw = { rank: number; source: string; reports: number; targets: number }[];
 
 // SANS ISC DShield: today's top attacking IPs from their worldwide honeypot and firewall-log sensors.
 export async function fetchScanners(): Promise<ScannerSource[]> {
-  let raw = await getJson<Raw>("https://isc.sans.edu/api/topips/records/25?json", 900);
+  let raw = await getJson<Raw>("https://isc.sans.edu/api/topips/records/25?json", REVALIDATE.scanners);
   raw = raw.filter((r) => isIp(r.source));
   const geo = await geolocate(raw.map((r) => r.source));
   // Raw IPs exist but none could be placed on the map: say why instead of

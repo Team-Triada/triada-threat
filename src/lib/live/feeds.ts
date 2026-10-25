@@ -1,5 +1,6 @@
 import "server-only";
 import { getText } from "./http";
+import { REVALIDATE } from "./config";
 import { safeUrl } from "../html";
 import { geotag } from "./geotag";
 import { parseFeedDate } from "./feed-date";
@@ -62,7 +63,7 @@ function severityOf(text: string, cves: string[]): Severity {
 }
 
 async function fetchFeed(feed: { name: string; url: string }): Promise<Article[]> {
-  const xml = await getText(feed.url, 300);
+  const xml = await getText(feed.url, REVALIDATE.feeds);
   if (xml.length > MAX_FEED_CHARS) throw new Error("feed too large");
   return splitItems(xml, 20).flatMap((block): Article[] => {
     if (block.length > MAX_ITEM_CHARS) return [];

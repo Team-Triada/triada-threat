@@ -1,5 +1,6 @@
 import "server-only";
 import { getJson } from "./http";
+import { MEMO_MS, REVALIDATE } from "./config";
 import { memo } from "./memo";
 import { plain } from "./text";
 import type { KevItem } from "../domain/types";
@@ -22,13 +23,13 @@ type Raw = {
 };
 
 export function fetchKev(): Promise<KevItem[]> {
-  return memo("kev", 30 * 60_000, loadKev);
+  return memo("kev", MEMO_MS.kev, loadKev);
 }
 
 async function loadKev(): Promise<KevItem[]> {
   // Body is over Next's 2 MB fetch-cache limit, so it isn't stored there (memo above covers it).
   // Keep revalidate positive: 0 makes every route that reads KEV render dynamically, home included.
-  const raw = await getJson<Raw>(URL_KEV, 3600);
+  const raw = await getJson<Raw>(URL_KEV, REVALIDATE.kev);
   return raw.vulnerabilities
     .map((v) => ({
       id: v.cveID,

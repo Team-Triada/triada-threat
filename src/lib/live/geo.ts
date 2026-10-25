@@ -5,6 +5,7 @@
 // (same idea as the C2 dots) so they don't stack or move between polls.
 import "server-only";
 import { getJson } from "./http";
+import { MEMO_MS, REVALIDATE } from "./config";
 import { country, jitter } from "../countries";
 import { isIp } from "../html";
 import { plain } from "./text";
@@ -12,15 +13,13 @@ import { plain } from "./text";
 export type Geo = { lat: number; lng: number; countryCode: string; city: string | null; org: string | null };
 
 const TOKEN = process.env.IPINFO_TOKEN;
-const TTL = 12 * 3600_000;
-const RETRY_AFTER_FAIL = 15 * 60_000;
 const CONCURRENCY = 6;
 const cache = new Map<string, { geo: Geo | null; until: number }>();
 
 type Raw = { country_code?: string; asn?: string; as_name?: string };
 
 async function lookup(ip: string): Promise<Geo | null> {
-  const r = await getJson<Raw>(`https://api.ipinfo.io/lite/${encodeURIComponent(ip)}`, 43200, { headers: { Authorization: `Bearer ${TOKEN}` } }, 8000);
+  const r = await getJson<Raw>(`https://api.ipinfo.io/lite/${encodeURIComponent(ip)}`, REVALIDATE.geo, { headers: { Authorization: `Bearer ${TOKEN}` } }, 8000);
   const code = typeof r.country_code === "string" ? r.country_code.toUpperCase() : "";
   const c = /^[A-Z]{2}$/.test(code) ? country(code) : null;
   if (!c) return null;
@@ -40,9 +39,9 @@ export async function geolocate(ips: string[]): Promise<Map<string, Geo>> {
     await Promise.all(
       todo.slice(i, i + CONCURRENCY).map(async (ip) => {
         try {
-          cache.set(ip, { geo: await lookup(ip), until: now + TTL });
+          cache.set(ip, { geo: await lookup(ip), until: now + MEMO_MS.geoHit });
         } catch {
-          cache.set(ip, { geo: null, until: now + RETRY_AFTER_FAIL });
+          cache.set(ip, { geo: null, until: now + MEMO_MS.geoMiss });
         }
       }),
     );

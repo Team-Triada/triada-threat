@@ -1,5 +1,6 @@
 import "server-only";
 import { getJson } from "./http";
+import { MEMO_MS, REVALIDATE } from "./config";
 import { plain } from "./text";
 import { memo } from "./memo";
 import { safeUrl } from "../html";
@@ -60,7 +61,7 @@ function normalize(item: RawCve): CveRecord {
 // CVEs published in the last `hours`, highest CVSS first. NVD requires a
 // bounded window (<=120 days), so we stay well inside it.
 export function fetchRecentCves(hours = 48): Promise<CveRecord[]> {
-  return memo(`nvd-recent-${hours}`, 10 * 60_000, () => loadRecentCves(hours));
+  return memo(`nvd-recent-${hours}`, MEMO_MS.nvdRecent, () => loadRecentCves(hours));
 }
 
 async function loadRecentCves(hours: number): Promise<CveRecord[]> {
@@ -70,7 +71,7 @@ async function loadRecentCves(hours: number): Promise<CveRecord[]> {
   const end = new Date(Math.floor(Date.now() / BUCKET) * BUCKET);
   const start = new Date(end.getTime() - hours * 3600_000);
   const url = `${API}?pubStartDate=${start.toISOString()}&pubEndDate=${end.toISOString()}&resultsPerPage=500`;
-  const data = await getJson<{ vulnerabilities?: RawCve[] }>(url, 600, { headers: AUTH }, 30000);
+  const data = await getJson<{ vulnerabilities?: RawCve[] }>(url, REVALIDATE.nvdRecent, { headers: AUTH }, 30000);
   return (data.vulnerabilities ?? [])
     .map(normalize)
     .sort((a, b) => (b.cvss?.score ?? 0) - (a.cvss?.score ?? 0) || b.published.localeCompare(a.published));
@@ -108,7 +109,7 @@ async function takeLookupSlot(): Promise<boolean> {
 export async function fetchCve(id: string): Promise<CveRecord | null> {
   if (!(await takeLookupSlot())) throw new NvdUnavailable("lookup rate cap reached");
   try {
-    const data = await getJson<{ vulnerabilities?: RawCve[] }>(`${API}?cveId=${encodeURIComponent(id)}`, 3600, { headers: AUTH });
+    const data = await getJson<{ vulnerabilities?: RawCve[] }>(`${API}?cveId=${encodeURIComponent(id)}`, REVALIDATE.nvdCve, { headers: AUTH });
     const v = data.vulnerabilities?.[0];
     return v ? normalize(v) : null;
   } catch {
