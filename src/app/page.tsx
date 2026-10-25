@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Dashboard from "@/components/live/Dashboard";
-import { buildSnapshot, slimSnapshot } from "@/lib/live/snapshot";
+import { buildSnapshot } from "@/lib/live/snapshot";
+import { slimSnapshot } from "@/lib/domain/slim";
 
 // ISR: the HTML already holds a recent snapshot (no "Connecting..." flash) and is rebuilt
 // at most once a minute. The browser then polls /api/threats.
