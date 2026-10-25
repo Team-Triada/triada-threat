@@ -95,7 +95,7 @@ The in-process caches are per instance. On serverless hosts each cold start begi
 
 - Security headers and a Content Security Policy are set in `next.config.ts`. The CSP allows inline scripts because Next requires them.
 - The image optimizer is limited to the logo (`images.localPatterns`).
-- Single-CVE lookups are capped at 30 per minute so crawlers cannot exhaust the NVD quota.
+- Single-CVE lookups are capped just under NVD's own limit (40 per 30 s with a key, 4 without) so crawlers can't use up the quota. Bursts queue for up to 12 s, then get a temporary error (never a cached false 404).
 - `/api/threats` has no rate limit of its own. Put a rate limit in front of it at the host.
 - Source maps are published (Lighthouse uses them). Set `productionBrowserSourceMaps` to `false` in `next.config.ts` to stop that.
 
