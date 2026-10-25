@@ -4,49 +4,14 @@
 
 import { memo, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import * as THREE from "three";
-import type { C2Server, ScannerSource, Victim } from "@/lib/live/types";
+import type { C2Server, ScannerSource, Victim } from "@/lib/domain/types";
 import { country, jitter } from "@/lib/countries";
-import { groupOrigin } from "@/lib/live/analysis";
+import { groupOrigin } from "@/lib/domain/analysis";
 import { esc } from "@/lib/html";
 import { useNow } from "@/lib/use-threat-feed";
+import { countryAt, isoOf, type CountryFeature } from "./country-geometry";
 
-type CountryFeature = { properties: Record<string, string | number> };
-
-// Natural Earth leaves ISO_A2 as "-99" for a few countries (France, Norway...).
-function isoOf(f: CountryFeature): string | null {
-  const iso = String(f.properties.ISO_A2);
-  if (iso !== "-99") return iso;
-  const wb = String(f.properties.WB_A2 ?? "");
-  if (wb && wb !== "-99") return wb;
-  return f.properties.NAME === "Norway" ? "NO" : null;
-}
-
-type Ring = [number, number][];
-
-function inRing(lng: number, lat: number, ring: Ring): boolean {
-  let inside = false;
-  for (let i = 0, j = ring.length - 1; i < ring.length; j = i++) {
-    const [xi, yi] = ring[i];
-    const [xj, yj] = ring[j];
-    if (yi > lat !== yj > lat && lng < ((xj - xi) * (lat - yi)) / (yj - yi) + xi) inside = !inside;
-  }
-  return inside;
-}
-
-// ISO code of the country containing lat/lng (outer ring minus holes).
-function countryAt(features: any[], lat: number, lng: number): string | null {
-  for (const f of features) {
-    const g = f.geometry;
-    if (!g) continue;
-    const polys: Ring[][] = g.type === "MultiPolygon" ? g.coordinates : [g.coordinates];
-    for (const [outer, ...holes] of polys) {
-      if (inRing(lng, lat, outer) && !holes.some((h) => inRing(lng, lat, h))) return isoOf(f);
-    }
-  }
-  return null;
-}
-
-export type GlobePoint = {
+type GlobePoint = {
   id: string;
   kind: "country" | "c2" | "scan";
   lat: number;
@@ -80,8 +45,8 @@ type Props = {
 const LAND_URL = "/geo/countries.geojson";
 const DAY = 86400_000;
 
-// Stable object identity per victim (see note in the component). Module-level so
-// it survives re-renders; bounded by the ~100 victims the feed ever returns.
+// Static accessors and config. Module-level so react-globe.gl sees stable function
+// and object identities across renders and does not rebuild its scene.
 const RENDERER_CONFIG = { antialias: true, alpha: true, powerPreference: "high-performance" as const };
 const SIDE_COLOR = () => "rgba(0,0,0,0)";
 const POINT_COLOR = (d: GlobePoint) => d.color;
@@ -91,6 +56,8 @@ const RING_COLOR = (d: { fresh: boolean }) => (t: number) => `rgba(255,${d.fresh
 const RING_RADIUS = (d: { fresh: boolean }) => (d.fresh ? 6 : 3.5);
 const ARC_COLOR = () => ["rgba(255,200,80,0.95)", "rgba(255,60,60,0.9)"];
 const ARC_LABEL = (d: Arc) => d.label;
+// Stable object identity per arc/ring (same reason). Bounded by the ~100 victims
+// the feed ever returns.
 const ARC_CACHE = new Map<string, Arc>();
 const RING_CACHE = new Map<string, { lat: number; lng: number; fresh: boolean }>();
 
