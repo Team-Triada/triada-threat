@@ -5,7 +5,8 @@ import PageTop from "@/components/ui/PageTop";
 import { fetchRecentVictims } from "@/lib/live/ransomware";
 import { ago, groupOrigin } from "@/lib/domain/analysis";
 import { countryName } from "@/lib/countries";
-import { ArrowUpRightIcon, XMarkIcon } from "@heroicons/react/16/solid";
+import { ArrowUpRightIcon, ShieldExclamationIcon, Squares2X2Icon, TrophyIcon, UserGroupIcon, XMarkIcon } from "@heroicons/react/16/solid";
+import StatTile from "@/components/ui/StatTile";
 
 export const revalidate = 120;
 
@@ -56,10 +57,10 @@ export default async function RansomwarePage({ searchParams }: { searchParams: P
 
   const shown = showAll ? victims : victims.slice(0, PAGE);
   const stats = [
-    { label: "Claims in window", value: all.length.toLocaleString() },
-    { label: "Active gangs", value: groups.length.toLocaleString() },
-    { label: "Most active", value: groups[0]?.[0] ?? "n/a", cap: true },
-    { label: "Top sector", value: sectors[0]?.[0] ?? "n/a" },
+    { label: "Claims in window", value: all.length, color: "#ff8c3c", Icon: ShieldExclamationIcon },
+    { label: "Active gangs", value: groups.length, color: "#ffcc3c", Icon: UserGroupIcon },
+    { label: "Most active", value: groups[0]?.[0] ?? "n/a", color: "#ff6b6b", Icon: TrophyIcon, text: true, capitalize: true },
+    { label: "Top sector", value: sectors[0]?.[0] ?? "n/a", color: "#19d3c5", Icon: Squares2X2Icon, text: true },
   ];
 
   return (
@@ -75,16 +76,11 @@ export default async function RansomwarePage({ searchParams }: { searchParams: P
               Victims as claimed on gang extortion sites, refreshed every two minutes. A claim means data was already stolen. Where shown, a gang&apos;s country is an assessed link from public law-enforcement and industry reporting, not telemetry.
             </p>
           </div>
-          <dl className="grid grid-cols-2 gap-2.5 sm:grid-cols-4">
-            {stats.map((s) => (
-              <div key={s.label} className="card-surface px-4 py-3 min-w-0">
-                <dt className="text-[11px] uppercase tracking-wide text-[var(--muted-foreground)]">{s.label}</dt>
-                <dd title={s.value} className={`mt-1 break-words text-[17px] sm:text-[22px] leading-tight font-semibold text-white tabular-nums ${s.cap ? "capitalize" : ""}`} style={{ fontFamily: "var(--font-telegraf), sans-serif" }}>
-                  {s.value}
-                </dd>
-              </div>
+          <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-4">
+            {stats.map((t) => (
+              <StatTile key={t.label} {...t} />
             ))}
-          </dl>
+          </div>
         </header>
 
         <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_300px] lg:items-start">
@@ -122,10 +118,10 @@ export default async function RansomwarePage({ searchParams }: { searchParams: P
                       <h2 className="heading-card min-w-0 break-words" style={{ fontSize: 17 }}>{v.victim}</h2>
                       <span className="shrink-0 pt-0.5 text-xs text-[var(--muted-foreground)] tabular-nums">{ago(v.discoveredAt)}</span>
                     </div>
-                    <div className="mt-1.5 flex flex-wrap items-center gap-x-2 gap-y-1 text-[13px] text-[var(--muted-foreground)]">
+                    <div className="mt-1.5 flex flex-wrap items-center gap-x-3 gap-y-1 text-[13px] text-[var(--muted-foreground)]">
                       <Link href={`/ransomware/${encodeURIComponent(v.group)}`} prefetch={false} className="font-medium capitalize text-[#ffb070] hover:underline">{v.group}</Link>
-                      {v.countryCode && (<><span aria-hidden>·</span><Link href={href({ group, sector, country: v.countryCode })} prefetch={false} className="hover:text-white">{countryName(v.countryCode)}</Link></>)}
-                      {v.sector && (<><span aria-hidden>·</span><span>{v.sector}</span></>)}
+                      {v.countryCode && <Link href={href({ group, sector, country: v.countryCode })} prefetch={false} className="hover:text-white">{countryName(v.countryCode)}</Link>}
+                      {v.sector && <span className="text-[#7d8591]">{v.sector}</span>}
                     </div>
                     {v.description && <p className="mt-2 line-clamp-2 text-[13px] leading-relaxed text-[#9aa1ab]">{v.description}</p>}
                     {(origin?.countryCode || v.permalink) && (

@@ -41,7 +41,7 @@ export default async function ActorPage({ params }: { params: Promise<{ id: stri
         </Link>
 
         <header className="flex flex-col gap-4">
-          <span className="section-label">{actor.attribution}</span>
+          <span className="section-label">Threat actor · {actor.mitreId}</span>
           <h1 className="heading-hero" style={{ fontSize: "clamp(28px, 4vw, 48px)" }}>
             {actor.name}
           </h1>
@@ -50,7 +50,10 @@ export default async function ActorPage({ params }: { params: Promise<{ id: stri
               <span key={a} className="pill-tag">{a}</span>
             ))}
           </div>
-          <div className="text-sm text-[var(--muted-foreground)]">{actor.country}</div>
+          <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
+            <span className={`pill-tag ${actor.countryCode ? "border-[var(--triada-cyan)] text-white" : ""}`}>{actor.country}</span>
+            <span className="max-w-2xl text-sm text-[var(--muted-foreground)]">{actor.attribution}</span>
+          </div>
         </header>
 
         <section className="card-surface p-6 flex flex-col gap-5">

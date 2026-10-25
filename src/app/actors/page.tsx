@@ -3,6 +3,8 @@ import type { Metadata } from "next";
 import { pageMeta } from "@/lib/seo";
 import PageTop from "@/components/ui/PageTop";
 import { getActors, type ThreatActor } from "@/lib/actors";
+import { FingerPrintIcon, GlobeAltIcon, QuestionMarkCircleIcon, UserGroupIcon } from "@heroicons/react/16/solid";
+import StatTile from "@/components/ui/StatTile";
 
 export const metadata: Metadata = pageMeta({
   title: "Threat Actors | MITRE ATT&CK Groups",
@@ -24,10 +26,10 @@ export default async function ActorsPage({ searchParams }: { searchParams: Promi
   const countries = Array.from(byCountry.entries()).sort((a, b) => b[1].length - a[1].length || a[0].localeCompare(b[0]));
 
   const stats = [
-    { label: "Intrusion sets", value: actors.length },
-    { label: "Attributed", value: attributed.length },
-    { label: "Countries", value: countries.length },
-    { label: "Unattributed", value: rest.length },
+    { label: "Intrusion sets", value: actors.length, color: "#ff8c3c", Icon: UserGroupIcon },
+    { label: "Attributed", value: attributed.length, color: "#ffcc3c", Icon: FingerPrintIcon },
+    { label: "Countries", value: countries.length, color: "#19d3c5", Icon: GlobeAltIcon },
+    { label: "Unattributed", value: rest.length, color: "#c77dff", Icon: QuestionMarkCircleIcon },
   ];
 
   return (
@@ -43,14 +45,11 @@ export default async function ActorsPage({ searchParams }: { searchParams: Promi
               {actors.length} intrusion sets with their techniques and malware. Origin is an assessed attribution from public reporting. Each actor page lists live news coverage matched by name or alias.
             </p>
           </div>
-          <dl className="grid grid-cols-2 gap-2.5 sm:grid-cols-4">
-            {stats.map((s) => (
-              <div key={s.label} className="card-surface px-4 py-3">
-                <dt className="text-[11px] uppercase tracking-wide text-[var(--muted-foreground)]">{s.label}</dt>
-                <dd className="mt-1 text-[22px] leading-tight font-semibold text-white tabular-nums" style={{ fontFamily: "var(--font-telegraf), sans-serif" }}>{s.value}</dd>
-              </div>
+          <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-4">
+            {stats.map((t) => (
+              <StatTile key={t.label} {...t} />
             ))}
-          </dl>
+          </div>
           {countries.length > 0 && (
             <nav aria-label="Jump to country" className="no-scrollbar -mx-4 flex gap-2 overflow-x-auto px-4 sm:mx-0 sm:flex-wrap sm:overflow-visible sm:px-0">
               {countries.map(([name, list]) => (

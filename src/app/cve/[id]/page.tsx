@@ -24,6 +24,13 @@ const CVE_RE = /^CVE-\d{4}-\d{4,7}$/;
 // Reject IDs from impossible years before they cost an upstream lookup.
 const validCve = (id: string) => CVE_RE.test(id) && +id.slice(4, 8) >= 1999 && +id.slice(4, 8) <= new Date().getFullYear() + 1;
 
+// Reference links are shown as host plus a muted path instead of the full raw URL.
+const refHost = (u: string) => new URL(u).hostname.replace(/^www\./, "");
+const refPath = (u: string) => {
+  const { pathname, search } = new URL(u);
+  return pathname === "/" && !search ? "" : pathname + search;
+};
+
 async function load(id: string) {
   let unavailable: string | null = null;
   const [cve, kevAll, epss, feed] = await Promise.all([
@@ -86,7 +93,7 @@ export default async function CvePage({ params }: { params: Promise<{ id: string
           </div>
         </header>
 
-        <section className="grid gap-6 md:grid-cols-[1fr_360px] items-start">
+        <section className="grid gap-6 md:grid-cols-[minmax(0,1fr)_360px] items-start">
           <div className="flex flex-col gap-6">
             <div className="card-surface p-6 flex flex-col gap-4">
               <span className="section-label">Description</span>
@@ -111,9 +118,16 @@ export default async function CvePage({ params }: { params: Promise<{ id: string
                 <span className="section-label">References</span>
                 <ul className="mt-3 flex flex-col gap-2">
                   {cve.references.map((r) => (
-                    <li key={r.url} className="flex flex-wrap items-baseline gap-2">
-                      <a href={r.url} target="_blank" rel="noopener noreferrer" className="text-xs text-cyan hover:underline break-all">{r.url}</a>
-                      {r.tags.slice(0, 3).map((t) => <span key={t} className="text-[10px] text-[var(--muted-foreground)]">{t}</span>)}
+                    <li key={r.url} className="flex items-center gap-3">
+                      <a href={r.url} target="_blank" rel="noopener noreferrer" title={r.url} className="min-w-0 flex-1 truncate text-[13px] hover:underline">
+                        <span className="text-cyan">{refHost(r.url)}</span>
+                        <span className="text-[var(--muted-foreground)]">{refPath(r.url)}</span>
+                      </a>
+                      <span className="flex shrink-0 flex-wrap justify-end gap-1">
+                        {r.tags.slice(0, 2).map((t) => (
+                          <span key={t} className="rounded-full border border-[var(--border)] px-2 py-0.5 text-[10px] text-[var(--muted-foreground)]">{t}</span>
+                        ))}
+                      </span>
                     </li>
                   ))}
                 </ul>
