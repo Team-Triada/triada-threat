@@ -4,13 +4,14 @@ import { useCallback, useEffect, useRef, type PointerEvent as RPointerEvent } fr
 
 export type Snap = "collapsed" | "half" | "full";
 const ORDER: Snap[] = ["collapsed", "half", "full"];
+// Keep in sync with --tabs in globals.css (24px grip row + 34px tab row).
 const TABS = 58;
 const LABEL: Record<Snap, string> = { collapsed: "map only", half: "half height", full: "full height" };
 
 function heights(): Record<Snap, number> {
   const h = window.innerHeight;
   const hdr = parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--hdr")) || 84;
-  return { collapsed: TABS, half: Math.min(560, Math.max(250, h * 0.44)), full: Math.max(TABS + 120, h - hdr) };
+  return { collapsed: TABS, half: Math.min(560, Math.max(250, h * 0.44)) /* = clamp(250px, 44dvh, 560px), the --sheet default in globals.css */, full: Math.max(TABS + 120, h - hdr) };
 }
 
 /**
