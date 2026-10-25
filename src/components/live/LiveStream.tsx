@@ -8,6 +8,7 @@ import { ago } from "@/lib/domain/analysis";
 import { useNow } from "@/lib/use-threat-feed";
 import { countryName } from "@/lib/countries";
 import { DEFAULT_FILTER, filterEvents, isFiltered, type MinSeverity, type SortMode, type StreamFilter } from "@/lib/stream-filter";
+import { XMarkIcon } from "@heroicons/react/16/solid";
 
 const PAGE = 60;
 
@@ -97,7 +98,7 @@ export default function LiveStream({
         {countryCode && (
           <div className="flex">
             <button onClick={() => set({ countryCode: null })} className={`${chip(true)} flex items-center gap-1.5`} aria-label={`Clear country filter ${countryName(countryCode)}`}>
-              {countryName(countryCode)} <span aria-hidden>×</span>
+              {countryName(countryCode)} <XMarkIcon className="h-3 w-3" aria-hidden />
             </button>
           </div>
         )}

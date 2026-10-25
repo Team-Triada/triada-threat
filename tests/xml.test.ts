@@ -45,7 +45,7 @@ describe("unwrapCdata / stripTags / codePoint", () => {
   it("rejects invalid code points instead of throwing", () => {
     for (const n of [99999999, 0xd800, -1, NaN]) expect(codePoint(n)).toBe("");
     expect(codePoint(65)).toBe("A");
-    expect(codePoint(0x1f600)).toBe("😀");
+    expect(codePoint(0x1f600)).toBe("\u{1F600}");
   });
 });
 

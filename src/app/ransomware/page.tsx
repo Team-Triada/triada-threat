@@ -5,6 +5,7 @@ import PageTop from "@/components/ui/PageTop";
 import { fetchRecentVictims } from "@/lib/live/ransomware";
 import { ago, groupOrigin } from "@/lib/domain/analysis";
 import { countryName } from "@/lib/countries";
+import { ArrowUpRightIcon, XMarkIcon } from "@heroicons/react/16/solid";
 
 export const revalidate = 120;
 
@@ -78,7 +79,7 @@ export default async function RansomwarePage({ searchParams }: { searchParams: P
             {stats.map((s) => (
               <div key={s.label} className="card-surface px-4 py-3 min-w-0">
                 <dt className="text-[11px] uppercase tracking-wide text-[var(--muted-foreground)]">{s.label}</dt>
-                <dd className={`mt-1 truncate text-[22px] leading-tight font-semibold text-white tabular-nums ${s.cap ? "capitalize" : ""}`} style={{ fontFamily: "var(--font-telegraf), sans-serif" }}>
+                <dd title={s.value} className={`mt-1 break-words text-[17px] sm:text-[22px] leading-tight font-semibold text-white tabular-nums ${s.cap ? "capitalize" : ""}`} style={{ fontFamily: "var(--font-telegraf), sans-serif" }}>
                   {s.value}
                 </dd>
               </div>
@@ -103,7 +104,7 @@ export default async function RansomwarePage({ searchParams }: { searchParams: P
                 </span>
                 {active.map((a) => (
                   <Link key={a.label} href={a.clear} prefetch={false} aria-label={`Remove filter ${a.label}`} className="pill-tag capitalize border-[var(--triada-cyan)] text-white" style={{ padding: "3px 10px", fontSize: 12 }}>
-                    {a.label} <span aria-hidden className="ml-1.5 text-[var(--muted-foreground)]">×</span>
+                    {a.label} <XMarkIcon className="ml-1.5 h-3 w-3 text-[var(--muted-foreground)]" aria-hidden />
                   </Link>
                 ))}
                 {active.length > 1 && (
@@ -130,7 +131,7 @@ export default async function RansomwarePage({ searchParams }: { searchParams: P
                     {(origin?.countryCode || v.permalink) && (
                       <div className="mt-2.5 flex flex-wrap items-center justify-between gap-x-4 gap-y-1 text-xs text-[var(--muted-foreground)]">
                         <span>{origin?.countryCode ? `Assessed gang nexus: ${countryName(origin.countryCode)}` : ""}</span>
-                        {v.permalink && <a href={v.permalink} target="_blank" rel="noopener noreferrer" className="text-cyan hover:underline">Source record ↗</a>}
+                        {v.permalink && <a href={v.permalink} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 text-cyan hover:underline">Source record<ArrowUpRightIcon className="h-3 w-3" aria-hidden /></a>}
                       </div>
                     )}
                   </li>

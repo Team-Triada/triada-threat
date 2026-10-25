@@ -7,6 +7,7 @@ import { getActorById, getActors, getArticlesForActor } from "@/lib/actors";
 import { fetchArticles } from "@/lib/live/feeds";
 import { ago } from "@/lib/domain/analysis";
 import { SeverityBadge, CategoryBadge } from "@/components/ui/Badges";
+import { ArrowLeftIcon, ArrowUpRightIcon } from "@heroicons/react/16/solid";
 
 export const revalidate = 600;
 
@@ -33,8 +34,9 @@ export default async function ActorPage({ params }: { params: Promise<{ id: stri
     <div className="min-h-screen">
       <main className="mx-auto flex w-full flex-col gap-8 px-4 py-6 sm:px-8 sm:py-10" style={{ maxWidth: 1180 }}>
         <PageTop />
-        <Link href="/" className="text-sm text-cyan hover:underline w-fit">
-          ← Back to live map
+        <Link href="/" className="inline-flex items-center gap-1.5 text-sm text-cyan hover:underline w-fit">
+          <ArrowLeftIcon className="h-3.5 w-3.5 shrink-0" aria-hidden />
+          Back to live map
         </Link>
 
         <header className="flex flex-col gap-4">
@@ -85,9 +87,10 @@ export default async function ActorPage({ params }: { params: Promise<{ id: stri
               href={actor.mitreUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-cyan hover:underline text-sm w-fit"
+              className="inline-flex items-center gap-1.5 text-cyan hover:underline text-sm w-fit"
             >
-              Full MITRE ATT&CK profile →
+              Full MITRE ATT&CK profile
+              <ArrowUpRightIcon className="h-3.5 w-3.5 shrink-0" aria-hidden />
             </a>
           )}
         </section>

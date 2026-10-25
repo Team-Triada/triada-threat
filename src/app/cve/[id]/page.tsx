@@ -10,6 +10,7 @@ import { fetchArticles } from "@/lib/live/feeds";
 import { articlesForCve, assessCve, ago } from "@/lib/domain/analysis";
 import { Actions, Findings, Gauge } from "@/components/ui/Assessment";
 import { KevBadge, RansomwareBadge } from "@/components/ui/Badges";
+import { ArrowLeftIcon } from "@heroicons/react/16/solid";
 
 export const revalidate = 300;
 
@@ -73,7 +74,7 @@ export default async function CvePage({ params }: { params: Promise<{ id: string
     <div className="min-h-screen">
       <main className="mx-auto flex w-full flex-col gap-8 px-4 py-6 sm:px-8 sm:py-10" style={{ maxWidth: 1180 }}>
         <PageTop />
-        <Link href="/" className="text-sm text-cyan hover:underline w-fit">← Back to live map</Link>
+        <Link href="/" className="inline-flex items-center gap-1.5 text-sm text-cyan hover:underline w-fit"><ArrowLeftIcon className="h-3.5 w-3.5 shrink-0" aria-hidden />Back to live map</Link>
 
         <header className="flex flex-col gap-4">
           <h1 className="heading-hero" style={{ fontSize: "clamp(28px, 4vw, 44px)" }}>{id}</h1>

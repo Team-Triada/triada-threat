@@ -6,6 +6,7 @@ import { pageMeta, titleCase } from "@/lib/seo";
 import { fetchGroupProfile } from "@/lib/live/ransomware";
 import { ago, groupOrigin } from "@/lib/domain/analysis";
 import { countryName } from "@/lib/countries";
+import { ArrowLeftIcon } from "@heroicons/react/16/solid";
 
 export const revalidate = 600;
 
@@ -42,7 +43,7 @@ export default async function GroupPage({ params }: { params: Promise<{ group: s
     <div className="min-h-screen">
       <main className="mx-auto flex w-full flex-col gap-8 px-4 py-6 sm:px-8 sm:py-10" style={{ maxWidth: 1180 }}>
         <PageTop />
-        <Link href="/ransomware" className="text-sm text-cyan hover:underline w-fit">← All ransomware activity</Link>
+        <Link href="/ransomware" className="inline-flex items-center gap-1.5 text-sm text-cyan hover:underline w-fit"><ArrowLeftIcon className="h-3.5 w-3.5 shrink-0" aria-hidden />All ransomware activity</Link>
 
         <header className="flex flex-col gap-3">
           <span className="section-label">Ransomware group</span>

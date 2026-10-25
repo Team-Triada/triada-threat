@@ -3,6 +3,7 @@
 import type { ThreatEvent, ThreatSnapshot } from "@/lib/domain/types";
 import CountryView from "./detail/CountryView";
 import EventView from "./detail/EventView";
+import { ChevronRightIcon } from "@heroicons/react/16/solid";
 
 export type Selection = { type: "event"; event: ThreatEvent } | { type: "country"; code: string };
 
@@ -22,9 +23,7 @@ export default function DetailPanel({ selection, snapshot, onClose, wide, onTogg
         title={wide ? "Narrow panel" : "Widen panel"}
         className="pointer-events-auto absolute left-0 top-1/2 z-10 hidden h-12 w-6 -translate-y-1/2 place-items-center rounded-md border border-[var(--border-strong)] bg-[rgba(12,13,17,0.96)] text-[var(--muted-foreground)] hover:text-white hover:border-[var(--triada-cyan)] transition-colors xl:grid"
       >
-        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden className={wide ? "" : "rotate-180"}>
-          <path d="M9 6l6 6-6 6" />
-        </svg>
+        <ChevronRightIcon className={`h-4 w-4 ${wide ? "" : "rotate-180"}`} aria-hidden />
       </button>
       <div className="card-surface @container pointer-events-auto flex flex-col w-full overflow-hidden">
         <div className="flex-1 overflow-y-auto thin-scroll">
