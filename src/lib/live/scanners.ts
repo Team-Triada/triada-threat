@@ -11,6 +11,9 @@ export async function fetchScanners(): Promise<ScannerSource[]> {
   let raw = await getJson<Raw>("https://isc.sans.edu/api/topips/records/25?json", 900);
   raw = raw.filter((r) => isIp(r.source));
   const geo = await geolocate(raw.map((r) => r.source));
+  // Raw IPs exist but none could be placed on the map: say why instead of
+  // reporting a healthy empty source.
+  if (raw.length > 0 && geo.size === 0) throw new Error(process.env.IPINFO_TOKEN ? "IP geolocation (IPinfo) returned no results" : "IP geolocation not configured: set IPINFO_TOKEN");
   return raw.flatMap((r): ScannerSource[] => {
     const g = geo.get(r.source);
     if (!g) return [];
