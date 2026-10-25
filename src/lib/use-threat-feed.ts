@@ -60,7 +60,7 @@ export function useThreatFeed(initial: ThreatSnapshot | null = null) {
   return { snapshot, error, loading, newIds, nextAt, refresh };
 }
 
-// Re-render every `ms` so relative timestamps ("4m ago") stay honest.
+// Re-render every `ms` so "4m ago" labels keep up.
 export function useNow(ms = 15_000) {
   const [now, setNow] = useState(() => Date.now());
   useEffect(() => {

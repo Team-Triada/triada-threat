@@ -36,9 +36,8 @@ async function track<T>(name: string, fn: () => Promise<T>, count: (t: T) => num
   }
 }
 
-// Concurrent callers (ISR render + several pollers) share one in-flight build,
-// and a finished build is reused for a few seconds, so a burst of visitors
-// can never fan out into a burst of upstream requests.
+// Concurrent callers (ISR render, pollers) share one in-flight build and reuse a finished one
+// for a few seconds, so a burst of visitors can't become a burst of upstream requests.
 let inflight: Promise<ThreatSnapshot> | null = null;
 let memo: { at: number; snap: ThreatSnapshot } | null = null;
 
@@ -209,9 +208,8 @@ async function compute(): Promise<ThreatSnapshot> {
   };
 }
 
-// Smaller copy for the server-rendered HTML. The page embeds this as JSON for
-// hydration, so every byte costs parse time on the critical path. Keeps what
-// the first screen needs (stats, first stream rows, map shading, panels).
+// Trimmed copy for the server-rendered HTML. It's embedded as JSON for hydration, so size costs
+// parse time. Keeps what the first screen needs: stats, first stream rows, map shading, panels.
 export function slimSnapshot(s: ThreatSnapshot): ThreatSnapshot {
   const timed = s.events.filter((e) => e.kind !== "scan").slice(0, 45);
   const scans = s.events.filter((e) => e.kind === "scan").slice(0, 5);

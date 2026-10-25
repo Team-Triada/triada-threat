@@ -6,8 +6,7 @@ import type { ScannerSource } from "../domain/types";
 
 type Raw = { rank: number; source: string; reports: number; targets: number }[];
 
-// SANS Internet Storm Center / DShield: the day's top attacking IPs as seen by
-// a worldwide honeypot/firewall-log sensor network. Real sources, real counts.
+// SANS ISC DShield: today's top attacking IPs from their worldwide honeypot and firewall-log sensors.
 export async function fetchScanners(): Promise<ScannerSource[]> {
   let raw = await getJson<Raw>("https://isc.sans.edu/api/topips/records/25?json", 900);
   raw = raw.filter((r) => isIp(r.source));

@@ -1,6 +1,5 @@
-// Site-wide atmosphere: pure CSS (no canvas) so it costs nothing next to the
-// WebGL globe. Layers, back to front: colour glows, perspective grid,
-// scanlines + sweep, vignette.
+// Background effect, CSS only so it stays cheap next to the globe.
+// Layers back to front: glows, grid, scanlines + sweep, vignette.
 export default function BackgroundFX() {
   return (
     <div aria-hidden className="fx-root">

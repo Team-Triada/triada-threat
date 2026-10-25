@@ -1,9 +1,6 @@
-// Pulls the real, official MITRE ATT&CK Enterprise STIX bundle and extracts
-// intrusion-set (threat actor group) objects plus their technique/malware
-// relationships. This is the live source of truth MITRE itself publishes —
-// no key needed. Country/attribution isn't part of the ATT&CK data model
-// (MITRE deliberately doesn't publish nation-state attribution), so that
-// stays in the small hand-curated data/actor-attribution.json overlay.
+// Downloads the MITRE ATT&CK Enterprise STIX bundle and pulls out the intrusion sets
+// (threat groups) with their techniques and malware. No key needed.
+// MITRE doesn't publish country attribution, so that lives in data/actor-attribution.json by hand.
 // Run: npm run fetch:attack
 import { writeFile, mkdir } from "node:fs/promises";
 import path from "node:path";

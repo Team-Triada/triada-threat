@@ -2,9 +2,8 @@ import Link from "next/link";
 import Dashboard from "@/components/live/Dashboard";
 import { buildSnapshot, slimSnapshot } from "@/lib/live/snapshot";
 
-// Incremental static regeneration: the HTML ships with a recent snapshot already
-// inside it (no "Connecting..." flash, fast LCP), and is rebuilt in the
-// background at most once a minute. The browser then polls /api/threats.
+// ISR: the HTML already holds a recent snapshot (no "Connecting..." flash) and is rebuilt
+// at most once a minute. The browser then polls /api/threats.
 export const revalidate = 60;
 
 export default async function Home() {

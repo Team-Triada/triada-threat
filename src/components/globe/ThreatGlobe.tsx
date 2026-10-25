@@ -69,9 +69,8 @@ function ThreatGlobe({ victims, c2, scanners, showRansomware, showC2, showScan, 
   const [Globe, setGlobe] = useState<any>(null);
   const [land, setLand] = useState<any[]>([]);
   const [hover, setHover] = useState<string | null>(null);
-  // Software rendering (no GPU: SwiftShader, llvmpipe, remote desktops, some CI
-  // browsers) cannot sustain a 60fps WebGL scene and would pin a CPU core. In
-  // that mode we draw on demand instead of continuously.
+  // No GPU (SwiftShader, llvmpipe, remote desktops) can't hold 60fps and would pin a core,
+  // so draw on demand there.
   const [lowPower, setLowPower] = useState(false);
   const lowPowerRef = useRef(false);
 
@@ -82,10 +81,8 @@ function ThreatGlobe({ victims, c2, scanners, showRansomware, showC2, showScan, 
 
   useEffect(() => {
     let alive = true;
-    // The 3D library is ~600 KB gzipped. The dashboard (stream, stats, panels) is
-    // server-rendered and usable first; the globe is a progressive enhancement
-    // that starts loading once the page has settled, or at once on any touch,
-    // click or key press. A static placeholder fills the space meanwhile.
+    // The 3D lib is ~600 KB gzipped, so the dashboard renders first and the globe loads once the
+    // page settles (or right away on touch/click/key). Placeholder until then.
     let started = false;
     let timer: ReturnType<typeof setTimeout> | undefined;
     const start = () => {
@@ -190,10 +187,8 @@ function ThreatGlobe({ victims, c2, scanners, showRansomware, showC2, showScan, 
     };
   }, [Globe]);
 
-  // Country selection is resolved here, not by the library's raycast picking:
-  // a tap/click is converted to lat/lng and matched against the country
-  // polygons. Works the same for touch and mouse and costs one lookup per tap.
-  // Raycast picking (hover tooltips) only runs while a mouse is over the globe.
+  // Picking happens here, not through the library's raycast: tap/click -> lat/lng -> point in
+  // polygon. Same for touch and mouse. Raycast only runs for hover while a mouse is over the globe.
   const [mouseInside, setMouseInside] = useState(false);
   const selectRef = useRef(onSelectCountry);
   useEffect(() => {
@@ -258,9 +253,8 @@ function ThreatGlobe({ victims, c2, scanners, showRansomware, showC2, showScan, 
     return m;
   }, [victims, showRansomware]);
 
-  // Accessors keep a stable identity: react-globe.gl re-evaluates a whole layer
-  // whenever one of its props changes, so inline arrows would redo every
-  // polygon, point and arc on each React render (hover, click, poll).
+  // Accessors need a stable identity. react-globe.gl redoes a whole layer when a prop changes,
+  // so inline arrows would rebuild every polygon, point and arc on each render.
   const capColor = useCallback(
     (f: CountryFeature) => {
       const iso = isoOf(f);
@@ -332,9 +326,8 @@ function ThreatGlobe({ victims, c2, scanners, showRansomware, showC2, showScan, 
     return out;
   }, [c2, scanners, showC2, showScan]);
 
-  // Strike replay: the last 24h of claims, oldest first, played back a few
-  // at a time. Each strike pings its target country; it also draws an arc when
-  // the gang has an assessed home country. Fresh claims jump the queue.
+  // Strike replay: last 24h of claims, oldest first, a few at a time. Each one pings its country,
+  // plus an arc if the gang has a known home country. New claims go first.
   const sequence = useMemo(() => {
     if (!showRansomware) return [];
     return victims
@@ -342,9 +335,8 @@ function ThreatGlobe({ victims, c2, scanners, showRansomware, showC2, showScan, 
       .sort((a, b) => a.discoveredAt.localeCompare(b.discoveredAt));
   }, [victims, showRansomware, now]);
 
-  // react-globe.gl diffs by object identity: rebuilding objects each tick
-  // restarts every arc/ring animation, which reads as jitter. Keep one stable
-  // object per victim for as long as it stays in the playback window.
+  // react-globe.gl diffs by object identity. New objects every tick restart the animations and
+  // look jittery, so keep one object per victim while it's in the window.
 
   const [cursor, setCursor] = useState(0);
   useEffect(() => {

@@ -16,9 +16,8 @@ export const DEFAULT_FILTER: StreamFilter = { query: "", minSeverity: "all", cou
 const RANK: Record<Severity, number> = { critical: 4, high: 3, medium: 2, low: 1, info: 0 };
 const MIN_RANK: Record<MinSeverity, number> = { all: 0, high: 3, critical: 4 };
 
-// Lowercased search text per event, built once. Events are replaced (not
-// mutated) on every poll, so the WeakMap drops stale entries by itself and a
-// keystroke costs one substring scan per row instead of rebuilding strings.
+// Lowercased search text per event, built once. Events are replaced on every poll (not mutated),
+// so the WeakMap cleans itself up and a keystroke is one substring scan per row.
 const haystacks = new WeakMap<ThreatEvent, string>();
 
 function haystack(e: ThreatEvent): string {

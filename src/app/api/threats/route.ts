@@ -3,10 +3,9 @@ import { buildSnapshot } from "@/lib/live/snapshot";
 export const dynamic = "force-dynamic";
 export const maxDuration = 60;
 
-// One aggregated snapshot for the dashboard. Upstream calls are individually
-// cached (see lib/live/http.ts), so polling this every minute is cheap.
-// The JSON is ~300 KB raw and compresses ~10x, so gzip it explicitly: the
-// framework does not compress route-handler bodies on its own here.
+// One snapshot for the whole dashboard. Upstream calls are cached already (lib/live/http.ts),
+// so polling every minute is cheap. Gzipped by hand: route handlers aren't compressed here
+// and the JSON is ~300 KB.
 export async function GET(request: Request) {
   const body = JSON.stringify(await buildSnapshot());
   const headers: Record<string, string> = {

@@ -1,6 +1,5 @@
-// Pure, client-safe analysis helpers. Everything here is derived from real
-// upstream signals (CVSS, EPSS, CISA KEV, leak-site cadence), no invented
-// numbers. The output is labelled as an assessment in the UI.
+// Pure helpers, safe in the browser. Scores come from the upstream data (CVSS, EPSS, KEV,
+// leak-site cadence), nothing made up. The UI labels the result as an assessment.
 import type { Article, C2Server, CveRecord, KevItem, Severity, ThreatSnapshot, Victim } from "./types";
 import ORIGIN from "../../../data/ransomware-origin.json";
 

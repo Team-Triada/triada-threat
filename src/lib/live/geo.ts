@@ -1,11 +1,8 @@
-// IP -> country and network owner via IPinfo Lite (https://ipinfo.io/lite):
-// HTTPS, free, no request quota, commercial use allowed with attribution.
-// Needs a free token in IPINFO_TOKEN; without one nothing is looked up and
-// callers fall back to whatever country data they already have.
+// IP -> country + network owner through IPinfo Lite (free, HTTPS, no quota, attribution required).
+// Needs IPINFO_TOKEN; without it nothing is looked up.
 //
-// Lite has no coordinates, so a dot is placed at its country's centroid with a
-// small stable jitter (the same offsets the globe uses for C2 servers), which
-// keeps points in one country from stacking and from moving between polls.
+// Lite has no coordinates, so each dot goes at the country centroid plus a small fixed offset
+// (same idea as the C2 dots) so they don't stack or move between polls.
 import "server-only";
 import { getJson } from "./http";
 import { country, jitter } from "../countries";

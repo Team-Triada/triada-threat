@@ -15,9 +15,8 @@ export function titleCase(s: string): string {
 export const OG_IMAGES = [OG_IMAGE];
 export const TWITTER_IMAGES = [OG_IMAGE.url];
 
-// Per-page metadata with a canonical URL and matching social cards. Next
-// replaces (not merges) openGraph/twitter objects, so each page restates them
-// including the image.
+// Per-page metadata with canonical + social cards. Next replaces openGraph/twitter instead of
+// merging, so each page repeats them with the image.
 export function pageMeta({ title, description, path }: { title: string; description: string; path: string }): Metadata {
   return {
     title,

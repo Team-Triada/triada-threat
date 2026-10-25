@@ -5,9 +5,8 @@ const ITEMS = [
   { color: "#3c8dff", label: "Mentioned in the news", short: "In the news" },
 ];
 
-// Explains the country shading. Bottom edge of the globe on small screens;
-// on desktop it sits top-left of the globe, clear of the stats cards and
-// hidden while the details panel is widened over that area.
+// Explains the country colours. Bottom of the globe on small screens, top-left on desktop
+// (hidden while the detail panel is wide).
 export default function MapLegend({ hideOnDesktop = false }: { hideOnDesktop?: boolean }) {
   return (
     <ul

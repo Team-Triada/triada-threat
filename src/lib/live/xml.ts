@@ -1,10 +1,8 @@
-// Linear-time helpers for reading untrusted RSS/XML.
+// Linear-time helpers for untrusted RSS/XML.
 //
-// The feeds are third-party. A broken or hostile one must not be able to stall
-// the server, and backtracking regexes such as /<[^>]+>/ or /<item[\s\S]*?<\/item>/
-// go quadratic on input with many opening markers and no closing ones (a few
-// hundred KB is enough to block the event loop for tens of seconds). Everything
-// here advances through the string with indexOf, so cost is proportional to size.
+// Feeds are third-party. Regexes like /<[^>]+>/ or /<item[\s\S]*?<\/item>/ go quadratic on lots of
+// opening markers with no closers (a few hundred KB can block the event loop for tens of seconds).
+// These just walk the string with indexOf.
 import "server-only";
 
 // ASCII-only lowercase. toLowerCase() can change string length for some Unicode

@@ -1,6 +1,5 @@
-// Server-side fetch helpers. Every upstream call goes through Next's data
-// cache (`next.revalidate`) so the dashboard polling us never fans out into
-// one upstream request per visitor.
+// Server fetch helpers. Every upstream call goes through Next's data cache (next.revalidate),
+// so polling visitors don't turn into one upstream request each.
 import "server-only";
 import { SITE_URL } from "../seo";
 export const UA = `triada-threat/1.0 (+${SITE_URL})`;

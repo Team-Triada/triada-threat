@@ -76,14 +76,12 @@ async function loadRecentCves(hours: number): Promise<CveRecord[]> {
     .sort((a, b) => (b.cvss?.score ?? 0) - (a.cvss?.score ?? 0) || b.published.localeCompare(a.published));
 }
 
-// Thrown when NVD could not be asked or did not answer (cap reached, timeout,
-// 5xx). Distinct from a null result, which means NVD answered "no such CVE":
-// callers must not present an outage as a missing record.
+// NVD wasn't asked or didn't answer (cap hit, timeout, 5xx). Not the same as null, which means
+// NVD said "no such CVE". Callers shouldn't show an outage as a missing record.
 export class NvdUnavailable extends Error {}
 
-// Single-CVE lookups are driven by whatever IDs visitors (or crawlers) request.
-// Cap them so a bot cycling random IDs cannot spend the whole NVD quota that the
-// dashboard's own refresh also relies on. Over the cap the lookup is refused (NvdUnavailable).
+// CVE lookups follow whatever IDs visitors and crawlers ask for. Cap them so a bot walking
+// random IDs can't burn the NVD quota the dashboard refresh needs too. Over the cap: NvdUnavailable.
 const LOOKUP_WINDOW_MS = 60_000;
 const LOOKUP_MAX = 30;
 let lookups: number[] = [];

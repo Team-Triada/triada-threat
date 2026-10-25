@@ -1,6 +1,6 @@
-// Best-effort country tagging for news by name/demonym/known-org mention.
-// Deliberately conservative: capitalised whole-word matches only, and names
-// that collide with common words (Chad, Jordan, Georgia, Mali...) are left out.
+// Rough country tagging for news, from names, demonyms and known orgs.
+// Capitalised whole words only, and names that are also common words (Chad, Jordan, Georgia,
+// Mali) are skipped.
 import "server-only";
 import centroids from "../../../data/country-centroids.json";
 
