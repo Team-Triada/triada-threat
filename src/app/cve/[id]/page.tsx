@@ -25,11 +25,11 @@ const CVE_RE = /^CVE-\d{4}-\d{4,7}$/;
 const validCve = (id: string) => CVE_RE.test(id) && +id.slice(4, 8) >= 1999 && +id.slice(4, 8) <= new Date().getFullYear() + 1;
 
 async function load(id: string) {
-  let unavailable = false;
+  let unavailable: string | null = null;
   const [cve, kevAll, epss, feed] = await Promise.all([
     fetchCve(id).catch((e) => {
       if (!(e instanceof NvdUnavailable)) throw e;
-      unavailable = true;
+      unavailable = e.message;
       return null;
     }),
     fetchKev().catch(() => []),
@@ -63,7 +63,7 @@ export default async function CvePage({ params }: { params: Promise<{ id: string
   if (!cve && !kev) {
     // NVD could not be asked: fail this render instead of caching a false 404.
     // (A thrown error is never stored by ISR; the last good page keeps serving.)
-    if (unavailable) throw new Error("CVE data temporarily unavailable");
+    if (unavailable) throw new Error(`CVE data temporarily unavailable (${unavailable})`);
     notFound();
   }
 

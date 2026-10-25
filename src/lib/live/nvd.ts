@@ -82,20 +82,31 @@ export class NvdUnavailable extends Error {}
 
 // CVE lookups follow whatever IDs visitors and crawlers ask for. Cap them so a bot walking
 // random IDs can't burn the NVD quota the dashboard refresh needs too. Over the cap: NvdUnavailable.
-const LOOKUP_WINDOW_MS = 60_000;
-const LOOKUP_MAX = 30;
+// NVD allows 50 requests per rolling 30 s with a key, 5 without. Stay under that and
+// leave room for the dashboard's own refresh.
+const LOOKUP_WINDOW_MS = 30_000;
+const LOOKUP_MAX = KEY ? 40 : 4;
 let lookups: number[] = [];
+const MAX_WAIT_MS = 12_000;
 
-function allowLookup(): boolean {
-  const now = Date.now();
-  lookups = lookups.filter((t) => now - t < LOOKUP_WINDOW_MS);
-  if (lookups.length >= LOOKUP_MAX) return false;
-  lookups.push(now);
-  return true;
+// Take a slot in the window. A burst waits for the oldest lookup to age out
+// instead of failing straight away; it gives up after MAX_WAIT_MS.
+async function takeLookupSlot(): Promise<boolean> {
+  const started = Date.now();
+  for (;;) {
+    const now = Date.now();
+    lookups = lookups.filter((t) => now - t < LOOKUP_WINDOW_MS);
+    if (lookups.length < LOOKUP_MAX) {
+      lookups.push(now);
+      return true;
+    }
+    if (now - started >= MAX_WAIT_MS) return false;
+    await new Promise((r) => setTimeout(r, Math.min(500, lookups[0] + LOOKUP_WINDOW_MS - now + 20)));
+  }
 }
 
 export async function fetchCve(id: string): Promise<CveRecord | null> {
-  if (!allowLookup()) throw new NvdUnavailable("lookup rate cap reached");
+  if (!(await takeLookupSlot())) throw new NvdUnavailable("lookup rate cap reached");
   try {
     const data = await getJson<{ vulnerabilities?: RawCve[] }>(`${API}?cveId=${encodeURIComponent(id)}`, 3600, { headers: AUTH });
     const v = data.vulnerabilities?.[0];
